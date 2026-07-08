@@ -1,0 +1,7 @@
+Enregistrez ici les 3 photos de la compétition Innov'Boost avec EXACTEMENT ces noms :
+
+  innov-remise-prix.jpg   -> la photo de la remise du chèque sur scène
+  innov-pitch.jpg         -> la photo où vous présentez devant l'écran
+  innov-projet.jpg        -> le slide NeurologiqueTWIN
+
+(Clic droit sur chaque photo dans le chat > Enregistrer l'image sous...)
