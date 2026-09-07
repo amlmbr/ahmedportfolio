@@ -68,6 +68,18 @@ window.AHMED_PROFILE = {
     }
   ],
 
+  // ---- SecureDocAI headline metrics (reused by the interview deck) ----
+  secureDoc: {
+    metrics: [
+      { v: '500', k: 'Documents', c: 'c' },
+      { v: '6,000', k: 'Scenarios', c: 'c' },
+      { v: '97.8%', k: 'RBAC compliance', c: 'g' },
+      { v: '95%', k: 'Authorized utility', c: 'g' }
+    ],
+    leakageFrom: '15.39%', leakageTo: '0.21%', leakageReduction: '98.6%',
+    small: [ { v: '0.96', k: 'PII / PHI micro-F1' }, { v: '0.98', k: 'Risk classifier ROC-AUC' } ]
+  },
+
   // ---- Reusable animated pipelines (nodes; t = optional tooltip; branch = parallel pair) ----
   pipelines: {
     'securedocai-doc': { title: 'Document Intelligence', accent: 'cyan', nodes: [
