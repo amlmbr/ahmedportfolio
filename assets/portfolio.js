@@ -294,90 +294,85 @@
   })();
 
   /* ============================================================
-     Ahmed AI — grounded assistant
-     Retrieval (client) + generation (Llama 3.2 via /api/chat, or curated KB)
+     Ahmed AI — profile-grounded assistant
+     Single source: window.AHMED_PROFILE (sections + faqs + chipGroups)
+     Client-side intent-aware retrieval  ->  Llama 3.2 (/api/chat) OR curated KB
+     Balanced across Ahmed's WHOLE profile — never SecureDocAI-only.
      ============================================================ */
   (function () {
-    // Knowledge base (mirror of data/portfolio-knowledge.json for zero-dependency client use)
-    var KB = [
-      { id: 'profile', kw: 'who about yourself ahmed profile presentation introduce tell me', text: 'Ahmed Moubarak Lahlyal is an AI Engineer with a strong Data Engineering foundation, focused on trustworthy AI, generative AI, knowledge graphs, agentic systems and industrial AI. He works across the full AI system — data, models, retrieval, agents, APIs, security, evaluation and deployment — and enjoys the intersection of research, engineering and real-world constraints.' },
-      { id: 'education', kw: 'education degree school university efrei ensa master studies graduate diploma', text: 'Engineering degree in Computer Science and Emerging Technologies from ENSA El Jadida (June 2026). Next: Advanced Master® in Data and Generative AI Engineering at EFREI Paris (2026–2027), on a 2 weeks company / 1 week school apprenticeship.' },
-      { id: 'apprenticeship', kw: 'apprenticeship alternance schedule rhythm availability contract work study', text: 'Ahmed is starting an Advanced Master® at EFREI Paris (2026–2027) on a work-study contract with a rhythm of 2 weeks in the company and 1 week at school — strong continuity on real engineering work with an academic anchor.' },
-      { id: 'experience', kw: 'experience journey career internship path work history', text: 'His experiences built the layers of an AI Engineer: 2024 OCP (industrial data analytics, SQL); 2025 AQUADVISER (Graph-RAG, Neo4j, LLMs); 2025 UM6P (multimodal AI research, EEG/IMU); 2026 LISTIC/USMB (Secure Document AI). Progression: Data → Machine Learning → Knowledge Systems → Generative AI → Trustworthy AI systems.' },
-      { id: 'securedocai', kw: 'securedocai secure document rbac governance listic leakage flagship trustworthy pii phi access control evaluate hallucination', text: 'SecureDocAI (LISTIC, USMB, Feb–Jul 2026) answers: how can an organization use LLMs over sensitive documents without giving every user access to everything? Two layers — Document Intelligence (OCR, extraction, canonical JSON, PII/PHI detection, vector index, knowledge graph) and Secure AI Governance (authenticated role, injection/jailbreak detection, policy filtering, authorized retrieval, context minimization, controlled LLM, output firewall, final validation). Evaluated on 500 documents / 6,000 scenarios: 97.8% RBAC compliance, 95% authorized utility, unauthorized leakage cut from 15.39% to 0.21% (98.6% relative reduction), PII/PHI micro-F1 0.96, risk classifier ROC-AUC 0.98. Insight: security without utility is not enough.' },
-      { id: 'contribution', kw: 'personally implement contribution did build role my part himself', text: 'On SecureDocAI Ahmed designed and implemented major parts as part of a research team: architecture design, the document-processing pipeline, RAG/Graph-RAG integration, security mechanisms (RBAC, prompt-injection filtering, sensitive-data protection), agent orchestration, FastAPI services, the evaluation protocol, experimental analysis, technical documentation and a contribution to the scientific manuscript.' },
-      { id: 'neurologiqueTwin', kw: 'neurologiquetwin neurologique twin eeg imu multimodal digital um6p innovboost signal deep learning', text: 'NeurologiqueTWIN (UM6P, 2025) is a multimodal AI / digital-twin project fusing EEG brain signals and IMU motion signals for neurological monitoring. Pipeline: synchronization, segmentation, feature extraction, deep-learning classification (PyTorch, CNN, attention). Result: ≈92% internal classification accuracy and 2nd Prize at Innov\'Boost 2025. Lesson: data synchronization and signal quality can matter as much as model architecture.' },
-      { id: 'graphRag', kw: 'graphrag graph rag aquadviser knowledge graph neo4j retrieval hybrid embeddings vector', text: 'At AQUADVISER (2025) Ahmed built a Graph-RAG assistant combining vector similarity and explicit graph relationships (Neo4j) with LLMs to answer business questions with sourced answers, exposed via FastAPI. Lesson: vector similarity and graph relationships solve different retrieval problems and complement each other.' },
-      { id: 'multiAgent', kw: 'multi agent agentic langgraph crewai sql data assistant kpi workflow orchestration why agents', text: 'The Intelligent Multi-Agent Data Assistant turns a natural-language business question into an auditable analysis through an explicit, controlled agent workflow (LangGraph, CrewAI): understanding → SQL generation → consistency check → controlled execution → KPI → visualization → synthesis. Lesson: prefer explicit, controlled agent workflows over uncontrolled autonomous conversations.' },
-      { id: 'gear5', kw: 'gear5 green ai distillation quantization int8 efficiency energy latency tinyllama distilgpt2', text: 'GEAR5 is a Green AI project reducing inference cost while keeping useful behavior: teacher-student knowledge distillation, adaptive gating and INT8 quantization, energy tracked via CodeCarbon (PyTorch, Hugging Face, TinyLLaMA, DistilGPT2). Lesson: the best model is not always the largest model.' },
-      { id: 'nlpMatching', kw: 'nlp cv job matching resume recruitment semantic sbert tfidf tf-idf embeddings ner similarity hiring recommendation recommend offers', text: 'NLP CV–Job Matching is an applied NLP project that matches CVs to job offers and recommends the most relevant offers for a given CV. It parses CVs and offers, extracts skills/entities (NER), scores with a hybrid of TF-IDF (lexical) and SBERT embeddings (semantic), then ranks by cosine similarity and returns the top recommended offers per CV. It reached about 95% matching precision. Lesson: combining TF-IDF and embeddings balances exact-term overlap with meaning, and extraction quality bounds the result.' },
-      { id: 'bigData', kw: 'big data streaming kafka spark hadoop etl elt nosql pipeline data engineering', text: 'Ahmed has hands-on Big Data and streaming experience — Kafka, Spark, streaming ingestion, NoSQL stores, ETL/ELT with Docker — the data foundation underneath the AI systems he builds.' },
-      { id: 'skills', kw: 'skills stack technologies tools tech frameworks languages programming used', text: 'Stack by layer — AI/ML: Python, PyTorch, TensorFlow, scikit-learn, XGBoost. Generative AI: LLMs, RAG, Graph-RAG, LangGraph, CrewAI, LangChain, Hugging Face, SBERT. Knowledge & Data: SQL, PostgreSQL, SQL Server, Neo4j, ChromaDB, MongoDB. Data Engineering: Kafka, Spark, Hadoop, HDFS, Hive, ETL/ELT. Engineering: FastAPI, REST APIs, Docker, Git, Linux, testing. BI: Power BI, DAX, Power Query. Tools are not the goal — architecture and measurable value are.' },
-      { id: 'mindset', kw: 'mindset approach think philosophy principles method strongest', text: 'Ten principles guide his engineering: problem before technology; baseline before complexity; measure before claiming; security by design; data quality matters; traceability matters; human oversight for critical decisions; build for maintainability; learn by testing; avoid unnecessary complexity. Two lines sum it up: "I don\'t use AI because it is fashionable — I use it when it provides measurable value" and "I see AI engineering as a complete system problem: data, models, software, security, evaluation and deployment."' },
-      { id: 'softskills', kw: 'soft skills how do you work behavior curiosity analytical rigor autonomy fast learning communication teamwork adaptability problem solving pragmatism personality', text: 'How Ahmed works (soft skills as behaviors): Curiosity — understands systems beyond the surface and explores alternatives. Analytical thinking — breaks problems into components with measurable objectives. Rigor — reproducible experiments, validation, testing, documentation. Autonomy — investigates, prototypes, and knows when to ask for expert feedback. Fast learning — picks up new frameworks and domains as needed. Communication — explains architectures to technical and non-technical audiences. Teamwork — values discussion, code review and feedback. Adaptability — has worked across data analytics, knowledge graphs, deep learning, generative AI and secure AI. Problem solving — understands the problem before choosing a technology. Engineering pragmatism — the simplest architecture that reliably works, adding complexity only for measurable value.' },
-      { id: 'thales', kw: 'thales fit critical systems aerospace defense reliability robustness learn explore', text: 'What attracts Ahmed to Thales is AI where performance alone is not enough — reliability, security, traceability and human control also matter. His verified experience in trustworthy generative AI, secure RAG, knowledge graphs, agents, data engineering, multimodal AI and experimental evaluation connects to the general challenges of reliable industrial AI. He wants to explore AI for critical systems, robustness, explainability, cybersecurity and deployment under strong constraints. He does not claim knowledge of any confidential Thales project.' },
-      { id: 'whyme', kw: 'why you why me strengths value bring add team', text: 'Ahmed brings an end-to-end AI perspective (data → models → APIs → security → deployment), a mix of research and engineering, direct trustworthy-AI experience from SecureDocAI, fast learning across domains, and the ability to explain technical systems. Curious enough to explore, rigorous enough to measure, pragmatic enough to simplify.' },
-      { id: 'languages', kw: 'language languages english french arabic speak', text: 'Languages: Arabic — native / bilingual; French — C1; English — C1.' },
-      { id: 'achievements', kw: 'achievement award prize distinction results recognition hackathon competition', text: '2nd Prize at the Innov\'Boost 2025 hackathon (The Startups Competition, Forum ENSAJ Entreprises, ENSA El Jadida) for NeurologiqueTWIN. SecureDocAI: 97.8% RBAC compliance and unauthorized leakage cut from 15.39% to 0.21% (98.6% relative reduction) across 6,000 scenarios. ≈92% classification accuracy on NeurologiqueTWIN.' },
-      { id: 'publication', kw: 'publication paper manuscript research scientific writing article listic', text: 'Research output: Ahmed contributed to a scientific manuscript for the SecureDocAI work at LISTIC (Université Savoie Mont Blanc) — including the experimental protocol, experimental analysis and technical writing. This is a manuscript contribution from a research internship, not a claim of an independently published paper.' }
-    ];
+    var P = window.AHMED_PROFILE || { sections: [], faqs: [], chipGroups: {} };
+    var SECTIONS = P.sections, FAQS = P.faqs;
 
-    // Curated answers for common interview questions (KB-mode responses).
-    var FAQS = [
-      { keys: 'tell me about ahmed yourself who introduce presentation', a: '**Ahmed Moubarak Lahlyal is an AI Engineer** with a strong Data Engineering foundation, focused on trustworthy AI, generative AI, knowledge graphs and agentic systems. He works across the whole AI system — data, models, retrieval, agents, APIs, security, evaluation and deployment. His experiences built these layers step by step, from industrial data at OCP to Secure Document AI at LISTIC. He enjoys working where research, engineering and real-world constraints meet.' },
-      { keys: 'explain securedocai secure document flagship', a: '**SecureDocAI** (LISTIC / USMB, 2026) tackles one problem: how can an organization use LLMs over sensitive documents **without giving every user access to everything?**\n\nIt has two layers:\n**1 · Document Intelligence** — OCR/parsing, extraction to canonical JSON, PII/PHI detection, vector index and a knowledge graph.\n**2 · Secure AI Governance** — authenticated role, prompt-injection detection, policy filtering, authorized retrieval, context minimization, a controlled LLM, an output firewall and final validation.\n\nOn **500 documents / 6,000 scenarios**: **97.8% RBAC compliance**, **95% authorized utility**, and unauthorized leakage cut from **15.39% to 0.21%** (98.6% relative reduction). Security without utility is not enough.' },
-      { keys: 'what did ahmed personally implement contribution build role', a: 'As part of a research team, Ahmed **designed and implemented major parts** of SecureDocAI: the architecture, the document-processing pipeline, RAG / Graph-RAG integration, security mechanisms (RBAC, prompt-injection filtering, sensitive-data protection), agent orchestration, FastAPI services, the evaluation protocol, experimental analysis, technical documentation and a contribution to the scientific manuscript.' },
-      { keys: 'evaluate evaluated securedocai metrics test scenarios how', a: 'SecureDocAI was evaluated end-to-end on **6,000 scenarios** over 500 documents — RBAC probes, prompt-injection attempts and PII/PHI checks. Headline metrics: **97.8% RBAC compliance**, **95% authorized utility**, unauthorized leakage **15.39% → 0.21%** (98.6% relative reduction), **PII/PHI micro-F1 0.96**, and **risk classifier ROC-AUC 0.98**.' },
-      { keys: 'why thales fit critical reliable', a: 'What attracts Ahmed to **Thales** is AI where **performance alone is not enough** — reliability, security, traceability and human control matter too. His verified experience in trustworthy generative AI, secure RAG, knowledge graphs, agents, data engineering, multimodal AI and rigorous evaluation connects directly to the general challenges of reliable industrial AI. He does not claim to know any confidential Thales project — he looks forward to the team explaining it.' },
-      { keys: 'rag experience retrieval', a: 'Ahmed has practical **RAG** experience across projects: secure RAG and Graph-RAG in **SecureDocAI**, and a hybrid Graph-RAG assistant at **AQUADVISER** combining embeddings, a Neo4j knowledge graph and LLMs (FastAPI). His view: vector similarity and graph relationships solve different retrieval problems and complement each other.' },
-      { keys: 'knowledge graph neo4j graphrag', a: 'Yes — **Knowledge Graphs** are a recurring theme. At **AQUADVISER** he built hybrid retrieval over a **Neo4j** knowledge graph; in **SecureDocAI** the document layer feeds both a vector index and a knowledge graph so retrieval can respect explicit relationships, not only similarity.' },
-      { keys: 'deep learning multimodal neurologiquetwin eeg', a: 'Yes. **NeurologiqueTWIN** (UM6P, 2025) is a multimodal deep-learning / digital-twin project fusing **EEG + IMU** signals for neurological monitoring — synchronization, segmentation, feature extraction and classification with PyTorch (CNN, attention) — reaching **≈92% internal accuracy** and **2nd Prize at Innov\'Boost 2025**.' },
-      { keys: 'langgraph crewai agents why', a: 'Ahmed uses **LangGraph and CrewAI** for **explicit, controlled agent workflows** rather than free-form autonomy. In his Multi-Agent Data Assistant a business question flows through understanding → SQL generation → consistency check → controlled execution → KPI → visualization → synthesis, so every step is auditable.' },
-      { keys: 'data engineering big data kafka spark streaming', a: 'Yes — Ahmed has a solid **Data Engineering** foundation: **Kafka, Spark, Hadoop/HDFS/Hive, ETL/ELT** and streaming into NoSQL stores, containerized with Docker. It is the data layer underneath his AI systems — models are only as reliable as the pipelines feeding them.' },
-      { keys: 'technologies used stack tools skills', a: 'By layer — **AI/ML:** Python, PyTorch, TensorFlow, scikit-learn, XGBoost. **Generative AI:** LLMs, RAG, Graph-RAG, LangGraph, CrewAI, LangChain, Hugging Face, SBERT. **Knowledge & Data:** SQL, PostgreSQL, SQL Server, Neo4j, ChromaDB, MongoDB. **Data Engineering:** Kafka, Spark, Hadoop, HDFS, Hive, ETL/ELT. **Engineering:** FastAPI, REST, Docker, Git, Linux, testing. **BI:** Power BI, DAX, Power Query.' },
-      { keys: 'strongest best projects', a: 'His strongest work: **SecureDocAI** (trustworthy generative AI, the flagship), **NeurologiqueTWIN** (multimodal deep learning, 2nd Prize Innov\'Boost 2025), and **Graph-RAG at AQUADVISER** (knowledge-graph retrieval). Together they show data, deep learning, knowledge systems, generative AI and security.' },
-      { keys: 'learn learning want thales grow', a: 'At Thales, Ahmed wants to explore **AI for critical systems** — robustness, reliability, explainability, cybersecurity, industrial validation, human-AI collaboration and deployment under strong constraints — and to understand how advanced AI research becomes a dependable capability.' },
-      { keys: 'apprenticeship schedule rhythm alternance availability', a: 'Ahmed\'s apprenticeship rhythm for the Advanced Master® at EFREI Paris (2026–2027) is **2 weeks in the company / 1 week at school** — strong continuity on real engineering work with a regular academic anchor.' },
-      { keys: 'bring team value add', a: 'Ahmed brings an **end-to-end AI perspective** (data → models → APIs → security → deployment), a blend of research and engineering, direct trustworthy-AI experience, fast learning across domains, and the ability to explain technical systems clearly through architecture, documentation and presentations.' },
-      { keys: 'hallucination reduce grounding', a: 'Ahmed reduces hallucinations by **grounding generation in retrieval** (RAG / Graph-RAG over authorized content), minimizing context, validating outputs (an output firewall / final validation in SecureDocAI), and evaluating end-to-end on adversarial scenarios rather than trusting a single demo.' },
-      { keys: 'soft skills how do you work behavior curiosity rigor autonomy teamwork adaptability pragmatism personality', a: 'Ahmed describes his soft skills as **behaviors**: **curiosity** (understanding systems beyond the surface), **analytical thinking** (breaking problems into measurable components), **rigor** (reproducible experiments, testing, documentation), **autonomy** (investigate and prototype, ask for feedback when needed), **fast learning**, **communication** (to technical and non-technical audiences), **teamwork** (discussion, code review, feedback), **adaptability** (across data analytics, KGs, deep learning, generative and secure AI) and **engineering pragmatism** — the simplest architecture that reliably solves the problem.' },
-      { keys: 'engineering mindset principles think approach philosophy', a: 'Ahmed\'s engineering mindset in ten principles: **problem before technology**, baseline before complexity, **measure before claiming**, **security by design**, data quality matters, **traceability matters**, human oversight for critical decisions, build for maintainability, learn by testing, and avoid unnecessary complexity. In short: *"I use AI when it provides measurable value"* and *"AI engineering is a complete system problem — data, models, software, security, evaluation and deployment."*' },
-      { keys: 'language languages english french arabic', a: 'Languages: **Arabic** — native / bilingual; **French** — C1; **English** — C1.' }
-    ];
+    var STOP = { the:1,a:1,an:1,of:1,to:1,and:1,is:1,are:1,in:1,on:1,for:1,with:1,what:1,how:1,why:1,do:1,does:1,did:1,his:1,he:1,she:1,they:1,ahmed:1,you:1,your:1,me:1,about:1,tell:1,can:1,has:1,have:1,i:1,at:1,it:1,that:1,this:1,any:1,some:1,more:1 };
+    function tokens(s) { return (String(s).toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (t) { return t.length > 1 && !STOP[t]; }); }
 
-    var STOP = { the: 1, a: 1, an: 1, of: 1, to: 1, and: 1, is: 1, are: 1, in: 1, on: 1, for: 1, with: 1, what: 1, how: 1, why: 1, do: 1, does: 1, did: 1, his: 1, he: 1, ahmed: 1, you: 1, your: 1, me: 1, about: 1, tell: 1, can: 1, has: 1, have: 1 };
-    function tokens(s) { return (s.toLowerCase().match(/[a-z0-9]+/g) || []).filter(function (t) { return t.length > 1 && !STOP[t]; }); }
+    var BROAD = /\b(who is ahmed|about ahmed|about yourself|overview|60[ -]?second|tell me about ahmed|introduce|profile in|summary of|makes ahmed different|who's ahmed)\b/i;
+    var FOLLOWUP = /\b(first one|second one|third|last one|the first|the second|that one|this one|more about|tell me more|and the|what about|those|these|it\b|its\b)\b/i;
 
-    function retrieve(q) {
-      var qt = tokens(q);
-      var scored = KB.map(function (s) {
-        var kws = s.kw.split(' '); var sc = 0;
-        qt.forEach(function (t) {
-          kws.forEach(function (k) { if (k === t) sc += 3; else if (k.indexOf(t) === 0 || t.indexOf(k) === 0) sc += 1; });
-          if (s.text.toLowerCase().indexOf(t) !== -1) sc += 1;
-        });
-        return { s: s, sc: sc };
-      }).sort(function (x, y) { return y.sc - x.sc; });
-      var top = scored.filter(function (x) { return x.sc > 0; }).slice(0, 3);
-      return { top: top, context: top.map(function (x) { return '[' + x.s.id + '] ' + x.s.text; }).join('\n\n') };
+    // conversation memory
+    var convo = [];            // {role, text}
+    var lastList = [];         // ordered section ids referenced by last answer
+    var lastTopicKw = '';      // keywords of last main topic (for pronoun follow-ups)
+
+    function scoreSection(qt, s) {
+      var kws = s.kw.split(' '), sc = 0;
+      qt.forEach(function (t) {
+        kws.forEach(function (k) { if (k === t) sc += 3; else if (k.indexOf(t) === 0 || t.indexOf(k) === 0) sc += 1; });
+        if (s.text.toLowerCase().indexOf(t) !== -1) sc += 1;
+      });
+      return sc;
     }
-    function bestFaq(q) {
-      var qt = tokens(q); var best = null, bestSc = 0;
+    function retrieve(query) {
+      var q = query;
+      // follow-up: keep prior topic in scope so pronouns resolve
+      if (FOLLOWUP.test(query) && (lastTopicKw || lastList.length)) q = query + ' ' + lastTopicKw;
+      var qt = tokens(q);
+      var scored = SECTIONS.map(function (s) { return { s: s, sc: scoreSection(qt, s) }; }).sort(function (a, b) { return b.sc - a.sc; });
+
+      if (BROAD.test(query)) {
+        // balanced overview — one from each key group, NOT SecureDocAI-heavy
+        var pick = ['identity', 'summary', 'education', 'exp-listic', 'exp-um6p', 'exp-aquadviser', 'exp-ocp', 'research-interests', 'pub-cityecoscout'];
+        var top = pick.map(function (id) { return SECTIONS.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
+        return { top: top, context: top.map(function (x) { return '[' + x.id + '] ' + x.text; }).join('\n\n') };
+      }
+      var top = scored.filter(function (x) { return x.sc > 0; }).slice(0, 4).map(function (x) { return x.s; });
+      if (top.length) lastTopicKw = top[0].kw.split(' ').slice(0, 6).join(' ');
+      return { top: top, context: top.map(function (x) { return '[' + x.id + '] ' + x.text; }).join('\n\n') };
+    }
+    function bestFaq(query) {
+      var q = query;
+      if (FOLLOWUP.test(query) && lastTopicKw) q = query + ' ' + lastTopicKw;
+      var qt = tokens(q), best = null, bestSc = 0;
       FAQS.forEach(function (f) {
-        var fk = f.keys.split(' '); var sc = 0;
+        var fk = f.keys.split(' '), sc = 0;
         qt.forEach(function (t) { fk.forEach(function (k) { if (k === t) sc += 3; else if (k.indexOf(t) === 0) sc += 1; }); });
         if (sc > bestSc) { bestSc = sc; best = f; }
       });
       return { f: best, sc: bestSc };
     }
-    function answerKB(q) {
-      var faq = bestFaq(q);
-      var r = retrieve(q);
-      if (faq.f && faq.sc >= 3) return faq.f.a;
-      if (r.top.length && r.top[0].sc >= 3) return r.top[0].s.text;
-      if (faq.f && faq.sc >= 2) return faq.f.a;
-      if (r.top.length && r.top[0].sc >= 2) return r.top[0].s.text;
-      return "I don't have verified information about that in Ahmed's portfolio. Try asking about SecureDocAI, his projects, his skills, his journey, or why he could fit an AI project at Thales.";
+    function setFollowState(query, faq, top) {
+      // remember an ordered list when the answer is list-like, for "the first one"
+      if (faq && faq.id === 'publications') lastList = ['pub-cityecoscout', 'manuscript-securedocai'];
+      else if (faq && faq.id === 'strongest') lastList = ['proj-securedocai', 'proj-neurologiquetwin', 'proj-graphrag', 'proj-multiagent', 'proj-gear5'];
+      if (top && top.length) lastTopicKw = top[0].kw.split(' ').slice(0, 6).join(' ');
+    }
+    function answerKB(query) {
+      // resolve "the first/second one" against the last list
+      if (FOLLOWUP.test(query) && lastList.length) {
+        var idx = /second|two|2nd/i.test(query) ? 1 : 0;
+        var refId = lastList[idx];
+        var sec = SECTIONS.filter(function (x) { return x.id === refId; })[0];
+        var fq = null;
+        if (refId === 'pub-cityecoscout') fq = FAQS.filter(function (f){return f.id==='cityecoscout';})[0];
+        if (fq) return fq.a;
+        if (sec) return sec.text;
+      }
+      var faq = bestFaq(query), r = retrieve(query);
+      if (faq.f && faq.sc >= 3) { setFollowState(query, faq.f, r.top); return faq.f.a; }
+      if (r.top.length && scoreSection(tokens(query), r.top[0]) >= 3) { setFollowState(query, null, r.top); return r.top[0].text; }
+      if (faq.f && faq.sc >= 2) { setFollowState(query, faq.f, r.top); return faq.f.a; }
+      if (r.top.length && r.top[0]) { setFollowState(query, null, r.top); return r.top[0].text; }
+      return "I don't have verified information about that in Ahmed's portfolio. Try asking about his research and publications, his projects (SecureDocAI, NeurologiqueTWIN, Graph-RAG…), his skills, his experience, or why he could fit an AI role at Thales.";
     }
 
     // ---- Mode probe ----
@@ -385,7 +380,7 @@
     var statusEl = $('#ai-status'), statusText = $('#ai-status-text'), pipeModel = $('#pipe-model');
     function setStatus() {
       if (mode === 'ollama') { statusEl.className = 'status live'; statusText.textContent = 'Llama 3.2 · Local'; if (pipeModel) pipeModel.textContent = 'Llama 3.2 · local'; }
-      else { statusEl.className = 'status kb'; statusText.textContent = 'Knowledge-base mode · Web'; if (pipeModel) pipeModel.textContent = 'Knowledge-base mode'; }
+      else { statusEl.className = 'status kb'; statusText.textContent = 'Profile-grounded · Web'; if (pipeModel) pipeModel.textContent = 'Profile knowledge base'; }
     }
     (function probe() {
       var ctrl = new AbortController(); var to = setTimeout(function () { ctrl.abort(); }, 2500);
@@ -396,7 +391,7 @@
 
     // ---- UI ----
     var log = $('#chat-log'), chipsBox = $('#chat-chips'), textEl = $('#chat-text'), sendBtn = $('#chat-send');
-    function escapeHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function fmt(s) { return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); }
     function addUser(t) { var d = document.createElement('div'); d.className = 'msg user'; d.textContent = t; log.appendChild(d); log.scrollTop = log.scrollHeight; }
     function addBot() { var d = document.createElement('div'); d.className = 'msg bot'; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
@@ -404,50 +399,65 @@
     function typeInto(el, text, srcLabel) {
       var html = fmt(text);
       if (reduced) { el.innerHTML = html + (srcLabel ? '<span class="src">' + srcLabel + '</span>' : ''); log.scrollTop = log.scrollHeight; return; }
-      // typewriter on plain text, then swap to formatted html
-      var plain = text; var i = 0; el.textContent = '';
+      var plain = text, i = 0; el.textContent = '';
       var iv = setInterval(function () {
-        i += 3; el.textContent = plain.slice(0, i); log.scrollTop = log.scrollHeight;
+        i += 4; el.textContent = plain.slice(0, i); log.scrollTop = log.scrollHeight;
         if (i >= plain.length) { clearInterval(iv); el.innerHTML = html + (srcLabel ? '<span class="src">' + srcLabel + '</span>' : ''); log.scrollTop = log.scrollHeight; }
-      }, 12);
+      }, 10);
     }
 
     var busy = false;
     function ask(q) {
       if (busy || !q.trim()) return; busy = true; sendBtn.disabled = true;
-      addUser(q);
+      addUser(q); convo.push({ role: 'user', text: q });
       runPipeline();
       var r = retrieve(q);
       var bubble = typingBubble();
       var minDelay = new Promise(function (res) { setTimeout(res, 420); });
       if (mode === 'ollama') {
         var ctrl = new AbortController(); var to = setTimeout(function () { ctrl.abort(); }, 30000);
+        var history = convo.slice(-7, -1).map(function (m) { return { role: m.role === 'user' ? 'user' : 'assistant', content: m.text }; });
         Promise.all([
-          fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, context: r.context }), signal: ctrl.signal })
+          fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, context: r.context, history: history }), signal: ctrl.signal })
             .then(function (res) { return res.ok ? res.json() : null; }).catch(function () { return null; }),
           minDelay
         ]).then(function (arr) {
           clearTimeout(to); var d = arr[0];
-          if (d && d.available && d.answer) { typeInto(bubble, d.answer, 'source: <b>Llama 3.2</b> · grounded in portfolio KB'); }
-          else { mode = 'knowledge-base'; setStatus(); typeInto(bubble, answerKB(q), 'source: <b>knowledge base</b> · retrieval'); }
+          if (d && d.available && d.answer) { typeInto(bubble, d.answer, 'source: <b>Llama 3.2</b> · profile-grounded'); convo.push({ role: 'assistant', text: d.answer }); setFollowState(q, bestFaq(q).f, r.top); }
+          else { mode = 'knowledge-base'; setStatus(); var a = answerKB(q); typeInto(bubble, a, 'source: <b>profile knowledge base</b>'); convo.push({ role: 'assistant', text: a }); }
           finish();
         });
       } else {
-        minDelay.then(function () { typeInto(bubble, answerKB(q), 'source: <b>knowledge base</b> · retrieval'); finish(); });
+        minDelay.then(function () { var a = answerKB(q); typeInto(bubble, a, 'source: <b>profile knowledge base</b>'); convo.push({ role: 'assistant', text: a }); finish(); });
       }
     }
     function finish() { busy = false; sendBtn.disabled = false; }
 
-    // suggested chips
-    var chips = ['Tell me about Ahmed', 'Explain SecureDocAI', 'What did Ahmed personally implement?', 'Why would Ahmed fit an AI project at Thales?', 'What is NeurologiqueTWIN?', 'What experience does he have with RAG?', 'Does he know Data Engineering?', 'What is his apprenticeship schedule?'];
-    chips.forEach(function (c) { var b = document.createElement('button'); b.className = 'qchip'; b.textContent = c; b.addEventListener('click', function () { ask(c); }); chipsBox.appendChild(b); });
+    // ---- categorized, rotating suggested questions ----
+    var groups = P.chipGroups || {}; var groupNames = Object.keys(groups); var activeCat = groupNames[0];
+    function renderChips() {
+      chipsBox.innerHTML = '';
+      var cats = document.createElement('div'); cats.className = 'chip-cats';
+      groupNames.forEach(function (g) {
+        var b = document.createElement('button'); b.className = 'chip-cat' + (g === activeCat ? ' active' : ''); b.textContent = g;
+        b.addEventListener('click', function () { activeCat = g; renderChips(); }); cats.appendChild(b);
+      });
+      chipsBox.appendChild(cats);
+      var row = document.createElement('div'); row.className = 'chip-qs';
+      (groups[activeCat] || []).forEach(function (c) {
+        var b = document.createElement('button'); b.className = 'qchip'; b.textContent = c;
+        b.addEventListener('click', function () { ask(c); }); row.appendChild(b);
+      });
+      chipsBox.appendChild(row);
+    }
+    renderChips();
 
     sendBtn.addEventListener('click', function () { var v = textEl.value; textEl.value = ''; ask(v); });
     textEl.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); var v = textEl.value; textEl.value = ''; ask(v); } });
     textEl.addEventListener('input', function () { textEl.style.height = '42px'; textEl.style.height = Math.min(textEl.scrollHeight, 110) + 'px'; });
 
-    $('#chat-clear').addEventListener('click', function () { log.innerHTML = ''; greet(); });
-    function greet() { var d = addBot(); d.innerHTML = fmt("Hi — I'm **Ahmed AI**, grounded in Ahmed's portfolio. Ask about SecureDocAI, his projects, skills, journey, or why he could fit an AI role at Thales. Pick a question below or type your own."); }
+    $('#chat-clear').addEventListener('click', function () { log.innerHTML = ''; convo = []; lastList = []; lastTopicKw = ''; greet(); });
+    function greet() { var d = addBot(); d.innerHTML = fmt("Hi — I'm **Ahmed AI**, grounded in Ahmed's **complete profile**: research & publications, projects, skills, experience and engineering approach. Ask me anything — pick a category below or type your own question."); }
     greet();
 
     // How it works + pipeline toggle
@@ -457,7 +467,7 @@
       pipeOn = true; pipeCard.style.display = ''; $('#toggle-pipeline').textContent = 'Hide AI pipeline';
       pipeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       var d = addBot();
-      d.innerHTML = fmt('**How it works:** Question → Portfolio Retrieval → Relevant Context → ' + (mode === 'ollama' ? 'Llama 3.2' : 'Knowledge-base answer') + ' → Grounded Answer. Retrieval runs in your browser over a local knowledge base; generation is ' + (mode === 'ollama' ? 'Llama 3.2 through a same-origin /api/chat route' : 'a curated knowledge-base response') + '. Answers never invent experience, metrics or confidential information.');
+      d.innerHTML = fmt('**How it works — profile-grounded AI:** Question → intent analysis → retrieve the relevant parts of Ahmed\'s structured profile → build a grounded prompt → ' + (mode === 'ollama' ? '**Llama 3.2**' : 'curated profile answer') + ' → answer. Retrieval runs in your browser over a single verified profile; generation is ' + (mode === 'ollama' ? 'Llama 3.2 via a same-origin /api/chat route (no fine-tuning — the profile can be updated without retraining)' : 'a curated profile response') + '. It never invents experience, metrics, publications or confidential information.');
       runPipeline();
     });
     function runPipeline() {
@@ -466,21 +476,17 @@
       var i = 0; (function n() { if (i < steps.length) { steps[i].classList.add('lit'); i++; setTimeout(n, 260); } })();
     }
 
-    // Ask Me talking points
+    // Ask Me talking points (presenter oral points)
     var talking = {
-      'Tell me about yourself': ['AI Engineer, strong data foundation → trustworthy & generative AI.', 'End-to-end: data → models → retrieval → agents → security → deployment.', 'Progression OCP → AQUADVISER → UM6P → LISTIC (SecureDocAI).', 'Research + engineering, drawn to real-world constraints.'],
-      'Why Thales?': ['AI where performance alone is not enough — reliability, security, traceability.', 'My work (secure RAG, KGs, agents, evaluation) maps to reliable industrial AI.', 'Want to explore critical systems, robustness, explainability.', 'No claim on the confidential project — eager to learn it.'],
-      'Why you?': ['End-to-end perspective, not just frameworks.', 'Direct trustworthy-AI experience (SecureDocAI).', 'Fast learner across industrial data, KGs, multimodal, genAI.', 'I can explain and document complex systems.'],
-      'Explain SecureDocAI': ['Problem: LLMs over sensitive docs without over-sharing.', 'Layer 1 document intelligence, Layer 2 secure governance.', '6,000 scenarios: 97.8% RBAC, leakage 15.39%→0.21%.', 'Security without utility is not enough — kept 95% utility.'],
-      'RAG vs Fine-tuning': ['RAG: grounding, traceability, easy updates, no retraining.', 'Fine-tuning: style/format, latency, when knowledge is stable.', 'For sensitive/traceable answers I default to RAG.', 'They combine — retrieve facts, tune behavior.'],
-      'RAG vs Graph-RAG': ['Vector RAG: semantic similarity over chunks.', 'Graph-RAG: explicit relationships, multi-hop reasoning.', 'They solve different problems — I combine them.', 'Used both at AQUADVISER and in SecureDocAI.'],
-      'Why agents?': ['Break a task into controlled, auditable steps.', 'I prefer explicit workflows over free-form autonomy.', 'LangGraph/CrewAI for orchestration + checks.', 'More critical → more validation and human oversight.'],
-      'LangGraph vs CrewAI': ['LangGraph: graph/state machine, explicit control & branching.', 'CrewAI: role-based collaborating agents, quick to compose.', 'I lean LangGraph when control and auditability matter.', 'Choice follows the constraint, not the hype.'],
+      'Tell me about yourself': ['AI & Data Engineer, research + engineering.', 'Data → models → retrieval → agents → security → deployment.', 'OCP → AQUADVISER → UM6P → LISTIC; published + manuscript in prep.', 'Drawn to trustworthy, real-world AI.'],
+      'Why Thales?': ['AI where performance alone is not enough — reliability, security, traceability.', 'My work (secure RAG, KGs, agents, evaluation) maps to industrial AI.', 'Want to explore critical systems, robustness, explainability.', 'No claim on the confidential project — eager to learn it.'],
+      'Why you?': ['End-to-end perspective, not just frameworks.', 'Research + engineering (a publication + a manuscript).', 'Direct trustworthy-AI experience (SecureDocAI).', 'Fast learner across domains; I explain systems clearly.'],
+      'My research & publications': ['Published: CityEcoScout (IJCEDS 2025), co-author.', 'In preparation: SecureDocAI manuscript (LISTIC).', 'Progression: knowledge rep → multimodal → trustworthy GenAI.', 'Interests: secure RAG, KGs, multimodal, evaluation.'],
+      'Explain SecureDocAI': ['Problem: LLMs over sensitive docs without over-sharing.', 'Layer 1 document intelligence, Layer 2 secure governance.', '6,000 scenarios: 97.8% RBAC, leakage 15.39%→0.21%.', 'Flagship — but one part of a broader profile.'],
+      'What I did outside LLMs': ['Multimodal deep learning (EEG/IMU, UM6P).', 'Computer vision (Swim Coach Vision).', 'Big Data & streaming (Kafka, Spark, Forex, e-commerce).', 'ML + BI (flight-delay prediction), industrial analytics (OCP).'],
       'How do you evaluate an LLM application?': ['Define measurable objectives + failure cases first.', 'Scenario suites (e.g. 6,000 for SecureDocAI).', 'Track utility AND safety (RBAC, leakage, PII F1).', 'Reproducible experiments, not a single demo.'],
-      'How do you reduce hallucinations?': ['Ground in retrieval over authorized content.', 'Minimize context; validate outputs (output firewall).', 'Constrain the task; prefer explicit steps.', 'Measure on adversarial scenarios.'],
-      'What is your biggest technical challenge?': ['Balancing security and utility in SecureDocAI.', 'Cutting leakage 15.39%→0.21% while keeping 95% utility.', 'Required careful retrieval, policy filtering, evaluation.', 'Taught me security must be designed in, not bolted on.'],
-      'Research or engineering?': ['Both — I define experiments and ship working systems.', 'Research rigor (metrics, manuscripts) + engineering (APIs, Docker).', 'Thales sits exactly at that intersection.', 'That mix is what I want to keep doing.'],
-      'What are your strengths?': ['End-to-end system thinking.', 'Trustworthy-AI and evaluation discipline.', 'Fast cross-domain learning.', 'Clear technical communication.'],
+      'How do you reduce hallucinations?': ['Ground in retrieval over authorized content.', 'Minimize context; validate outputs.', 'Constrain the task; explicit steps.', 'Measure on adversarial scenarios.'],
+      'Research or engineering?': ['Both — I define experiments and ship systems.', 'A publication + a manuscript, and working APIs/Docker.', 'Thales sits at that intersection.', 'That mix is what I want to keep doing.'],
       'What do you want to learn?': ['AI for critical / safety-relevant systems.', 'Robustness, reliability, explainability.', 'Industrial validation & deployment constraints.', 'Human-AI collaboration in the loop.']
     };
     var amCards = $('#askme-cards'), amAns = $('#askme-answer');
@@ -500,19 +506,22 @@
      ============================================================ */
   (function () {
     var STEPS = [
-      { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Profile' }, { id: 'journey', label: 'Journey' },
-      { id: 'securedocai', label: 'SecureDocAI' }, { id: 'projects', label: 'AI Projects' }, { id: 'mindset', label: 'Engineering Mindset' },
-      { id: 'thales', label: 'Why Thales' }, { id: 'assistant', label: 'AI Assistant' }, { id: 'contact', label: "Let's Talk" }
+      { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Who I Am' }, { id: 'journey', label: 'My Journey' },
+      { id: 'research', label: 'Research & Publications' }, { id: 'securedocai', label: 'SecureDocAI' }, { id: 'projects', label: 'Selected AI Systems' },
+      { id: 'stack', label: 'Technical Foundations' }, { id: 'mindset', label: 'Engineering Mindset' }, { id: 'thales', label: 'Why Thales' },
+      { id: 'assistant', label: 'Ahmed AI' }, { id: 'contact', label: "Let's Talk" }
     ];
     var HINTS = {
       intro: ['Open with the one-line: data → deployment, with security in mind.', 'Point at the chips: LLMs, RAG/Graph-RAG, KGs, Agentic, Secure AI.', 'Note: graduating 2026, EFREI Advanced Master, 2w/1w apprenticeship.'],
       profile: ['“Tell me about yourself” lands here.', 'Three pillars: AI Engineering, Data Foundations, Trustworthy Systems.', 'I understand complete systems, not just frameworks.'],
-      journey: ['Not many unrelated internships — a progression.', 'Each role added a layer: Data → ML → Knowledge → GenAI → Trustworthy.', 'LISTIC (SecureDocAI) is where it converges.'],
-      securedocai: ['Lead with the PROBLEM, not the tech.', 'Walk Layer 1 (document) then Layer 2 (security) — click the tabs.', 'Headline: 97.8% RBAC, leakage 15.39%→0.21%, 95% utility kept.', 'Open “My contribution” to show what I personally did.'],
-      projects: ['Click each tab; the visual animates live.', 'For each: Problem → Built → Core → Lesson.', 'Highlight NeurologiqueTWIN (2nd prize) and Graph-RAG.'],
-      mindset: ['This is the part that matters for critical systems.', 'Five principles; land on “security by design” and “human control”.', 'Quote: use LLMs/agents only where they bring measurable value.'],
+      journey: ['Not many unrelated internships — a progression.', 'Each role added a layer: Data → ML → Knowledge → GenAI → Trustworthy.', 'OCP → AQUADVISER → UM6P → LISTIC.'],
+      research: ['I have a real research profile, not only projects.', 'PUBLISHED: CityEcoScout (co-author, IJCEDS 2025).', 'IN PREPARATION: SecureDocAI manuscript (LISTIC, with Loukil & Verjus).', 'Progression: knowledge rep → multimodal → trustworthy GenAI.'],
+      securedocai: ['Lead with the PROBLEM, not the tech.', 'Walk Layer 1 (document) then Layer 2 (security) — click the tabs.', 'Headline: 97.8% RBAC, leakage 15.39%→0.21%, 95% utility kept.', 'This is my flagship — but one part of a broader profile.'],
+      projects: ['Click each tab; the visual animates live.', 'For each: Problem → Built → My contribution → Approach → Results → Takeaway.', 'Show breadth: multimodal, KGs, agents, Green AI, NLP, Big Data.'],
+      stack: ['Organized by architecture layer, not a logo wall.', 'AI/ML · GenAI · Document AI · Data Eng · Databases · MLOps · BI.', 'Point: tools are not the goal — architecture and value are.'],
+      mindset: ['This is the part that matters for critical systems.', 'Ten principles; land on “security by design” and “measure before claiming”.', 'Quote: use AI only where it brings measurable value.'],
       thales: ['Honest overlap, not flattery.', 'Left = what I built, Right = what I want to explore.', 'Ask them: “what problem would you want me on first?”', 'Then Why-me: five evidence-based points.'],
-      assistant: ['Turn the tool on myself: an AI candidate arrives with an assistant.', 'Toggle “Show AI pipeline” to explain retrieval → Llama → grounded.', 'It answers ONLY from the KB — never invents.', 'Locally it runs Llama 3.2; on the web, knowledge-base mode.'],
+      assistant: ['Turn the tool on myself: an AI candidate arrives with an assistant.', 'Toggle “Show AI pipeline” to explain retrieval → Llama → grounded.', 'It answers from my WHOLE profile — never invents.', 'Locally it runs Llama 3.2; on the web, profile-grounded mode.'],
       contact: ['Close on “AI that can be trusted”.', 'Give the apprenticeship rhythm again (2w/1w).', 'Ask the three prepared questions.', 'Thank them.']
     };
 

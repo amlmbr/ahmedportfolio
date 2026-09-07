@@ -304,6 +304,10 @@
   .msg.bot .src b { color:var(--cyan); }
   .chips-row { display:flex; gap:7px; flex-wrap:wrap; padding:0 16px 10px; }
   .qchip { font-size:.76rem; padding:6px 11px; border-radius:999px; border:1px solid var(--line2); background:var(--panel); color:var(--muted); cursor:pointer; font-family:inherit; }
+  .chip-cats { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .chip-cat { font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; padding:4px 9px; border-radius:7px; border:1px solid var(--line); background:transparent; color:var(--faint); cursor:pointer; }
+  .chip-cat.active { color:var(--cyan); border-color:var(--cyan-deep); background:rgba(14,111,151,.14); }
+  .chip-qs { display:flex; gap:7px; flex-wrap:wrap; }
   .qchip:hover { color:var(--cyan); border-color:var(--cyan-deep); }
   .chat-input { display:flex; gap:8px; padding:12px 14px; border-top:1px solid var(--line); background:var(--panel); }
   .chat-input textarea { flex:1; resize:none; height:42px; max-height:110px; padding:10px 12px; border-radius:10px; border:1px solid var(--line2); background:var(--panel3); color:var(--ink); font-family:inherit; font-size:.9rem; }
@@ -434,9 +438,10 @@
     </span>
     <div class="nav-links">
       <a class="navlink" href="#profile">Profile</a>
-      <a class="navlink" href="#journey">Journey</a>
-      <a class="navlink" href="#securedocai">SecureDocAI</a>
+      <a class="navlink" href="#journey">Experience</a>
+      <a class="navlink" href="#research">Research</a>
       <a class="navlink" href="#projects">Projects</a>
+      <a class="navlink" href="#stack">Skills</a>
       <a class="navlink" href="#thales">Why Thales</a>
       <a class="navlink" href="#assistant">Ahmed AI</a>
     </div>
@@ -528,10 +533,69 @@
   </div>
 </section>
 
-<!-- ============ 04 · SECUREDOCAI ============ -->
+<!-- ============ 04 · RESEARCH & PUBLICATIONS ============ -->
+<section class="step" id="research" data-step="Research">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="idx">04</span> · Research &amp; Publications</span>
+    <h2 class="sec-title reveal">A <em>research</em> profile, not only projects</h2>
+    <p class="sec-sub reveal">One peer-reviewed publication, one manuscript in preparation, and a clear research direction — from knowledge representation to trustworthy generative AI.</p>
+
+    <div class="grid2" style="align-items:stretch">
+      <!-- PUBLISHED -->
+      <div class="card reveal d1" style="border-left:3px solid var(--green)">
+        <div class="flag-badge" style="color:var(--green)"><span class="idx" style="color:var(--faint)">◆</span> PUBLISHED · PEER-REVIEWED</div>
+        <h3 style="margin:10px 0 4px;font-size:1.2rem">CityEcoScout</h3>
+        <p style="color:var(--cyan);font-weight:600;margin:0 0 8px;font-size:.95rem">A Platform for Exploring Sustainable Locations Worldwide</p>
+        <p style="color:var(--muted);font-size:.9rem;margin:0 0 10px">Co-authored an AI-enabled platform for exploring sustainable urban locations, combining geographic services (Google Maps, Street View, Places APIs), environmental analytics and generative AI (Gemini).</p>
+        <div class="stack-line" style="font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-bottom:6px">IJCEDS · Vol. 4, Issue 1 · 2025 · pp. 41–54</div>
+        <div class="stack-line" style="font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-bottom:12px">Benhirt · Fihri · <b style="color:var(--ink)">Lahlyal (co-author)</b> · Errattahi</div>
+        <div class="chips" style="margin-bottom:14px">
+          <span class="chip-static">Sustainable AI</span><span class="chip-static">Geospatial Data</span><span class="chip-static">Generative AI</span><span class="chip-static">Smart Cities</span><span class="chip-static">Environmental Analytics</span>
+        </div>
+        <a class="btn ghost" style="font-size:.82rem;padding:9px 16px" href="https://www.ijceds.com/ijceds/article/view/81" target="_blank" rel="noopener">Read Publication ↗</a>
+      </div>
+
+      <!-- IN PREPARATION -->
+      <div class="card reveal d2" style="border-left:3px solid var(--amber)">
+        <div class="flag-badge"><span class="idx" style="color:var(--faint)">◆</span> MANUSCRIPT IN PREPARATION</div>
+        <h3 style="margin:10px 0 4px;font-size:1.2rem">SecureDocAI</h3>
+        <p style="color:var(--cyan);font-weight:600;margin:0 0 8px;font-size:.95rem">Trustworthy Document AI &amp; Secure LLM-Based Information Access</p>
+        <p style="color:var(--muted);font-size:.9rem;margin:0 0 10px">Research on secure document intelligence and controlled LLM-based access for sensitive multi-domain documents — Document AI, RAG, Knowledge Graphs, role-aware retrieval, adversarial filtering and output governance.</p>
+        <div class="stack-line" style="font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-bottom:6px">LISTIC · Université Savoie Mont Blanc / Polytech Annecy-Chambéry</div>
+        <div class="stack-line" style="font-family:var(--mono);font-size:.72rem;color:var(--faint);margin-bottom:12px">Faiza Loukil · Hervé Verjus · <b style="color:var(--ink)">Ahmed Moubarak Lahlyal</b></div>
+        <div class="chips">
+          <span class="chip-static hl">Trustworthy AI</span><span class="chip-static">Document AI</span><span class="chip-static">LLMs</span><span class="chip-static">RAG / Graph-RAG</span><span class="chip-static">Knowledge Graphs</span><span class="chip-static">AI Security</span><span class="chip-static">Prompt-Injection Defense</span><span class="chip-static">Access Control</span><span class="chip-static">Agentic AI</span>
+        </div>
+        <div class="stack-line" style="font-family:var(--mono);font-size:.7rem;color:var(--faint);margin-top:10px">Verified results — 6,000 scenarios · 97.8% RBAC · leakage 15.39% → 0.21% · 95% utility · 0.96 PII/PHI F1 · 0.98 ROC-AUC</div>
+      </div>
+    </div>
+
+    <!-- Research progression -->
+    <div class="ladder reveal d2" style="margin-top:22px">
+      <h4>Research progression</h4>
+      <div class="grid3" style="gap:12px">
+        <div class="rung" style="flex-direction:column;align-items:flex-start;gap:3px"><span class="n">AQUADVISER</span><span style="font-weight:600">Knowledge Representation</span><span style="color:var(--muted);font-size:.78rem">Graph-RAG + Knowledge Graphs</span></div>
+        <div class="rung" style="flex-direction:column;align-items:flex-start;gap:3px"><span class="n">UM6P</span><span style="font-weight:600">Multimodal Intelligence</span><span style="color:var(--muted);font-size:.78rem">EEG + IMU + Deep Learning</span></div>
+        <div class="rung top" style="flex-direction:column;align-items:flex-start;gap:3px"><span class="n">LISTIC</span><span style="font-weight:600">Trustworthy Generative AI</span><span style="color:var(--amber);font-size:.78rem">SecureDocAI · RAG · Agents · Security</span></div>
+      </div>
+      <p style="color:var(--muted);font-size:.92rem;margin:14px 0 0">Across these experiences, my work progressively moved from knowledge representation and multimodal learning toward <b style="color:var(--cyan)">trustworthy generative AI systems</b>.</p>
+    </div>
+
+    <!-- Research interests -->
+    <div class="reveal d3" style="margin-top:22px">
+      <h4 style="font-family:var(--mono);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 12px">Research interests</h4>
+      <div class="chips">
+        <span class="chip-static hl">Trustworthy Generative AI</span><span class="chip-static hl">Secure RAG</span><span class="chip-static hl">Agentic AI</span><span class="chip-static hl">Knowledge Graphs</span><span class="chip-static">Multimodal Learning</span><span class="chip-static">Predictive Modeling</span><span class="chip-static">Document Intelligence</span><span class="chip-static">Digital Twins</span><span class="chip-static">Industrial AI</span><span class="chip-static hl">AI Security</span><span class="chip-static">Human-in-the-Loop AI</span><span class="chip-static">Model Evaluation</span>
+      </div>
+      <p style="color:var(--muted);font-size:.92rem;margin:14px 0 0;max-width:70ch">My research interests focus on AI systems that combine strong predictive or generative capabilities with <b style="color:var(--cyan)">security, traceability, evaluation and real-world engineering constraints</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · SECUREDOCAI ============ -->
 <section class="step flagship" id="securedocai" data-step="SecureDocAI">
   <div class="wrap">
-    <span class="flag-badge reveal"><span class="idx" style="color:var(--faint)">04</span> ◆ FLAGSHIP PROJECT</span>
+    <span class="flag-badge reveal"><span class="idx" style="color:var(--faint)">05</span> ◆ FLAGSHIP PROJECT · MANUSCRIPT IN PREPARATION</span>
     <h2 class="flag-title reveal">SecureDocAI</h2>
     <p class="flag-sub reveal">From Document Intelligence to Trustworthy Generative AI</p>
     <div class="problem-box reveal d1">
@@ -605,7 +669,7 @@
 <!-- ============ 05 · SELECTED AI SYSTEMS ============ -->
 <section class="step" id="projects" data-step="AI Projects">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">05</span> · Selected AI Systems</span>
+    <span class="eyebrow reveal"><span class="idx">06</span> · Selected AI Systems</span>
     <h2 class="sec-title reveal">Systems, not <em>slides</em></h2>
     <p class="sec-sub reveal">Each project is framed the same way — Problem, What I built, My contribution, Technical approach, Results, Takeaway — with a live visualization of how it actually works.</p>
     <div class="show">
@@ -705,7 +769,7 @@
 <!-- ============ 06 · ENGINEERING MINDSET ============ -->
 <section class="step" id="mindset" data-step="Engineering Mindset">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">06</span> · Engineering Mindset</span>
+    <span class="eyebrow reveal"><span class="idx">08</span> · Engineering Mindset</span>
     <h2 class="sec-title reveal">How I think as an <em>AI Engineer</em></h2>
     <p class="sec-sub reveal">The part that matters most for critical systems: not which framework, but how decisions are made.</p>
     <div class="principles">
@@ -728,7 +792,7 @@
 <!-- ============ 07 · WHY THALES + WHY ME ============ -->
 <section class="step" id="thales" data-step="Why Thales">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">07</span> · Why Thales</span>
+    <span class="eyebrow reveal"><span class="idx">09</span> · Why Thales</span>
     <h2 class="sec-title reveal">Where my work <em>points</em></h2>
     <p class="sec-sub reveal">Not corporate flattery — an honest overlap between what I have been building and what I want to explore next.</p>
     <div class="venn reveal d1">
@@ -773,9 +837,9 @@
 <!-- ============ 08 · AI ASSISTANT ============ -->
 <section class="step" id="assistant" data-step="AI Assistant">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">08</span> · AI Assistant</span>
+    <span class="eyebrow reveal"><span class="idx">10</span> · AI Assistant</span>
     <h2 class="sec-title reveal">Ask <em>Ahmed's AI</em></h2>
-    <p class="sec-sub reveal">An AI assistant grounded in my projects, experience and technical work. Retrieval over a local knowledge base, generation by Llama&nbsp;3.2 when running locally — a curated knowledge-base mode on the web.</p>
+    <p class="sec-sub reveal"><b style="color:var(--cyan)">Profile-grounded AI</b> — an assistant grounded in my <b>complete profile</b>: research &amp; publications, projects, skills, experience and engineering approach. Intent-aware retrieval over one verified profile, answered by Llama&nbsp;3.2 when running locally, or a curated profile mode on the web. It never redirects everything to one project.</p>
     <div class="assistant-grid">
       <div class="chat-panel reveal d1">
         <div class="chat-head">
@@ -819,9 +883,9 @@
 </section>
 
 <!-- ===== Tech stack (regular section) ===== -->
-<section class="step" id="stack" data-step="Stack" style="min-height:auto">
+<section class="step" id="stack" data-step="Technical Foundations" style="min-height:auto">
   <div class="wrap">
-    <span class="eyebrow reveal">Technical stack</span>
+    <span class="eyebrow reveal"><span class="idx">07</span> · Technical Foundations</span>
     <h2 class="sec-title reveal">Organized by <em>architecture layer</em></h2>
     <p class="sec-sub reveal">Not a logo wall. Tools are not the goal — architecture and measurable value are.</p>
     <div class="stack-grid">
@@ -876,6 +940,12 @@
       <div class="edu-card reveal d1"><div class="d">2026</div><h4>Engineering Degree — Computer Science &amp; Emerging Technologies</h4><p>ENSA El Jadida. Obtained June 2026.</p></div>
       <div class="edu-card reveal d2"><div class="d">2026 → 2027</div><h4>Advanced Master® — Data &amp; Generative AI Engineering</h4><p>EFREI Paris. Apprenticeship: 2 weeks company / 1 week school.</p></div>
     </div>
+    <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:22px 0 10px">Technical activities</h4>
+    <div class="lang-row reveal d2" style="margin-top:0">
+      <span class="lang"><b>🏆 Innov'Boost 2025</b> — 2nd Prize · NeurologiqueTWIN</span>
+      <span class="lang"><b>Open Data Hackathon 2025</b> — Digital Health · Santeo</span>
+      <span class="lang"><b>Pwned Hackathon</b> — Cybersecurity &amp; AI</span>
+    </div>
     <div class="lang-row reveal d2">
       <span class="lang"><b>Arabic</b> — native / bilingual</span>
       <span class="lang"><b>French</b> — C1</span>
@@ -887,7 +957,7 @@
 <!-- ============ 09 · LET'S TALK ============ -->
 <section class="step closing" id="contact" data-step="Let's Talk">
   <div class="wrap">
-    <span class="eyebrow reveal" style="margin-left:auto;margin-right:auto"><span class="idx">09</span> · Let's Talk</span>
+    <span class="eyebrow reveal" style="margin-left:auto;margin-right:auto"><span class="idx">11</span> · Let's Talk</span>
     <h2 class="reveal">Let's build AI that can be <em>trusted</em>.</h2>
     <p class="who reveal d1"><b>Ahmed Moubarak Lahlyal</b> · AI &amp; Data Engineer</p>
     <p class="who reveal d1">Advanced Master® — Data &amp; Generative AI Engineering · EFREI Paris</p>
@@ -925,6 +995,7 @@
   <ul id="ph-list"></ul>
 </div>
 
+<script src="assets/ahmed-profile.js" defer></script>
 <script src="assets/portfolio.js" defer></script>
 </body>
 </html>

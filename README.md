@@ -15,12 +15,12 @@ A premium, interactive single-page portfolio that doubles as a **screen-share in
 | `assets/portfolio.js` | All behavior: animations, presentation mode, the Ahmed AI assistant (retrieval + generation). |
 | `assets/portrait.jpg` | Hero portrait. |
 | `photos/` | Innov'Boost 2025 photos. |
-| `data/portfolio-knowledge.json` | **Canonical knowledge base** — grounds the assistant. |
+| `assets/ahmed-profile.js` | **Single source of truth** — Ahmed's complete structured profile (`window.AHMED_PROFILE`): sections, curated answers and grouped suggested questions. Grounds the assistant. |
 | `api/chat.js` | Vercel serverless function: same-origin `/api/chat` → Ollama (with honest fallback). |
 | `server/dev-server.mjs` | Zero-dependency local server (static + `/api/chat` proxy to Ollama). |
 | `.env.example` | `OLLAMA_BASE_URL`, `OLLAMA_MODEL`. |
 
-> The knowledge base is mirrored inline in `assets/portfolio.js` so the browser can answer with **zero dependencies**; `data/portfolio-knowledge.json` is the canonical copy used by the server route to ground Llama. Keep the two in sync when editing facts.
+> The assistant is **profile-grounded**: `assets/ahmed-profile.js` is the single canonical profile. The browser loads it as a global, runs intent-aware retrieval over Ahmed's whole profile, and sends the relevant sections to `/api/chat` (Llama 3.2) — or answers from curated profile answers on the web. Editing one file updates both the site's chatbot and the model context. It is deliberately **not** SecureDocAI-only.
 
 ---
 
@@ -94,7 +94,7 @@ Static site + one serverless function — no framework, no build.
 
 ## Data accuracy
 
-All metrics and facts are verified and centralized in `data/portfolio-knowledge.json`. Notable figures (SecureDocAI): 500 documents, 6,000 scenarios, 97.8% RBAC compliance, 95% authorized utility, unauthorized leakage 15.39% → 0.21% (98.6% relative reduction), PII/PHI micro-F1 0.96, risk classifier ROC-AUC 0.98. NeurologiqueTWIN: ≈92% internal accuracy, 2nd Prize Innov'Boost 2025.
+All metrics and facts are verified and centralized in `assets/ahmed-profile.js`. Notable figures (SecureDocAI): 500 documents, 6,000 scenarios, 97.8% RBAC compliance, 95% authorized utility, unauthorized leakage 15.39% → 0.21% (98.6% relative reduction), PII/PHI micro-F1 0.96, risk classifier ROC-AUC 0.98. NeurologiqueTWIN: ≈92% internal accuracy, 2nd Prize Innov'Boost 2025. Publication: CityEcoScout (IJCEDS, Vol. 4 Issue 1, 2025, pp. 41–54, co-author). SecureDocAI manuscript: **in preparation** (LISTIC, with Faiza Loukil and Hervé Verjus).
 
 ---
 

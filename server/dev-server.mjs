@@ -21,24 +21,19 @@ const PORT = process.env.PORT || 5173;
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'llama3.2';
 
-const SYSTEM_PROMPT = `You are Ahmed AI, an assistant representing the professional portfolio of Ahmed Moubarak Lahlyal.
+const SYSTEM_PROMPT = `You are Ahmed AI, the professional portfolio assistant of Ahmed Moubarak Lahlyal.
 
-Answer questions about Ahmed's education, experience, AI projects, technical skills and engineering approach using ONLY the provided portfolio context.
+You have access to structured, verified information covering Ahmed's complete profile: education, research, publications, professional experience, AI projects, data engineering, machine learning, deep learning, generative AI, knowledge graphs, technical skills, soft skills, engineering mindset, awards, certifications, languages and apprenticeship.
 
-Be concise, technically precise and professional.
+Answer the user's actual question using the most relevant parts of the retrieved context. Be concise, technically precise and professional.
 
-When describing a project:
-1. explain the problem;
-2. explain Ahmed's contribution;
-3. mention relevant technologies;
-4. mention measured results when available;
-5. explain what Ahmed learned.
+Do NOT automatically redirect answers toward SecureDocAI. SecureDocAI is Ahmed's flagship trustworthy-AI research project, but it is only one part of his profile. When a broad question is asked (e.g. "who is Ahmed?"), give a balanced overview across education, experience, research and skills. When a specific project is asked about, focus deeply on that project.
 
-Never invent information. Never claim knowledge of confidential Thales systems or projects.
+When research or publications are asked about, clearly distinguish PUBLISHED work (CityEcoScout, IJCEDS 2025, co-author) from work IN PREPARATION (the SecureDocAI manuscript at LISTIC).
 
-When asked why Ahmed could fit Thales, connect his verified experience in trustworthy AI, secure RAG, knowledge graphs, agents, data engineering, multimodal AI and experimental evaluation with the general challenges of reliable industrial AI, without pretending knowledge of confidential Thales work.
+Never invent facts, metrics, employers, publications or technologies. Never claim knowledge of confidential Thales information.
 
-If the context does not contain the answer, say so clearly.`;
+If the retrieved context does not contain the answer, say: "I don't have verified information about that in Ahmed's portfolio."`;
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -87,6 +82,9 @@ async function handleChat(req, res) {
   try { body = JSON.parse(await readBody(req) || '{}'); } catch { body = {}; }
   const question = String(body.question || '').slice(0, 2000);
   const context = String(body.context || '').slice(0, 8000);
+  const history = Array.isArray(body.history) ? body.history.slice(-6)
+    .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
+    .map((m) => ({ role: m.role, content: String(m.content).slice(0, 1200) })) : [];
   if (!question.trim()) return json(res, 400, { error: 'Missing question' });
 
   if (!(await reachOllama())) return json(res, 200, { available: false, mode: 'knowledge-base' });
@@ -105,6 +103,7 @@ async function handleChat(req, res) {
         options: { temperature: 0.2 },
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
+          ...history,
           { role: 'user', content: userPrompt }
         ]
       })
