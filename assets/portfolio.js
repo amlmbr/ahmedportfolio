@@ -242,7 +242,7 @@
     function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
     function render(key) {
       var p = projects[key]; if (!p) return;
-      stageTitle.textContent = p.file;
+      stageTitle.textContent = p.title;
       info.innerHTML =
         '<span class="type">' + esc(p.type) + (p.org ? '  ·  ' + esc(p.org) : '') + '</span>' +
         '<h3>' + esc(p.title) + '</h3>' +
