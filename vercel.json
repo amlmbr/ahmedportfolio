@@ -7,7 +7,7 @@
     }
   },
   "rewrites": [
-    { "source": "/presentation", "destination": "/index.html" }
+    { "source": "/presentation", "destination": "/" }
   ],
   "headers": [
     {
