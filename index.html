@@ -597,7 +597,84 @@
     <span class="eyebrow reveal"><span class="idx">04</span> · Professional &amp; R&amp;D Experience</span>
     <h2 class="sec-title reveal">Where I worked, and <em>what I built</em></h2>
     <p class="sec-sub reveal">Four experiences with exact dates — the project, the problem, my contribution, the stack and the result. Each links to the full project.</p>
-    <div id="xp-timeline"><!-- rendered from AHMED_PROFILE.experiences --></div>
+    <div id="xp-timeline">
+      <div class="xp-item now">
+        <div class="xp-rail"><span class="xp-dot"></span>
+          <div class="xp-dates">Feb 2026 → Jul 2026</div>
+          <div class="xp-org">LISTIC Laboratory</div>
+          <div class="xp-sub">Université Savoie Mont Blanc / Polytech Annecy-Chambéry</div><div class="xp-loc">Annecy, France</div>
+        </div>
+        <div class="xp-body">
+          <div class="xp-role">Final-Year R&amp;D Internship — Secure Document AI, LLMs &amp; Agentic Security</div>
+          <div class="xp-proj">SecureDocAI</div>
+          <p class="xp-problem">How can an organization use LLMs over sensitive documents without giving every user access to everything?</p>
+          <div class="xp-grid">
+            <div><h5>What I worked on</h5><ul class="xp-worked"><li>Document ingestion &amp; OCR / native PDF parsing</li><li>Information extraction → canonical JSON</li><li>PII / PHI detection &amp; protected storage</li><li>Vector index + Knowledge Graph, RAG / Graph-RAG</li><li>Agent orchestration, RBAC, prompt-injection &amp; jailbreak filtering</li><li>Secure retrieval, output validation, risk classification</li><li>FastAPI services, Docker, evaluation &amp; scientific writing</li></ul></div>
+            <div><h5>My contribution</h5><p class="xp-contrib">I designed and implemented major parts of the end-to-end system as part of the LISTIC research team — from document processing and knowledge retrieval to security mechanisms, LLM orchestration and experimental evaluation.</p><h5 style="margin-top:12px">Technologies</h5><div class="xp-tech"><span>Python</span><span>FastAPI</span><span>LangGraph</span><span>CrewAI</span><span>LangChain</span><span>RAG</span><span>Graph-RAG</span><span>Neo4j</span><span>ChromaDB</span><span>Presidio</span><span>SBERT</span><span>XGBoost</span><span>OCR</span><span>Docker</span></div></div>
+          </div>
+          <div class="xp-result">500 documents · 6,000 scenarios · 97.8% RBAC compliance · 95% authorized utility · leakage 15.39% → 0.21% · PII/PHI micro-F1 0.96 · ROC-AUC 0.98.</div>
+          <p class="xp-take"><b>Takeaway —</b> For sensitive AI, access control, provenance and output validation cannot be afterthoughts.</p>
+          <a class="btn ghost" style="font-size:.82rem;padding:8px 16px" href="#securedocai">Explore SecureDocAI →</a>
+        </div>
+      </div>
+      <div class="xp-item">
+        <div class="xp-rail"><span class="xp-dot"></span>
+          <div class="xp-dates">Jul 2025 → Oct 2025</div>
+          <div class="xp-org">Mohammed VI Polytechnic University (UM6P)</div>
+          <div class="xp-sub">Smart Data Analysis Systems Research Group</div><div class="xp-loc">Morocco</div>
+        </div>
+        <div class="xp-body">
+          <div class="xp-role">Research Internship — Multimodal AI &amp; Biomedical Time Series</div>
+          <div class="xp-proj">NeurologiqueTWIN</div>
+          <p class="xp-problem">How can heterogeneous EEG and IMU signals be combined to support neurological monitoring and early-event prediction?</p>
+          <div class="xp-grid">
+            <div><h5>What I worked on</h5><ul class="xp-worked"><li>EEG &amp; IMU signal cleaning and synchronization</li><li>Segmentation / windowing &amp; time-series representation</li><li>Feature extraction</li><li>Deep learning: CNN architectures + attention</li><li>Multimodal learning</li><li>Real-time monitoring &amp; risk indicators</li><li>Digital-twin visualization</li></ul></div>
+            <div><h5>My contribution</h5><p class="xp-contrib">Designed and implemented the experimental pipeline for preprocessing, synchronizing and modelling multimodal EEG/IMU signals, and developed the deep-learning and visualization components for neurological monitoring.</p><h5 style="margin-top:12px">Technologies</h5><div class="xp-tech"><span>Python</span><span>PyTorch</span><span>TensorFlow</span><span>scikit-learn</span><span>Pandas</span><span>NumPy</span><span>CNN</span><span>Attention</span><span>EEG</span><span>IMU</span><span>Streamlit</span></div></div>
+          </div>
+          <div class="xp-result">≈92% internal classification accuracy · 6–10 pp improvement in pre-crisis recall · 2nd Prize Innov'Boost 2025.</div>
+          <p class="xp-take"><b>Takeaway —</b> In multimodal AI, synchronization and signal quality can matter as much as model architecture.</p>
+          <a class="btn ghost" style="font-size:.82rem;padding:8px 16px" href="#projects">Explore NeurologiqueTWIN →</a>
+        </div>
+      </div>
+      <div class="xp-item">
+        <div class="xp-rail"><span class="xp-dot"></span>
+          <div class="xp-dates">May 2025 → Jul 2025</div>
+          <div class="xp-org">AQUADVISER</div>
+          <div class="xp-sub">Data Science Internship</div>
+        </div>
+        <div class="xp-body">
+          <div class="xp-role">Data Science Internship — Graph-RAG &amp; Knowledge Graphs</div>
+          <div class="xp-proj">Graph-RAG Decision Support</div>
+          <p class="xp-problem">How can business information be retrieved using both semantic similarity and the explicit relationships between entities?</p>
+          <div class="xp-grid">
+            <div><h5>What I worked on</h5><ul class="xp-worked"><li>Data ingestion &amp; cleaning</li><li>Entity &amp; relationship modelling</li><li>Neo4j knowledge graph construction</li><li>Vector embeddings &amp; semantic search</li><li>Graph traversal &amp; hybrid retrieval</li><li>LLM integration (RAG / Graph-RAG)</li><li>FastAPI, provenance &amp; traceability, architecture documentation</li></ul></div>
+            <div><h5>My contribution</h5><p class="xp-contrib">Developed a Graph-RAG architecture combining semantic vector retrieval with knowledge-graph relationships to produce more contextual and traceable decision-support responses.</p><h5 style="margin-top:12px">Technologies</h5><div class="xp-tech"><span>Python</span><span>FastAPI</span><span>Neo4j</span><span>Embeddings</span><span>Vector Search</span><span>SQL</span><span>LLMs</span><span>RAG</span><span>Graph-RAG</span></div></div>
+          </div>
+          <div class="xp-result">Grounded, source-attributed answers that use both similarity and explicit relationships.</div>
+          <p class="xp-take"><b>Takeaway —</b> Vector similarity and explicit graph relationships solve different retrieval problems and can complement each other.</p>
+          <a class="btn ghost" style="font-size:.82rem;padding:8px 16px" href="#projects">Explore Graph-RAG Decision Support →</a>
+        </div>
+      </div>
+      <div class="xp-item">
+        <div class="xp-rail"><span class="xp-dot"></span>
+          <div class="xp-dates">Jul 2024 → Aug 2024</div>
+          <div class="xp-org">OCP Group</div>
+          <div class="xp-sub">Software Development &amp; Data Analytics Internship</div><div class="xp-loc">Morocco</div>
+        </div>
+        <div class="xp-body">
+          <div class="xp-role">Software Development &amp; Data Analytics Internship — the data foundation</div>
+          <div class="xp-proj">Survey &amp; Analytics Platform</div>
+          <p class="xp-problem">Transform collected business information into structured data, operational indicators and decision-support reporting.</p>
+          <div class="xp-grid">
+            <div><h5>What I worked on</h5><ul class="xp-worked"><li>Web application development</li><li>Data collection</li><li>SQL database design</li><li>Data analysis &amp; KPIs</li><li>Operational reporting &amp; dashboards</li><li>Data visualization</li></ul></div>
+            <div><h5>My contribution</h5><p class="xp-contrib">Developed a web-based survey and analytics platform connected to a SQL database and created operational indicators and reporting views.</p><h5 style="margin-top:12px">Technologies</h5><div class="xp-tech"><span>SQL</span><span>Web Development</span><span>Data Visualization</span><span>KPI Design</span><span>Reporting</span></div></div>
+          </div>
+          <div class="xp-result">A working survey → SQL → KPI reporting platform.</div>
+          <p class="xp-take"><b>Takeaway —</b> This experience gave me the data and software foundations that later supported my Machine Learning and AI projects.</p>
+          <a class="btn ghost" style="font-size:.82rem;padding:8px 16px" href="#projects">Explore Survey &amp; Analytics Platform →</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -829,7 +906,7 @@
         </div>
       </div>
     </div>
-    <div class="proj-info reveal d2" id="proj-info"></div>
+    <div class="proj-info reveal d2" id="proj-info"><span class="type">Multimodal AI · Digital Twin  ·  UM6P — 2025</span><h3>NeurologiqueTWIN</h3><div class="qa-block"><div class="qa-row"><span class="q">Problem</span><span class="a">Combine heterogeneous physiological signals (EEG and IMU) into a reliable model for neurological monitoring.</span></div><div class="qa-row"><span class="q">What I built</span><span class="a">An end-to-end multimodal pipeline: signal synchronization, segmentation, feature extraction and a deep-learning classifier fusing both modalities.</span></div><div class="qa-row"><span class="q">My contribution</span><span class="a">Built the EEG/IMU processing pipeline, aligned the two modalities, engineered the features and implemented and evaluated the classification model.</span></div><div class="qa-row"><span class="q">Technical approach</span><span class="a"><span class="stack-line">Python · PyTorch · TensorFlow · CNN · Attention · EEG / IMU · Time Series</span></span></div><div class="qa-row"><span class="q">Results</span><span class="a">≈92% internal classification accuracy; won 2nd Prize at Innov'Boost 2025.</span></div></div><span class="kpi-chip"><span class="v">≈92%</span><span class="k">internal classification accuracy</span></span><div class="lesson"><b>Takeaway —</b> In multimodal AI, data synchronization and signal quality can be as important as model architecture.</div></div>
     <div class="reveal d2" style="margin-top:18px">
       <p class="pipe-title" id="proj-pipe-title"></p>
       <div id="proj-pipeline"></div>
@@ -1083,7 +1160,7 @@
   <ul id="ph-list"></ul>
 </div>
 
-<script src="assets/ahmed-profile.js?v=20260907" defer></script>
-<script src="assets/portfolio.js?v=20260907" defer></script>
+<script src="assets/ahmed-profile.js?v=20260907b" defer></script>
+<script src="assets/portfolio.js?v=20260907b" defer></script>
 </body>
 </html>

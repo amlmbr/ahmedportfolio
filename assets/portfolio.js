@@ -178,7 +178,7 @@
   (function () {
     var projects = {
       'v-eeg': {
-        file: 'neurologique_twin.ipynb', type: 'Multimodal AI · Digital Twin', title: 'NeurologiqueTWIN', org: 'UM6P — 2025',
+        type: 'Multimodal AI · Digital Twin', title: 'NeurologiqueTWIN', org: 'UM6P — 2025',
         problem: 'Combine heterogeneous physiological signals (EEG and IMU) into a reliable model for neurological monitoring.',
         built: 'An end-to-end multimodal pipeline: signal synchronization, segmentation, feature extraction and a deep-learning classifier fusing both modalities.',
         contribution: 'Built the EEG/IMU processing pipeline, aligned the two modalities, engineered the features and implemented and evaluated the classification model.',
@@ -188,7 +188,7 @@
         lesson: 'In multimodal AI, data synchronization and signal quality can matter as much as model architecture.'
       },
       'v-rag': {
-        file: 'graph_rag_assistant.py', type: 'Knowledge Graph · Generative AI', title: 'Graph-RAG — AQUADVISER', org: 'AQUADVISER — 2025',
+        type: 'Knowledge Graph · Generative AI', title: 'Graph-RAG — AQUADVISER', org: 'AQUADVISER — 2025',
         problem: 'Retrieve business information using both semantic similarity and the explicit relationships between entities.',
         built: 'A hybrid retrieval assistant combining vector embeddings, a Neo4j knowledge graph and LLMs, served through a FastAPI API.',
         contribution: 'Designed the hybrid retrieval strategy, modelled the Neo4j knowledge graph, integrated embeddings with graph traversal and exposed the service via FastAPI.',
@@ -198,7 +198,7 @@
         lesson: 'Vector similarity and graph relationships solve different retrieval problems and complement each other.'
       },
       'v-agents': {
-        file: 'multi_agent_assistant.py', type: 'Agentic AI · Controlled workflow', title: 'Intelligent Multi-Agent Data Assistant', org: 'Applied project',
+        type: 'Agentic AI · Controlled workflow', title: 'Intelligent Multi-Agent Data Assistant', org: 'Applied project',
         problem: 'Turn a natural-language business question into a controlled, auditable data analysis.',
         built: 'An explicit agent workflow: question understanding → SQL generation → consistency check → controlled execution → KPI computation → visualization → natural-language synthesis.',
         contribution: 'Designed the controlled workflow, orchestrated the agents with LangGraph/CrewAI, added the SQL consistency checks and built the FastAPI/Streamlit interfaces.',
@@ -208,7 +208,7 @@
         lesson: 'I prefer explicit, controlled agent workflows over uncontrolled autonomous conversations.'
       },
       'v-gear': {
-        file: 'gear5_distillation.py', type: 'Green AI · Efficiency', title: 'GEAR5 — Green AI', org: 'R&D project',
+        type: 'Green AI · Efficiency', title: 'GEAR5 — Green AI', org: 'R&D project',
         problem: 'Reduce inference cost while preserving useful language-model behavior.',
         built: 'Teacher-student knowledge distillation with adaptive gating and INT8 quantization, with energy consumption measured via CodeCarbon.',
         contribution: 'Implemented the distillation and gating experiments, applied INT8 quantization and measured the quality/latency/memory/energy trade-off.',
@@ -218,7 +218,7 @@
         lesson: 'The best model is not always the largest model.'
       },
       'v-nlp': {
-        file: 'cv_job_matching.py', type: 'NLP · Matching & Recommendation', title: 'NLP CV–Job Matching', org: 'Applied NLP project',
+        type: 'NLP · Matching & Recommendation', title: 'NLP CV–Job Matching', org: 'Applied NLP project',
         problem: 'Match CVs to job offers by meaning, and recommend the most relevant offers for a given CV — not just keyword overlap.',
         built: 'A hybrid matching + recommendation pipeline: parse CVs and offers, extract skills/entities, score with TF-IDF (lexical) and SBERT embeddings (semantic), then rank and recommend the best-fitting offers per CV.',
         contribution: 'Built the text pre-processing and entity extraction, combined TF-IDF with SBERT embeddings, and implemented the similarity scoring and offer recommendation.',
@@ -228,7 +228,7 @@
         lesson: 'Combining TF-IDF and embeddings balances exact-term overlap with meaning — and extraction quality still bounds the result.'
       },
       'v-data': {
-        file: 'streaming_pipeline.py', type: 'Data Engineering · Foundation', title: 'Big Data / Streaming', org: 'OCP Group & coursework',
+        type: 'Data Engineering · Foundation', title: 'Big Data / Streaming', org: 'OCP Group & coursework',
         problem: 'Handle high-volume, continuous data reliably — the foundation underneath any AI system.',
         built: 'Streaming ingestion and processing with Kafka and Spark, ETL / ELT into NoSQL stores, containerized with Docker.',
         contribution: 'Built streaming ingestion and transformation jobs, modelled the storage layer and containerized the pipeline for reproducible runs.',
@@ -353,6 +353,7 @@
   /* ===== Professional & R&D Experience timeline ===== */
   (function () {
     var host = $('#xp-timeline'); if (!host || !PROFILE.experiences) return;
+    if (host.querySelector('.xp-item')) return; // static cards already present — leave them
     var html = PROFILE.experiences.map(function (x) {
       var worked = x.worked.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('');
       var tech = x.tech.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
