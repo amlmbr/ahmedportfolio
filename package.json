@@ -1,0 +1,14 @@
+{
+  "name": "ahmed-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Ahmed Moubarak Lahlyal — AI Engineer portfolio & interactive interview presentation.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/dev-server.mjs",
+    "start": "node server/dev-server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

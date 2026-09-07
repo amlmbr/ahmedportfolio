@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "name": "Ahmed Moubarak Lahlyal",
+    "role": "AI Engineer",
+    "tagline": "Trustworthy AI · Generative AI · Data Engineering",
+    "statement": "I build intelligent systems from data to deployment — with security, traceability and measurable performance in mind.",
+    "note": "This file is the canonical knowledge base. It is used by the server /api/chat route to ground Llama 3.2, and is mirrored inline in index.html so the browser can answer in knowledge-base mode with zero dependencies. Keep both in sync."
+  },
+  "profile": {
+    "title": "Profile",
+    "keywords": ["who", "about", "yourself", "ahmed", "profile", "presentation", "introduce"],
+    "content": "Ahmed Moubarak Lahlyal is an AI Engineer with a strong Data Engineering foundation, focused on trustworthy AI, generative AI, knowledge graphs, agentic systems and industrial AI. He works across the full AI system: data, models, retrieval, agents, APIs, security, evaluation and deployment. He enjoys working at the intersection of research, engineering and real-world constraints. Three pillars describe him: (1) AI Engineering — from ML experimentation to LLM-based applications and APIs; (2) Data Foundations — pipelines, SQL, Big Data, knowledge graphs and heterogeneous data; (3) Trustworthy Systems — security, controlled retrieval, evaluation, traceability and governance."
+  },
+  "education": {
+    "title": "Education",
+    "keywords": ["education", "degree", "school", "university", "efrei", "ensa", "master", "studies", "graduate", "diploma"],
+    "content": "Engineering degree in Computer Science and Emerging Technologies from ENSA El Jadida, obtained June 2026. Next program: Advanced Master® in Data and Generative AI Engineering at EFREI Paris (2026–2027), on an apprenticeship rhythm of 2 weeks in company / 1 week at school."
+  },
+  "apprenticeship": {
+    "title": "Apprenticeship",
+    "keywords": ["apprenticeship", "alternance", "schedule", "rhythm", "availability", "contract", "work-study"],
+    "content": "Ahmed is starting an Advanced Master® at EFREI Paris (2026–2027) on a work-study / apprenticeship contract. The rhythm is 2 weeks in the company and 1 week at school, which gives strong continuity on real engineering work while keeping an academic anchor in data and generative AI."
+  },
+  "experience": {
+    "title": "Experience journey",
+    "keywords": ["experience", "journey", "career", "internship", "path", "work", "history", "ocp", "um6p", "aquadviser", "listic"],
+    "content": "Ahmed's experiences progressively built the layers of an AI Engineer profile. 2024 — OCP: Data Analytics & Software in an industrial environment (SQL, analytics, reporting). 2025 — AQUADVISER: Graph-RAG and knowledge graphs (Neo4j, semantic retrieval, LLMs, FastAPI). 2025 — UM6P: multimodal AI research (EEG, IMU, deep learning, digital twin). 2026 — LISTIC / Université Savoie Mont Blanc: Secure Document AI (LLMs, RAG, agents, security, knowledge graphs). The progression goes Data → Machine Learning → Knowledge Systems → Generative AI → Trustworthy AI systems."
+  },
+  "secureDocAI": {
+    "title": "SecureDocAI (flagship project)",
+    "keywords": ["securedocai", "secure", "document", "rbac", "governance", "listic", "leakage", "flagship", "trustworthy", "pii", "phi", "access control"],
+    "problem": "How can an organization use LLMs over sensitive documents without giving every user access to every piece of information?",
+    "layer1": "Layer 1 — Document Intelligence: Documents → OCR / native parsing → layout analysis → domain routing → information extraction → canonical JSON → PII / PHI detection → protected storage → vector index → knowledge graph.",
+    "layer2": "Layer 2 — Secure AI Governance: User → authenticated role → security guard → prompt-injection / jailbreak detection → policy filtering → authorized retrieval → context minimization → controlled LLM → output firewall → final validation.",
+    "context": "R&D internship at LISTIC, Université Savoie Mont Blanc (Feb 2026 – Jul 2026).",
+    "results": "500 documents; 6,000 evaluation scenarios; 97.8% RBAC compliance; 95% authorized utility; unauthorized leakage reduced from 15.39% to 0.21% (98.6% relative reduction); PII/PHI micro-F1 of 0.96; risk classifier ROC-AUC of 0.98.",
+    "insight": "Security without utility is not enough. The objective was to reduce unauthorized disclosure while preserving useful answers for authorized users.",
+    "technologies": ["Python", "FastAPI", "LangGraph", "CrewAI", "LangChain", "RAG", "Graph-RAG", "Neo4j", "ChromaDB", "Presidio", "SBERT", "XGBoost", "OCR", "Docker"],
+    "contribution": "Ahmed designed and implemented major parts of the system: architecture design, the document-processing pipeline, RAG / Graph-RAG integration, security mechanisms (RBAC, prompt-injection filtering, sensitive-data protection), agent orchestration, FastAPI services, the evaluation protocol, experimental analysis, technical documentation and a contribution to the scientific manuscript.",
+    "content": "SecureDocAI answers: how can an organization use LLMs over sensitive documents without giving every user access to every piece of information? It has two layers — Document Intelligence and Secure AI Governance — and was evaluated on 500 documents across 6,000 scenarios, reaching 97.8% RBAC compliance while cutting unauthorized leakage from 15.39% to 0.21% (98.6% relative reduction) and keeping 95% authorized utility."
+  },
+  "neurologiqueTwin": {
+    "title": "NeurologiqueTWIN",
+    "keywords": ["neurologiquetwin", "neurologique", "twin", "eeg", "imu", "multimodal", "digital twin", "um6p", "innovboost", "signal", "deep learning"],
+    "problem": "Combine heterogeneous physiological signals for neurological monitoring.",
+    "built": "An EEG + IMU processing pipeline with synchronization, segmentation, feature extraction and deep-learning classification.",
+    "technologies": ["Python", "PyTorch", "TensorFlow", "CNN", "Attention", "EEG / IMU", "Time Series"],
+    "result": "≈92% internal classification accuracy. 2nd Prize — Innov'Boost 2025 (The Startups Competition, ENSA El Jadida).",
+    "lesson": "In multimodal AI, data synchronization and signal quality can be as important as model architecture.",
+    "content": "NeurologiqueTWIN is a multimodal AI / digital-twin project done during research at UM6P (SDAS Research Group, 2025). It fuses EEG brain signals and IMU motion signals for neurological monitoring, reaching about 92% internal classification accuracy, and won 2nd Prize at Innov'Boost 2025."
+  },
+  "graphRag": {
+    "title": "Graph-RAG — AQUADVISER",
+    "keywords": ["graphrag", "graph-rag", "aquadviser", "knowledge graph", "neo4j", "retrieval", "hybrid", "embeddings", "vector"],
+    "problem": "Retrieve business information using both semantic similarity and explicit relationships.",
+    "built": "Hybrid retrieval combining embeddings, Neo4j knowledge graphs and LLMs, exposed through a FastAPI service.",
+    "technologies": ["Python", "FastAPI", "Neo4j", "Embeddings", "Vector Search", "LLMs", "Graph-RAG"],
+    "lesson": "Vector similarity and graph relationships solve different retrieval problems and can complement each other.",
+    "content": "At AQUADVISER (2025), Ahmed built a Graph-RAG assistant that combines vector similarity and explicit graph relationships (Neo4j) with LLMs to answer business questions with sourced answers, exposed via a FastAPI API."
+  },
+  "multiAgentAssistant": {
+    "title": "Intelligent Multi-Agent Data Assistant",
+    "keywords": ["multi-agent", "agent", "agentic", "langgraph", "crewai", "sql", "data assistant", "kpi", "workflow", "orchestration"],
+    "problem": "Transform a natural-language business question into a controlled and auditable data analysis.",
+    "built": "A controlled agent pipeline: business question → request understanding → SQL generation → consistency check → controlled execution → KPI calculation → visualization → natural-language synthesis.",
+    "technologies": ["Python", "LangGraph", "CrewAI", "SQL", "FastAPI", "Streamlit", "LLMs"],
+    "lesson": "I prefer explicit and controlled agent workflows over uncontrolled autonomous conversations.",
+    "content": "The Intelligent Multi-Agent Data Assistant turns a natural-language business question into an auditable analysis through an explicit, controlled agent workflow (LangGraph, CrewAI) with SQL generation, consistency checks, controlled execution, KPI calculation and a natural-language synthesis."
+  },
+  "gear5": {
+    "title": "GEAR5 — Green AI",
+    "keywords": ["gear5", "green ai", "distillation", "quantization", "int8", "efficiency", "energy", "latency", "tinyllama", "distilgpt2"],
+    "problem": "Reduce inference cost while preserving useful language-model behavior.",
+    "built": "Teacher-student knowledge-distillation experimentation, adaptive gating and INT8 quantization, with energy measured through CodeCarbon.",
+    "technologies": ["PyTorch", "Hugging Face", "TinyLLaMA", "DistilGPT2", "INT8", "CodeCarbon"],
+    "tradeoff": "Quality, latency, memory and energy are traded off explicitly.",
+    "lesson": "The best model is not always the largest model.",
+    "content": "GEAR5 is a Green AI project focused on reducing inference cost while keeping useful behavior, using teacher-student knowledge distillation, adaptive gating and INT8 quantization, with energy tracked via CodeCarbon."
+  },
+  "nlpMatching": {
+    "title": "NLP CV–Job Matching",
+    "keywords": ["nlp", "cv", "job matching", "resume", "recruitment", "semantic", "sbert", "tf-idf", "tfidf", "embeddings", "ner", "similarity", "hiring", "recommendation", "recommend"],
+    "problem": "Match CVs to job offers by meaning and recommend the most relevant offers for a given CV, not just keyword overlap.",
+    "built": "A hybrid matching + recommendation pipeline: parse CVs and offers, extract skills/entities with NER, score with TF-IDF (lexical) and SBERT embeddings (semantic), then rank by cosine similarity and recommend the best offers per CV.",
+    "technologies": ["Python", "TF-IDF", "SBERT", "Embeddings", "NER", "Cosine Similarity", "scikit-learn"],
+    "result": "≈95% CV–offer matching precision; returns a ranked Top-5 shortlist of offers per CV.",
+    "lesson": "Combining TF-IDF and embeddings balances exact-term overlap with meaning; extraction quality still bounds the result.",
+    "content": "NLP CV–Job Matching is an applied NLP project that ranks CVs against job offers using a hybrid of TF-IDF and SBERT embeddings and recommends the top-matching offers for each CV, reaching about 95% matching precision."
+  },
+  "bigData": {
+    "title": "Big Data / Streaming",
+    "keywords": ["big data", "streaming", "kafka", "spark", "hadoop", "etl", "elt", "nosql", "pipeline", "data engineering"],
+    "content": "Ahmed has hands-on Big Data and streaming experience — Kafka, Spark, streaming ingestion, NoSQL stores and ETL / ELT pipelines with Docker — which is the data foundation underneath the AI systems he builds.",
+    "technologies": ["Kafka", "Spark", "Streaming", "NoSQL", "ETL / ELT", "Docker"]
+  },
+  "technicalSkills": {
+    "title": "Technical stack",
+    "keywords": ["skills", "stack", "technologies", "tools", "tech", "frameworks", "languages", "programming"],
+    "aiMachineLearning": ["Python", "PyTorch", "TensorFlow", "scikit-learn", "XGBoost", "Deep Learning", "CNNs", "Attention", "Classification", "Forecasting", "Anomaly Detection", "Model Evaluation"],
+    "generativeAiNlp": ["LLMs", "RAG", "Graph-RAG", "LangGraph", "CrewAI", "LangChain", "Hugging Face Transformers", "SBERT", "Embeddings", "NER", "Prompt Engineering", "Agentic Workflows", "Guardrails", "Prompt-Injection Defense"],
+    "documentAiVision": ["OCR", "PDF Parsing", "Layout Analysis", "Information Extraction", "Tesseract", "DocTR", "Mistral OCR", "PDFPlumber", "LayoutLMv3", "OpenCV"],
+    "dataEngineering": ["SQL", "ETL / ELT", "Kafka", "Spark", "Spark Streaming", "Hadoop", "HDFS", "Hive", "HBase", "Airflow", "Talend", "Data Pipelines"],
+    "databasesKnowledge": ["PostgreSQL", "SQL Server", "MySQL", "MongoDB", "Cassandra", "Neo4j", "ChromaDB", "Knowledge Graphs", "Vector Databases"],
+    "softwareMlops": ["FastAPI", "REST APIs", "Docker", "Git / GitHub", "Linux", "Testing", "Logging", "Modular Architecture", "CI/CD fundamentals"],
+    "businessIntelligence": ["Power BI", "DAX", "Power Query", "Tableau", "Superset", "Looker Studio", "KPI Design", "Data Visualization"],
+    "content": "Ahmed organizes his stack by architecture layer. AI & Machine Learning: Python, PyTorch, TensorFlow, scikit-learn, XGBoost, deep learning, CNNs, attention, classification, forecasting, anomaly detection, model evaluation. Generative AI & NLP: LLMs, RAG, Graph-RAG, LangGraph, CrewAI, LangChain, Hugging Face Transformers, SBERT, embeddings, NER, prompt engineering, agentic workflows, guardrails, prompt-injection defense. Document AI & Vision: OCR, PDF parsing, layout analysis, information extraction, Tesseract, DocTR, Mistral OCR, PDFPlumber, LayoutLMv3, OpenCV. Data Engineering: SQL, ETL/ELT, Kafka, Spark, Spark Streaming, Hadoop, HDFS, Hive, HBase, Airflow, Talend, data pipelines. Databases & Knowledge Systems: PostgreSQL, SQL Server, MySQL, MongoDB, Cassandra, Neo4j, ChromaDB, knowledge graphs, vector databases. Software Engineering & MLOps: FastAPI, REST APIs, Docker, Git/GitHub, Linux, testing, logging, modular architecture, CI/CD fundamentals. Business Intelligence: Power BI, DAX, Power Query, Tableau, Superset, Looker Studio, KPI design, data visualization. Tools are not the goal — architecture and measurable value are."
+  },
+  "engineeringMindset": {
+    "title": "Engineering mindset",
+    "keywords": ["mindset", "approach", "think", "philosophy", "principles", "method"],
+    "principles": [
+      "Problem before technology.",
+      "Baseline before complexity.",
+      "Measure before claiming.",
+      "Security by design.",
+      "Data quality matters.",
+      "Traceability matters.",
+      "Human oversight for critical decisions.",
+      "Build for maintainability.",
+      "Learn by testing.",
+      "Avoid unnecessary complexity."
+    ],
+    "quotes": [
+      "I don't use AI because it is fashionable. I use it when it provides measurable value.",
+      "I see AI engineering as a complete system problem: data, models, software, security, evaluation and deployment."
+    ],
+    "content": "Ahmed's engineering mindset in ten principles: problem before technology; baseline before complexity; measure before claiming; security by design; data quality matters; traceability matters; human oversight for critical decisions; build for maintainability; learn by testing; avoid unnecessary complexity."
+  },
+  "softSkills": {
+    "title": "How I work (soft skills)",
+    "keywords": ["soft skills", "how do you work", "behavior", "curiosity", "rigor", "autonomy", "teamwork", "adaptability", "communication", "problem solving", "pragmatism", "personality"],
+    "items": [
+      "Curiosity — understanding a system beyond the surface and exploring alternative approaches.",
+      "Analytical thinking — breaking complex problems into components with measurable objectives.",
+      "Rigor — reproducible experiments, validation, testing and clear documentation.",
+      "Autonomy — investigating a problem, prototyping a solution and recognizing when expert feedback is needed.",
+      "Fast learning — comfortable with new frameworks, domains and concepts when a project requires them.",
+      "Communication — explaining architectures and results to technical and non-technical audiences.",
+      "Teamwork — technical discussion, code review, feedback and collaborative problem solving.",
+      "Adaptability — has worked across data analytics, knowledge graphs, deep learning, generative AI and secure AI.",
+      "Problem solving — understanding the underlying problem before choosing a technology.",
+      "Engineering pragmatism — the simplest architecture that reliably solves the problem, adding complexity only for measurable value."
+    ],
+    "content": "Ahmed expresses soft skills as behaviors: curiosity, analytical thinking, rigor, autonomy, fast learning, communication, teamwork, adaptability, problem solving and engineering pragmatism."
+  },
+  "whyThales": {
+    "title": "Why Thales",
+    "keywords": ["thales", "why thales", "fit", "critical systems", "aerospace", "defense", "reliability", "robustness"],
+    "have": ["Trustworthy Generative AI", "Secure RAG", "Knowledge Graphs", "AI Agents", "Data Engineering", "Multimodal AI", "Evaluation", "Traceability"],
+    "explore": ["AI for critical systems", "Robustness", "Reliability", "Explainability", "Cybersecurity", "Industrial validation", "Human-AI collaboration", "Deployment under strong constraints"],
+    "content": "What attracts Ahmed to Thales is the opportunity to work on AI where performance alone is not enough — reliability, security, traceability and human control also matter. He wants to understand how advanced AI research becomes a dependable capability in real industrial and critical systems. His verified experience in trustworthy generative AI, secure RAG, knowledge graphs, agents, data engineering, multimodal AI and experimental evaluation connects directly to the general challenges of reliable industrial AI. He does not claim any knowledge of confidential Thales projects — the interviewers will explain them."
+  },
+  "whyMe": {
+    "title": "Why me",
+    "keywords": ["why you", "why me", "strengths", "value", "bring", "add", "team"],
+    "points": [
+      "End-to-end AI perspective: data → models → APIs → security → deployment.",
+      "Research + engineering: experience defining experiments but also implementing working systems.",
+      "Trustworthy AI experience: SecureDocAI gave direct exposure to access control, adversarial requests, sensitive data and LLM governance.",
+      "Fast learning across domains: industrial data, knowledge graphs, multimodal AI, generative AI.",
+      "Ability to explain technical systems: architecture, documentation, scientific writing and presentations."
+    ],
+    "tagline": "Curious enough to explore. Rigorous enough to measure. Pragmatic enough to simplify.",
+    "content": "Ahmed brings an end-to-end AI perspective (data → models → APIs → security → deployment), a mix of research and engineering, direct trustworthy-AI experience from SecureDocAI, fast learning across domains, and the ability to explain technical systems clearly."
+  },
+  "achievements": {
+    "title": "Achievements",
+    "keywords": ["achievement", "award", "prize", "distinction", "results", "recognition", "hackathon", "competition"],
+    "content": "2nd Prize at the Innov'Boost 2025 hackathon (The Startups Competition, Forum ENSAJ Entreprises, ENSA El Jadida) for NeurologiqueTWIN. On SecureDocAI: 97.8% RBAC compliance and unauthorized leakage cut from 15.39% to 0.21% (98.6% relative reduction) across 6,000 scenarios. ≈92% internal classification accuracy on NeurologiqueTWIN."
+  },
+  "publication": {
+    "title": "Research / publication",
+    "keywords": ["publication", "paper", "manuscript", "research", "scientific", "writing", "article", "listic"],
+    "content": "Ahmed contributed to a scientific manuscript for the SecureDocAI work at LISTIC (Université Savoie Mont Blanc), including the experimental protocol, experimental analysis and technical writing. This is a manuscript contribution from a research internship — not a claim of an independently published paper."
+  },
+  "languages": {
+    "title": "Languages",
+    "keywords": ["language", "languages", "english", "french", "arabic", "speak"],
+    "content": "Arabic — native / bilingual. French — C1. English — C1."
+  },
+  "contact": {
+    "title": "Contact",
+    "keywords": ["contact", "email", "linkedin", "github", "reach", "talk"],
+    "content": "Ahmed Moubarak Lahlyal — AI & Data Engineer. Reach him by email, LinkedIn or GitHub (links are in the closing section of the portfolio)."
+  }
+}
