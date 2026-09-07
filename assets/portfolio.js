@@ -10,6 +10,67 @@
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 
+  var PROFILE = window.AHMED_PROFILE || {};
+
+  /* ============================================================
+     Reusable animated pipeline component
+     buildPipeline(container, pipelineDef) — renders a node/arrow flow,
+     animates once when scrolled into view, supports parallel branches
+     and click/keyboard tooltips. Respects prefers-reduced-motion.
+     ============================================================ */
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function buildPipeline(container, def) {
+    if (!container || !def) return;
+    container.innerHTML = '';
+    container.className = 'pipe' + (def.accent === 'amber' ? ' amber' : '');
+    var flow = document.createElement('div'); flow.className = 'pipe-flow';
+    var order = []; // ordered list of .pnode elements for animation
+    def.nodes.forEach(function (n, i) {
+      if (i > 0) { var ar = document.createElement('span'); ar.className = 'pipe-arrow'; ar.setAttribute('aria-hidden', 'true'); ar.textContent = '→'; flow.appendChild(ar); }
+      if (n.branch) {
+        var br = document.createElement('div'); br.className = 'pipe-branch';
+        n.branch.forEach(function (bl) {
+          var pn = document.createElement('div'); pn.className = 'pnode'; pn.textContent = bl; br.appendChild(pn); order.push(pn);
+        });
+        flow.appendChild(br);
+      } else {
+        var el;
+        if (n.t) { el = document.createElement('button'); el.type = 'button'; el.setAttribute('aria-label', n.l + ' — details'); el.dataset.tip = n.t; el.classList.add('has-tip'); }
+        else { el = document.createElement('div'); }
+        el.className = (el.className ? el.className + ' ' : '') + 'pnode'; el.textContent = n.l;
+        flow.appendChild(el); order.push(el);
+      }
+    });
+    container.appendChild(flow);
+    var tip = document.createElement('div'); tip.className = 'pipe-tip'; tip.hidden = true; container.appendChild(tip);
+
+    // tooltips (click / keyboard)
+    $$('.pnode.has-tip', flow).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var open = b.classList.contains('tip-open');
+        $$('.pnode.has-tip', flow).forEach(function (o) { o.classList.remove('tip-open'); });
+        if (open) { tip.hidden = true; return; }
+        b.classList.add('tip-open'); tip.innerHTML = '<b>' + esc(b.textContent) + '</b> — ' + esc(b.dataset.tip); tip.hidden = false;
+      });
+    });
+
+    function light() { order.forEach(function (el) { el.classList.add('on'); }); container.classList.add('done'); }
+    if (reduced) { light(); return; }
+    var started = false;
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting && !started) {
+          started = true;
+          var i = 0; (function step() { if (i < order.length) { order[i].classList.add('on'); i++; setTimeout(step, 170); } else container.classList.add('done'); })();
+          obs.unobserve(container);
+        }
+      });
+    }, { threshold: 0.25 });
+    obs.observe(container);
+    // replay on click of the container background
+    container.addEventListener('dblclick', function () { order.forEach(function (el) { el.classList.remove('on'); }); var i = 0; (function step() { if (i < order.length) { order[i].classList.add('on'); i++; setTimeout(step, 120); } })(); });
+  }
+
   /* ===== Hero particle network ===== */
   (function () {
     var canvas = $('#net'); if (!canvas) return;
@@ -74,37 +135,18 @@
 
   /* ===== SecureDocAI architecture ===== */
   (function () {
-    var docSteps = ['Documents', 'OCR / Parsing', 'Layout Analysis', 'Domain Routing', 'Extraction', 'Canonical JSON', 'PII / PHI Detection', 'Protected Storage', 'Vector Index', 'Knowledge Graph'];
-    var secSteps = ['User', 'Authenticated Role', 'Security Guard', 'Injection / Jailbreak Detection', 'Policy Filtering', 'Authorized Retrieval', 'Context Minimization', 'Controlled LLM', 'Output Firewall', 'Final Validation'];
-    function build(container, steps, sec) {
-      steps.forEach(function (s, i) {
-        var n = document.createElement('span'); n.className = 'node' + (sec ? ' sec' : ''); n.textContent = s; container.appendChild(n);
-        if (i < steps.length - 1) { var a = document.createElement('span'); a.className = 'ar'; a.textContent = '→'; container.appendChild(a); }
-      });
-    }
-    var fd = $('#flow-doc'), fs = $('#flow-sec');
-    if (fd) build(fd, docSteps, false);
-    if (fs) build(fs, secSteps, true);
+    var pl = PROFILE.pipelines || {};
+    if ($('#flow-doc') && pl['securedocai-doc']) buildPipeline($('#flow-doc'), pl['securedocai-doc']);
+    if ($('#flow-sec') && pl['securedocai-sec']) buildPipeline($('#flow-sec'), pl['securedocai-sec']);
+    if ($('#flow-eval') && pl['securedocai-eval']) buildPipeline($('#flow-eval'), pl['securedocai-eval']);
 
     var explains = {
-      doc: 'Raw, heterogeneous documents are turned into <b>structured, protected knowledge</b>: parsed, routed by domain, extracted to canonical JSON, scanned for PII / PHI, then indexed for both vector search and a knowledge graph.',
-      sec: 'Every request is governed: the user\'s <b>authenticated role</b> drives access, adversarial prompts are filtered, retrieval is restricted to authorized content, the context is minimized, and the model\'s output passes an <b>output firewall</b> and final validation before it is returned.',
-      eval: 'The system was stress-tested on <b>6,000 scenarios</b> — RBAC probes, prompt-injection attempts and sensitive-data checks — producing the measured metrics below.'
+      doc: 'Raw, heterogeneous documents are turned into <b>structured, protected knowledge</b>: parsed, routed by domain, extracted to canonical JSON, scanned for PII / PHI, then indexed for both vector search and a knowledge graph. <span style="color:var(--faint)">Click a node with ⓘ for details.</span>',
+      sec: 'Every request is governed: the user\'s <b>authenticated role</b> drives access, adversarial prompts are filtered, retrieval is restricted to authorized content, the context is minimized, and the model\'s output passes an <b>output firewall</b> and final validation. <span style="color:var(--faint)">Click a node with ⓘ for details.</span>',
+      eval: 'The system was stress-tested on <b>6,000 scenarios</b> across 5 domains — normal, sensitive and adversarial queries, RBAC and PII / PHI tests — producing the measured metrics below.'
     };
     var explEl = $('#arch-explain');
     function setExplain(k) { if (explEl) explEl.innerHTML = explains[k]; }
-
-    // step-by-step lighting when the section becomes active
-    var animated = {};
-    function animateFlow(container) {
-      if (!container || reduced) { if (container) $$('.node', container).forEach(function (n) { n.classList.add('lit'); }); return; }
-      var nodes = $$('.node', container); nodes.forEach(function (n) { n.classList.remove('lit'); });
-      var i = 0; (function step() { if (i < nodes.length) { nodes[i].classList.add('lit'); i++; setTimeout(step, 240); } })();
-    }
-    var secObs = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting && !animated.doc) { animated.doc = true; animateFlow(fd); } });
-    }, { threshold: .3 });
-    var sd = $('#securedocai'); if (sd) secObs.observe(sd);
 
     // arch tabs
     $$('.arch-tab[data-arch]').forEach(function (t) {
@@ -116,8 +158,6 @@
         $('#arch-sec').style.display = k === 'sec' ? '' : 'none';
         $('#arch-eval').style.display = k === 'eval' ? '' : 'none';
         setExplain(k);
-        if (k === 'doc' && !animated.docTab) { animated.docTab = true; animateFlow(fd); }
-        if (k === 'sec' && !animated.sec) { animated.sec = true; animateFlow(fs); }
       });
     });
     setExplain('doc');
@@ -215,8 +255,13 @@
         '</div>' +
         '<span class="kpi-chip"><span class="v">' + esc(p.kpi[0]) + '</span><span class="k">' + esc(p.kpi[1]) + '</span></span>' +
         '<div class="lesson"><b>Takeaway —</b> ' + esc(p.lesson) + '</div>';
+      // per-project animated pipeline
+      var pipeMap = { 'v-eeg': 'neurologiquetwin', 'v-rag': 'graphrag', 'v-agents': 'multiagent', 'v-gear': 'gear5' };
+      var pdef = (PROFILE.pipelines || {})[pipeMap[key]];
+      var pcont = $('#proj-pipeline'), ptitle = $('#proj-pipe-title');
+      if (pcont && pdef) { buildPipeline(pcont, pdef); if (ptitle) ptitle.innerHTML = 'Technical pipeline — <b>' + esc(pdef.title) + '</b>'; }
     }
-    var tabs = $$('.show-tab');
+    var tabs = $$('.show-tab[data-v]');
     tabs.forEach(function (t) {
       t.addEventListener('click', function () {
         tabs.forEach(function (o) { o.classList.remove('active'); });
@@ -291,6 +336,71 @@
       });
     });
     lb.addEventListener('click', function () { lb.classList.remove('open'); img.src = ''; });
+  })();
+
+  /* ===== Generic show/hide toggles ===== */
+  (function () {
+    $$('.js-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var t = document.getElementById(btn.dataset.target); if (!t) return;
+        var show = t.hidden; t.hidden = !show;
+        btn.setAttribute('aria-expanded', show ? 'true' : 'false');
+        if (btn.dataset.more) btn.textContent = show ? (btn.dataset.less || 'Show less') : btn.dataset.more;
+      });
+    });
+  })();
+
+  /* ===== Professional & R&D Experience timeline ===== */
+  (function () {
+    var host = $('#xp-timeline'); if (!host || !PROFILE.experiences) return;
+    var html = PROFILE.experiences.map(function (x) {
+      var worked = x.worked.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('');
+      var tech = x.tech.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
+      var loc = x.location ? '<div class="xp-loc">' + esc(x.location) + '</div>' : '';
+      return '<div class="xp-item' + (x.current ? ' now' : '') + '">' +
+          '<div class="xp-rail"><span class="xp-dot"></span>' +
+            '<div class="xp-dates">' + esc(x.start) + ' → ' + esc(x.end) + '</div>' +
+            '<div class="xp-org">' + esc(x.org) + '</div>' +
+            '<div class="xp-sub">' + esc(x.sub) + '</div>' + loc +
+          '</div>' +
+          '<div class="xp-body">' +
+            '<div class="xp-role">' + esc(x.role) + '</div>' +
+            '<div class="xp-proj">' + esc(x.project) + '</div>' +
+            '<p class="xp-problem">' + esc(x.problem) + '</p>' +
+            '<div class="xp-grid">' +
+              '<div><h5>What I worked on</h5><ul class="xp-worked">' + worked + '</ul></div>' +
+              '<div><h5>My contribution</h5><p class="xp-contrib">' + esc(x.contribution) + '</p>' +
+                '<h5 style="margin-top:12px">Technologies</h5><div class="xp-tech">' + tech + '</div></div>' +
+            '</div>' +
+            '<div class="xp-result">' + esc(x.result) + '</div>' +
+            '<p class="xp-take"><b>Takeaway —</b> ' + esc(x.takeaway) + '</p>' +
+            (x.target ? '<a class="btn ghost" style="font-size:.82rem;padding:8px 16px" href="#' + esc(x.target) + '">Explore ' + esc(x.project) + ' →</a>' : '') +
+          '</div>' +
+        '</div>';
+    }).join('');
+    host.innerHTML = html;
+  })();
+
+  /* ===== Secondary "More Data & AI Projects" ===== */
+  (function () {
+    var host = $('#more-grid'); if (!host || !PROFILE.pipelines) return;
+    var pl = PROFILE.pipelines;
+    var more = [
+      { id: 'forex', title: 'Forex Trading Platform', sub: 'Big Data · Forecasting · Reinforcement Learning', desc: 'Streaming market data through Kafka and Spark into forecasting models (LSTM, RNN, Random Forest) and reinforcement-learning trading agents (buy / hold / sell) under risk constraints.', tech: ['Python', 'Kafka', 'Spark', 'TensorFlow', 'scikit-learn', 'MongoDB / Cassandra', 'Streamlit'] },
+      { id: 'swim', title: 'SwimCoach Vision', sub: 'Computer Vision · Sensor Fusion · Digital Twin', desc: 'Overhead cameras and wearable sensors fused into movement analysis and automated technical feedback (stroke symmetry, head position, entry angle), visualized as a digital twin.', tech: ['Python', 'OpenCV', 'Pose Estimation', 'Sensor Fusion', 'Digital Twins'] },
+      { id: 'ecommerce', title: 'Real-Time E-commerce Pipeline', sub: 'Streaming · Data Engineering', desc: 'Customer events streamed through Kafka and Spark Streaming into PostgreSQL, surfacing sessions, baskets, conversions and marketing / pricing / inventory KPIs in Superset.', tech: ['Kafka', 'Spark Streaming', 'PostgreSQL', 'Superset', 'Docker'] },
+      { id: 'cvjob', title: 'NLP CV–Job Matching', sub: 'NLP · Semantic Matching', desc: 'Matches CVs to job offers by meaning: skill extraction, hybrid TF-IDF + SBERT scoring, cosine-similarity ranking and an explainable match score (~95% matching precision).', tech: ['Python', 'NLP', 'SBERT', 'TF-IDF', 'Embeddings', 'Streamlit'] },
+      { id: 'flightdelay', title: 'Flight Delay Analytics', sub: 'Data · BI', desc: '500,000+ flight records through Talend ETL and data-quality checks into MySQL, then an analytical model and BI dashboards for delay KPIs and bottleneck analysis.', tech: ['Talend', 'MySQL', 'Looker Studio', 'ETL', 'Data Quality', 'BI'] }
+    ];
+    more.forEach(function (m) {
+      var card = document.createElement('div'); card.className = 'more-card';
+      card.innerHTML = '<h3>' + esc(m.title) + '</h3><div class="mc-sub">' + esc(m.sub) + '</div>' +
+        '<p style="color:var(--muted);font-size:.9rem;margin:0 0 14px">' + esc(m.desc) + '</p>' +
+        '<div class="mc-pipe"></div>' +
+        '<div class="mc-tech">' + m.tech.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>';
+      host.appendChild(card);
+      if (pl[m.id]) buildPipeline(card.querySelector('.mc-pipe'), pl[m.id]);
+    });
   })();
 
   /* ============================================================
@@ -507,14 +617,15 @@
   (function () {
     var STEPS = [
       { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Who I Am' }, { id: 'journey', label: 'My Journey' },
-      { id: 'research', label: 'Research & Publications' }, { id: 'securedocai', label: 'SecureDocAI' }, { id: 'projects', label: 'Selected AI Systems' },
-      { id: 'stack', label: 'Technical Foundations' }, { id: 'mindset', label: 'Engineering Mindset' }, { id: 'thales', label: 'Why Thales' },
-      { id: 'assistant', label: 'Ahmed AI' }, { id: 'contact', label: "Let's Talk" }
+      { id: 'experience', label: 'Experience' }, { id: 'research', label: 'Research & Publications' }, { id: 'securedocai', label: 'SecureDocAI' },
+      { id: 'projects', label: 'Selected AI Systems' }, { id: 'stack', label: 'Technical Foundations' }, { id: 'mindset', label: 'Engineering Mindset' },
+      { id: 'thales', label: 'Why Thales' }, { id: 'assistant', label: 'Ahmed AI' }, { id: 'contact', label: "Let's Talk" }
     ];
     var HINTS = {
       intro: ['Open with the one-line: data → deployment, with security in mind.', 'Point at the chips: LLMs, RAG/Graph-RAG, KGs, Agentic, Secure AI.', 'Note: graduating 2026, EFREI Advanced Master, 2w/1w apprenticeship.'],
       profile: ['“Tell me about yourself” lands here.', 'Three pillars: AI Engineering, Data Foundations, Trustworthy Systems.', 'I understand complete systems, not just frameworks.'],
       journey: ['Not many unrelated internships — a progression.', 'Each role added a layer: Data → ML → Knowledge → GenAI → Trustworthy.', 'OCP → AQUADVISER → UM6P → LISTIC.'],
+      experience: ['Four experiences with exact dates.', 'For each: role, project, my contribution, stack, result.', 'LISTIC (Feb–Jul 2026) is the current, flagship one.', 'Each card links to the full project.'],
       research: ['I have a real research profile, not only projects.', 'PUBLISHED: CityEcoScout (co-author, IJCEDS 2025).', 'IN PREPARATION: SecureDocAI manuscript (LISTIC, with Loukil & Verjus).', 'Progression: knowledge rep → multimodal → trustworthy GenAI.'],
       securedocai: ['Lead with the PROBLEM, not the tech.', 'Walk Layer 1 (document) then Layer 2 (security) — click the tabs.', 'Headline: 97.8% RBAC, leakage 15.39%→0.21%, 95% utility kept.', 'This is my flagship — but one part of a broader profile.'],
       projects: ['Click each tab; the visual animates live.', 'For each: Problem → Built → My contribution → Approach → Results → Takeaway.', 'Show breadth: multimodal, KGs, agents, Green AI, NLP, Big Data.'],

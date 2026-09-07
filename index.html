@@ -239,6 +239,63 @@
   .lesson { margin-top:10px; padding:12px 14px; border:1px dashed var(--line2); border-radius:10px; color:var(--muted); font-size:.9rem; font-style:italic; }
   .lesson b { color:var(--green); font-style:normal; }
 
+  /* ===== Reusable pipeline component ===== */
+  .pipe { border:1px solid var(--line); border-radius:14px; background:var(--panel3); padding:16px; overflow-x:auto; }
+  .pipe-flow { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap; }
+  .pnode { font-family:var(--mono); font-size:.72rem; line-height:1.25; padding:9px 12px; border-radius:9px; border:1px solid var(--line2);
+    background:var(--panel); color:var(--muted); white-space:nowrap; opacity:.5; transform:translateY(3px);
+    transition:opacity .35s, transform .35s, border-color .35s, box-shadow .35s, color .35s; display:flex; align-items:center; }
+  .pnode.on { opacity:1; transform:none; color:var(--ink); border-color:var(--cyan); box-shadow:0 0 0 1px rgba(57,198,240,.12), 0 0 16px rgba(57,198,240,.12); }
+  .pipe.amber .pnode.on { border-color:var(--amber); box-shadow:0 0 0 1px rgba(230,178,76,.12), 0 0 16px rgba(230,178,76,.12); }
+  button.pnode { cursor:pointer; font-family:var(--mono); }
+  button.pnode.has-tip::after { content:"ⓘ"; margin-left:6px; color:var(--faint); font-size:.68rem; }
+  button.pnode.tip-open { border-color:var(--amber); color:var(--amber); }
+  .pipe-arrow { display:flex; align-items:center; color:var(--faint); font-size:.8rem; opacity:.6; }
+  .pipe.done .pipe-arrow { opacity:.8; }
+  .pipe-branch { display:flex; flex-direction:column; gap:5px; padding:4px 6px; border-left:2px solid var(--line2); border-right:2px solid var(--line2); border-radius:8px; }
+  .pipe-tip { margin-top:12px; padding:10px 12px; border-top:1px solid var(--line); color:var(--muted); font-size:.84rem; }
+  .pipe-tip b { color:var(--cyan); }
+  .pipe-title { font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin:0 0 8px; }
+  .pipe-title b { color:var(--cyan); }
+  @media(max-width:720px){ .pipe-flow{ flex-direction:column; align-items:stretch; } .pnode{ white-space:normal; } .pipe-arrow{ transform:rotate(90deg); align-self:center; } .pipe-branch{ flex-direction:column; } }
+
+  /* ===== Experience timeline ===== */
+  .xp-item { display:grid; grid-template-columns:200px 1fr; gap:24px; position:relative; padding:0 0 30px 0; }
+  .xp-rail { position:relative; padding-left:22px; }
+  .xp-rail::before { content:""; position:absolute; left:5px; top:6px; bottom:-30px; width:2px; background:linear-gradient(var(--cyan-deep),var(--line)); }
+  .xp-item:last-child .xp-rail::before { display:none; }
+  .xp-dot { position:absolute; left:0; top:4px; width:12px; height:12px; border-radius:50%; background:var(--bg); border:2px solid var(--cyan); box-shadow:0 0 10px var(--glow); }
+  .xp-item.now .xp-dot { background:var(--amber); border-color:var(--amber); }
+  .xp-dates { font-family:var(--mono); font-size:.78rem; color:var(--cyan); }
+  .xp-item.now .xp-dates { color:var(--amber); }
+  .xp-org { font-weight:700; font-size:1.02rem; margin:4px 0 2px; }
+  .xp-sub { color:var(--muted); font-size:.8rem; }
+  .xp-loc { color:var(--faint); font-size:.75rem; font-family:var(--mono); margin-top:4px; }
+  .xp-body { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; }
+  .xp-role { font-family:var(--mono); font-size:.74rem; color:var(--cyan); letter-spacing:.03em; margin:0 0 4px; }
+  .xp-proj { font-weight:700; font-size:1.1rem; margin:0 0 8px; }
+  .xp-problem { color:var(--muted); font-size:.9rem; border-left:2px solid var(--cyan-deep); padding-left:12px; margin:0 0 12px; }
+  .xp-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:12px; }
+  .xp-grid h5 { font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin:0 0 6px; }
+  .xp-worked { margin:0; padding-left:16px; color:var(--ink); font-size:.85rem; }
+  .xp-worked li { margin-bottom:3px; }
+  .xp-contrib { color:var(--ink); font-size:.88rem; }
+  .xp-tech { display:flex; flex-wrap:wrap; gap:5px; margin:4px 0 12px; }
+  .xp-tech span { font-family:var(--mono); font-size:.68rem; color:var(--muted); border:1px solid var(--line2); border-radius:6px; padding:3px 8px; background:var(--panel3); }
+  .xp-result { font-size:.85rem; color:var(--green); background:rgba(63,214,143,.06); border:1px solid var(--line2); border-left:3px solid var(--green); border-radius:9px; padding:9px 12px; margin-bottom:10px; }
+  .xp-take { color:var(--muted); font-size:.85rem; font-style:italic; margin-bottom:12px; }
+  .xp-take b { color:var(--green); font-style:normal; }
+  @media(max-width:760px){ .xp-item{ grid-template-columns:1fr; gap:12px; } .xp-rail{ padding-left:22px; } .xp-rail::before{ display:none; } .xp-grid{ grid-template-columns:1fr; } }
+
+  /* ===== Secondary projects ===== */
+  .more-toggle { margin:22px 0 0; }
+  .more-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-top:18px; }
+  .more-card { border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:20px; }
+  .more-card h3 { margin:0 0 2px; font-size:1.08rem; }
+  .more-card .mc-sub { font-family:var(--mono); font-size:.72rem; color:var(--cyan); margin-bottom:10px; }
+  .more-card .mc-tech { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
+  .more-card .mc-tech span { font-family:var(--mono); font-size:.68rem; color:var(--muted); border:1px solid var(--line2); border-radius:6px; padding:3px 8px; background:var(--panel3); }
+
   /* barup for gear */
   .barup { transform-origin:bottom; animation:grow 1s ease forwards; }
   @keyframes grow { from{transform:scaleY(0);} to{transform:scaleY(1);} }
@@ -249,6 +306,7 @@
   .principle .n { font-family:var(--mono); font-size:1.5rem; font-weight:800; color:var(--cyan); opacity:.6; }
   .principle h4 { margin:6px 0 8px; font-size:.98rem; }
   .principle p { margin:0; color:var(--muted); font-size:.84rem; }
+  #more-principles:not([hidden]) { display:contents; }
   .big-quote { margin-top:26px; font-size:clamp(1.15rem,2.4vw,1.6rem); font-weight:600; line-height:1.4; border-left:3px solid var(--cyan); padding-left:20px; color:var(--ink); }
   .big-quote .mk { color:var(--cyan); }
 
@@ -438,7 +496,7 @@
     </span>
     <div class="nav-links">
       <a class="navlink" href="#profile">Profile</a>
-      <a class="navlink" href="#journey">Experience</a>
+      <a class="navlink" href="#experience">Experience</a>
       <a class="navlink" href="#research">Research</a>
       <a class="navlink" href="#projects">Projects</a>
       <a class="navlink" href="#stack">Skills</a>
@@ -533,10 +591,20 @@
   </div>
 </section>
 
-<!-- ============ 04 · RESEARCH & PUBLICATIONS ============ -->
+<!-- ============ 04 · PROFESSIONAL & R&D EXPERIENCE ============ -->
+<section class="step" id="experience" data-step="Experience">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="idx">04</span> · Professional &amp; R&amp;D Experience</span>
+    <h2 class="sec-title reveal">Where I worked, and <em>what I built</em></h2>
+    <p class="sec-sub reveal">Four experiences with exact dates — the project, the problem, my contribution, the stack and the result. Each links to the full project.</p>
+    <div id="xp-timeline" class="reveal d1"><!-- rendered from AHMED_PROFILE.experiences --></div>
+  </div>
+</section>
+
+<!-- ============ 05 · RESEARCH & PUBLICATIONS ============ -->
 <section class="step" id="research" data-step="Research">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">04</span> · Research &amp; Publications</span>
+    <span class="eyebrow reveal"><span class="idx">05</span> · Research &amp; Publications</span>
     <h2 class="sec-title reveal">A <em>research</em> profile, not only projects</h2>
     <p class="sec-sub reveal">One peer-reviewed publication, one manuscript in preparation, and a clear research direction — from knowledge representation to trustworthy generative AI.</p>
 
@@ -595,7 +663,7 @@
 <!-- ============ 05 · SECUREDOCAI ============ -->
 <section class="step flagship" id="securedocai" data-step="SecureDocAI">
   <div class="wrap">
-    <span class="flag-badge reveal"><span class="idx" style="color:var(--faint)">05</span> ◆ FLAGSHIP PROJECT · MANUSCRIPT IN PREPARATION</span>
+    <span class="flag-badge reveal"><span class="idx" style="color:var(--faint)">06</span> ◆ FLAGSHIP PROJECT · MANUSCRIPT IN PREPARATION</span>
     <h2 class="flag-title reveal">SecureDocAI</h2>
     <p class="flag-sub reveal">From Document Intelligence to Trustworthy Generative AI</p>
     <div class="problem-box reveal d1">
@@ -612,15 +680,15 @@
 
       <div id="arch-doc" class="arch-panel">
         <div class="layer-label">Layer 1 — <b>Document Intelligence</b></div>
-        <div class="flowrow" id="flow-doc"></div>
+        <div id="flow-doc"></div>
       </div>
       <div id="arch-sec" class="arch-panel" style="display:none">
         <div class="layer-label">Layer 2 — <b style="color:var(--amber)">Secure AI Governance</b></div>
-        <div class="flowrow" id="flow-sec"></div>
+        <div id="flow-sec"></div>
       </div>
       <div id="arch-eval" class="arch-panel" style="display:none">
-        <div class="layer-label">Evaluation — <b>adversarial &amp; RBAC scenarios</b></div>
-        <div class="flowrow" style="opacity:.9"><span class="node">6,000 scenarios</span><span class="ar">→</span><span class="node">RBAC probes</span><span class="ar">→</span><span class="node">prompt-injection attempts</span><span class="ar">→</span><span class="node">PII/PHI checks</span><span class="ar">→</span><span class="node lit">measured metrics</span></div>
+        <div class="layer-label">Evaluation — <b>500 documents · 5 domains · 6,000 scenarios</b></div>
+        <div id="flow-eval"></div>
       </div>
       <div class="arch-explain" id="arch-explain"></div>
     </div>
@@ -653,7 +721,7 @@
           <span>Evaluation protocol</span><span>Experimental analysis</span><span>Technical documentation</span>
           <span>Scientific manuscript contribution</span>
         </div>
-        <p class="disclaimer">Phrased honestly: I designed and implemented major parts of the system — as part of a research team, not single-handedly.</p>
+        <p class="disclaimer">I designed and implemented major parts of the system as part of the LISTIC research team.</p>
       </div>
       <div id="contrib-tech" style="display:none">
         <div class="stack-cat" style="border:none;padding:0">
@@ -669,7 +737,7 @@
 <!-- ============ 05 · SELECTED AI SYSTEMS ============ -->
 <section class="step" id="projects" data-step="AI Projects">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">06</span> · Selected AI Systems</span>
+    <span class="eyebrow reveal"><span class="idx">07</span> · Selected AI Systems</span>
     <h2 class="sec-title reveal">Systems, not <em>slides</em></h2>
     <p class="sec-sub reveal">Each project is framed the same way — Problem, What I built, My contribution, Technical approach, Results, Takeaway — with a live visualization of how it actually works.</p>
     <div class="show">
@@ -678,8 +746,7 @@
         <button class="show-tab" data-v="v-rag"><span class="t">Graph-RAG — AQUADVISER</span><span class="s">knowledge graph · genAI</span></button>
         <button class="show-tab" data-v="v-agents"><span class="t">Multi-Agent Data Assistant</span><span class="s">controlled agents · SQL</span></button>
         <button class="show-tab" data-v="v-gear"><span class="t">GEAR5 — Green AI</span><span class="s">distillation · efficiency</span></button>
-        <button class="show-tab" data-v="v-nlp"><span class="t">NLP CV–Job Matching</span><span class="s">semantic matching · NLP</span></button>
-        <button class="show-tab" data-v="v-data"><span class="t">Big Data / Streaming</span><span class="s">the data foundation</span></button>
+        <a class="show-tab" href="#securedocai" style="text-decoration:none"><span class="t">SecureDocAI ↑</span><span class="s">flagship · see section 06</span></a>
       </div>
       <div class="show-stage reveal d2">
         <div class="stage-bar"><span class="dt r"></span><span class="dt y"></span><span class="dt g"></span><span class="title" id="stage-title">neurologique_twin.ipynb</span></div>
@@ -763,6 +830,15 @@
       </div>
     </div>
     <div class="proj-info reveal d2" id="proj-info"></div>
+    <div class="reveal d2" style="margin-top:18px">
+      <p class="pipe-title" id="proj-pipe-title"></p>
+      <div id="proj-pipeline"></div>
+    </div>
+
+    <div style="margin-top:34px">
+      <button class="btn ghost js-toggle reveal d1" data-target="more-grid" data-more="＋ More Data &amp; AI Projects" data-less="Hide extra projects">＋ More Data &amp; AI Projects</button>
+      <div id="more-grid" class="more-grid" hidden><!-- rendered from JS --></div>
+    </div>
   </div>
 </section>
 
@@ -777,13 +853,16 @@
       <div class="principle reveal d1"><div class="n">02</div><h4>Baseline before complexity</h4><p>A simple, measurable baseline before agents, graphs or larger models.</p></div>
       <div class="principle reveal d1"><div class="n">03</div><h4>Measure before claiming</h4><p>No result is real until it is quantified on a defined protocol.</p></div>
       <div class="principle reveal d2"><div class="n">04</div><h4>Security by design</h4><p>Access control, provenance and output validation are not afterthoughts.</p></div>
-      <div class="principle reveal d2"><div class="n">05</div><h4>Data quality matters</h4><p>Most model problems are data problems in disguise.</p></div>
-      <div class="principle reveal d2"><div class="n">06</div><h4>Traceability matters</h4><p>Every answer should be explainable back to its source.</p></div>
-      <div class="principle reveal d3"><div class="n">07</div><h4>Human oversight for critical decisions</h4><p>The more critical the decision, the stronger the validation.</p></div>
-      <div class="principle reveal d3"><div class="n">08</div><h4>Build for maintainability</h4><p>Modular, documented systems others can extend safely.</p></div>
-      <div class="principle reveal d3"><div class="n">09</div><h4>Learn by testing</h4><p>Experiments and failure cases teach more than assumptions.</p></div>
-      <div class="principle reveal d4"><div class="n">10</div><h4>Avoid unnecessary complexity</h4><p>The simplest architecture that reliably solves the problem wins.</p></div>
+      <div class="principle reveal d2"><div class="n">05</div><h4>Traceability matters</h4><p>Every answer should be explainable back to its source.</p></div>
+      <div class="principle reveal d2"><div class="n">06</div><h4>Human oversight for critical decisions</h4><p>The more critical the decision, the stronger the validation.</p></div>
+      <div class="principle reveal d3"><div class="n">07</div><h4>Build for maintainability</h4><p>Modular, documented systems others can extend safely.</p></div>
+      <div id="more-principles" hidden>
+        <div class="principle"><div class="n">08</div><h4>Data quality matters</h4><p>Most model problems are data problems in disguise.</p></div>
+        <div class="principle"><div class="n">09</div><h4>Learn by testing</h4><p>Experiments and failure cases teach more than assumptions.</p></div>
+        <div class="principle"><div class="n">10</div><h4>Avoid unnecessary complexity</h4><p>The simplest architecture that reliably solves the problem wins.</p></div>
+      </div>
     </div>
+    <button class="btn ghost reveal d1 js-toggle" data-target="more-principles" data-more="View all principles" data-less="Show fewer" style="font-size:.82rem;padding:8px 16px;margin-top:14px">View all principles</button>
     <blockquote class="big-quote reveal d2"><span class="mk">“</span>I don't use AI because it is fashionable. I use it when it provides measurable value.<span class="mk">”</span></blockquote>
     <blockquote class="big-quote reveal d3" style="border-color:var(--amber); margin-top:16px"><span class="mk" style="color:var(--amber)">“</span>I see AI engineering as a complete system problem: data, models, software, security, evaluation and deployment.<span class="mk" style="color:var(--amber)">”</span></blockquote>
   </div>
@@ -794,7 +873,7 @@
   <div class="wrap">
     <span class="eyebrow reveal"><span class="idx">09</span> · Why Thales</span>
     <h2 class="sec-title reveal">Where my work <em>points</em></h2>
-    <p class="sec-sub reveal">Not corporate flattery — an honest overlap between what I have been building and what I want to explore next.</p>
+    <p class="sec-sub reveal">An honest overlap between what I have been building and what I want to explore next.</p>
     <div class="venn reveal d1">
       <div class="venn-col left">
         <h4>What I have been building</h4>
@@ -816,7 +895,7 @@
     </div>
     <div class="thales-note reveal d2">
       <p>What attracts me is the opportunity to work on AI where <b style="color:var(--cyan)">performance alone is not enough</b> — reliability, security, traceability and human control also matter.</p>
-      <p style="color:var(--muted)">I want to understand how advanced AI research becomes a dependable capability in real industrial and critical systems. <span style="color:var(--faint)">(I don't claim to know your confidential project — I look forward to you explaining it.)</span></p>
+      <p style="color:var(--muted)">I want to understand how advanced AI research becomes a dependable capability in real industrial and critical systems.</p>
       <div class="qcard"><span class="lbl">A question I'd like to ask you</span><p>What technical problem would you want me to work on first?</p></div>
     </div>
 
@@ -865,10 +944,12 @@
           <p class="desc">How each answer is produced — this is exactly how the assistant is built.</p>
           <div class="pipe-steps">
             <div class="pipe-step" data-p="0"><span class="pn">1</span> User question</div>
-            <div class="pipe-step" data-p="1"><span class="pn">2</span> Retrieve Ahmed's portfolio context</div>
-            <div class="pipe-step" data-p="2"><span class="pn">3</span> Prompt construction</div>
-            <div class="pipe-step" data-p="3"><span class="pn">4</span> <span id="pipe-model">Llama 3.2 · local</span></div>
-            <div class="pipe-step" data-p="4"><span class="pn">5</span> Grounded response</div>
+            <div class="pipe-step" data-p="1"><span class="pn">2</span> Intent analysis</div>
+            <div class="pipe-step" data-p="2"><span class="pn">3</span> Profile retrieval</div>
+            <div class="pipe-step" data-p="3"><span class="pn">4</span> Relevant Ahmed context</div>
+            <div class="pipe-step" data-p="4"><span class="pn">5</span> Prompt construction</div>
+            <div class="pipe-step" data-p="5"><span class="pn">6</span> <span id="pipe-model">Llama 3.2 · local</span></div>
+            <div class="pipe-step" data-p="6"><span class="pn">7</span> Grounded answer</div>
           </div>
         </div>
         <div class="askme reveal d2">
@@ -885,7 +966,7 @@
 <!-- ===== Tech stack (regular section) ===== -->
 <section class="step" id="stack" data-step="Technical Foundations" style="min-height:auto">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">07</span> · Technical Foundations</span>
+    <span class="eyebrow reveal"><span class="idx">11</span> · Technical Foundations</span>
     <h2 class="sec-title reveal">Organized by <em>architecture layer</em></h2>
     <p class="sec-sub reveal">Not a logo wall. Tools are not the goal — architecture and measurable value are.</p>
     <div class="stack-grid">
@@ -903,50 +984,57 @@
 <!-- ===== How I Work (soft skills) ===== -->
 <section class="step" id="howiwork" data-step="How I Work" style="min-height:auto">
   <div class="wrap">
-    <span class="eyebrow reveal">How I Work</span>
+    <span class="eyebrow reveal"><span class="idx">12</span> · How I Work</span>
     <h2 class="sec-title reveal">Soft skills, as <em>behaviors</em></h2>
     <p class="sec-sub reveal">Not a list of adjectives — how I actually work on technical problems and in a team.</p>
     <div class="grid3">
-      <div class="card pillar reveal d1"><h3>Curiosity</h3><p>I like understanding how a system works beyond the surface and exploring alternative technical approaches.</p></div>
-      <div class="card pillar reveal d1"><h3>Analytical thinking</h3><p>I break complex problems into smaller components, define measurable objectives and compare solutions using evidence.</p></div>
-      <div class="card pillar reveal d1"><h3>Rigor</h3><p>I value reproducible experiments, validation, testing and clear documentation.</p></div>
-      <div class="card pillar reveal d2"><h3>Autonomy</h3><p>I can independently investigate a problem, prototype a solution and recognize when expert feedback is needed.</p></div>
-      <div class="card pillar reveal d2"><h3>Fast learning</h3><p>I am comfortable picking up new frameworks, domains and concepts when a project requires them.</p></div>
-      <div class="card pillar reveal d2"><h3>Communication</h3><p>I can explain technical architectures and results to both technical and non-technical audiences.</p></div>
-      <div class="card pillar reveal d3"><h3>Teamwork</h3><p>I value technical discussion, code review, feedback and collaborative problem solving.</p></div>
-      <div class="card pillar reveal d3"><h3>Adaptability</h3><p>I have worked across Data Analytics, Knowledge Graphs, Deep Learning, Generative AI and secure AI systems.</p></div>
-      <div class="card pillar reveal d3"><h3>Problem solving</h3><p>I focus on understanding the underlying problem before choosing a technology.</p></div>
+      <div class="card pillar reveal d1"><h3>Curiosity</h3><p>I like understanding systems beyond the surface.</p></div>
+      <div class="card pillar reveal d1"><h3>Analytical thinking</h3><p>I break complex problems into measurable components.</p></div>
+      <div class="card pillar reveal d1"><h3>Rigor</h3><p>I value reproducible experiments, testing and documentation.</p></div>
+      <div class="card pillar reveal d2"><h3>Autonomy</h3><p>I investigate and prototype independently, while knowing when expert feedback is needed.</p></div>
+      <div class="card pillar reveal d2"><h3>Communication &amp; teamwork</h3><p>I explain technical decisions clearly and collaborate around feedback and shared objectives.</p></div>
+      <div class="card pillar reveal d2"><h3>Adaptability</h3><p>I have worked across Data Analytics, Knowledge Graphs, Deep Learning, Generative AI and secure AI systems.</p></div>
     </div>
     <div class="highlight-line reveal d2"><b style="color:var(--cyan)">Engineering pragmatism</b> — I prefer the simplest architecture that reliably solves the problem, and add complexity only when it provides measurable value.</div>
   </div>
 </section>
 
 <!-- ===== Education + Innov'Boost (regular section) ===== -->
+<!-- ============ 08 · HACKATHONS & AWARDS ============ -->
+<section class="step" id="hackathons" data-step="Hackathons & Awards" style="min-height:auto">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="idx">13</span> · Hackathons &amp; Awards</span>
+    <h2 class="sec-title reveal">Building under <em>pressure</em></h2>
+    <p class="sec-sub reveal">A national prize and two focused hackathons — evidence of fast prototyping and delivery.</p>
+    <div class="card reveal d1" style="border-left:3px solid var(--amber);margin-bottom:20px">
+      <div class="flag-badge"><span class="idx" style="color:var(--faint)">🏆</span> 2ND PRIZE · INNOV'BOOST 2025</div>
+      <h3 style="margin:8px 0 4px;font-size:1.2rem">NeurologiqueTWIN</h3>
+      <p style="color:var(--muted);margin:0;font-size:.92rem">The Startups Competition, Forum ENSAJ Entreprises (ENSA El Jadida) — multimodal EEG + IMU AI for neurological monitoring.</p>
+    </div>
+    <div class="gallery reveal d1" style="margin-bottom:24px">
+      <figure class="shot"><img loading="lazy" src="photos/innov-remise-prix.jpg" alt="Ahmed at the Innov'Boost 2025 award ceremony receiving 2nd Prize"><figcaption>Award ceremony — 2nd Prize</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="photos/innov-pitch.jpg" alt="Ahmed pitching the NeurologiqueTWIN project at Innov'Boost 2025"><figcaption>Pitch — NeurologiqueTWIN</figcaption></figure>
+      <figure class="shot"><img loading="lazy" src="photos/innov-projet.jpg" alt="NeurologiqueTWIN project presentation at Innov'Boost 2025"><figcaption>Project presentation</figcaption></figure>
+    </div>
+    <div class="grid2">
+      <div class="card reveal d2"><div class="xp-role">Open Data Hackathon 2025 · Digital Health</div><h4 style="margin:4px 0 6px">Santeo</h4><p style="color:var(--muted);margin:0;font-size:.9rem">An application combining open data and AI agents to improve access to healthcare services.</p></div>
+      <div class="card reveal d2"><div class="xp-role">Pwned Hackathon · Cybersecurity &amp; AI</div><h4 style="margin:4px 0 6px">Security &amp; rapid prototyping</h4><p style="color:var(--muted);margin:0;font-size:.9rem">Security analysis and rapid prototyping / development under time constraints.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 · EDUCATION & CERTIFICATIONS ============ -->
 <section class="step" id="education" data-step="Education" style="min-height:auto">
   <div class="wrap">
-    <span class="eyebrow reveal">Recognition · research · education</span>
-    <h2 class="sec-title reveal">Achievements &amp; <em>credentials</em></h2>
-    <p class="sec-sub reveal">A national hackathon prize, a research contribution, an engineering degree and an ongoing Advanced Master®.</p>
-    <div class="grid2 reveal d1" style="margin-bottom:22px">
-      <div class="edu-card" style="border-left:3px solid var(--amber)"><div class="d" style="color:var(--amber)">🏆 Hackathon — 2025</div><h4>2nd Prize — Innov'Boost 2025</h4><p>The Startups Competition, Forum ENSAJ Entreprises (ENSA El Jadida), for <b style="color:var(--ink)">NeurologiqueTWIN</b>.</p></div>
-      <div class="edu-card" style="border-left:3px solid var(--cyan)"><div class="d">📄 Research — 2026</div><h4>Scientific manuscript contribution</h4><p>Contributed to the SecureDocAI research work at LISTIC (Université Savoie Mont Blanc) — experimental protocol, analysis and technical writing.</p></div>
-    </div>
-    <div class="gallery reveal d1" style="margin-bottom:26px">
-      <figure class="shot"><img src="photos/innov-remise-prix.jpg" alt="Award ceremony — Innov'Boost 2025"><figcaption>Award ceremony — 2nd Prize</figcaption></figure>
-      <figure class="shot"><img src="photos/innov-pitch.jpg" alt="Pitch — Innov'Boost 2025"><figcaption>Pitch — NeurologiqueTWIN</figcaption></figure>
-      <figure class="shot"><img src="photos/innov-projet.jpg" alt="Project presentation — Innov'Boost 2025"><figcaption>Project presentation</figcaption></figure>
-    </div>
+    <span class="eyebrow reveal"><span class="idx">14</span> · Education &amp; Certifications</span>
+    <h2 class="sec-title reveal">Education &amp; <em>credentials</em></h2>
     <div class="edu-grid">
-      <div class="edu-card reveal d1"><div class="d">2026</div><h4>Engineering Degree — Computer Science &amp; Emerging Technologies</h4><p>ENSA El Jadida. Obtained June 2026.</p></div>
+      <div class="edu-card reveal d1"><div class="d">June 2026</div><h4>Engineering Degree — Computer Science &amp; Emerging Technologies</h4><p>ENSA El Jadida.</p></div>
       <div class="edu-card reveal d2"><div class="d">2026 → 2027</div><h4>Advanced Master® — Data &amp; Generative AI Engineering</h4><p>EFREI Paris. Apprenticeship: 2 weeks company / 1 week school.</p></div>
     </div>
-    <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:22px 0 10px">Technical activities</h4>
+    <p class="sec-sub reveal d2" style="margin:16px 0 0;font-size:.9rem">Plus verifiable certifications in cloud, data and Python.</p>
+    <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:20px 0 10px">Languages</h4>
     <div class="lang-row reveal d2" style="margin-top:0">
-      <span class="lang"><b>🏆 Innov'Boost 2025</b> — 2nd Prize · NeurologiqueTWIN</span>
-      <span class="lang"><b>Open Data Hackathon 2025</b> — Digital Health · Santeo</span>
-      <span class="lang"><b>Pwned Hackathon</b> — Cybersecurity &amp; AI</span>
-    </div>
-    <div class="lang-row reveal d2">
       <span class="lang"><b>Arabic</b> — native / bilingual</span>
       <span class="lang"><b>French</b> — C1</span>
       <span class="lang"><b>English</b> — C1</span>
@@ -957,7 +1045,7 @@
 <!-- ============ 09 · LET'S TALK ============ -->
 <section class="step closing" id="contact" data-step="Let's Talk">
   <div class="wrap">
-    <span class="eyebrow reveal" style="margin-left:auto;margin-right:auto"><span class="idx">11</span> · Let's Talk</span>
+    <span class="eyebrow reveal" style="margin-left:auto;margin-right:auto"><span class="idx">15</span> · Let's Talk</span>
     <h2 class="reveal">Let's build AI that can be <em>trusted</em>.</h2>
     <p class="who reveal d1"><b>Ahmed Moubarak Lahlyal</b> · AI &amp; Data Engineer</p>
     <p class="who reveal d1">Advanced Master® — Data &amp; Generative AI Engineering · EFREI Paris</p>

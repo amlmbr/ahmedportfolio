@@ -16,6 +16,101 @@ window.AHMED_PROFILE = {
     github: 'https://github.com/amlmbr'
   },
 
+  // ---- Professional & R&D experience (rendered as a timeline) ----
+  experiences: [
+    {
+      id: 'listic', org: 'LISTIC Laboratory', sub: 'Université Savoie Mont Blanc / Polytech Annecy-Chambéry',
+      location: 'Annecy, France', start: 'Feb 2026', end: 'Jul 2026', current: true,
+      role: 'Final-Year R&D Internship — Secure Document AI, LLMs & Agentic Security',
+      project: 'SecureDocAI', target: 'securedocai',
+      problem: 'How can an organization use LLMs over sensitive documents without giving every user access to everything?',
+      worked: ['Document ingestion & OCR / native PDF parsing', 'Information extraction → canonical JSON', 'PII / PHI detection & protected storage', 'Vector index + Knowledge Graph, RAG / Graph-RAG', 'Agent orchestration, RBAC, prompt-injection & jailbreak filtering', 'Secure retrieval, output validation, risk classification', 'FastAPI services, Docker, evaluation & scientific writing'],
+      contribution: 'I designed and implemented major parts of the end-to-end system as part of the LISTIC research team — from document processing and knowledge retrieval to security mechanisms, LLM orchestration and experimental evaluation.',
+      tech: ['Python', 'FastAPI', 'LangGraph', 'CrewAI', 'LangChain', 'RAG', 'Graph-RAG', 'Neo4j', 'ChromaDB', 'Presidio', 'SBERT', 'XGBoost', 'OCR', 'Docker'],
+      result: '500 documents · 6,000 scenarios · 97.8% RBAC compliance · 95% authorized utility · leakage 15.39% → 0.21% · PII/PHI micro-F1 0.96 · ROC-AUC 0.98.',
+      takeaway: 'For sensitive AI, access control, provenance and output validation cannot be afterthoughts.'
+    },
+    {
+      id: 'um6p', org: 'Mohammed VI Polytechnic University (UM6P)', sub: 'Smart Data Analysis Systems Research Group',
+      location: 'Morocco', start: 'Jul 2025', end: 'Oct 2025',
+      role: 'Research Internship — Multimodal AI & Biomedical Time Series',
+      project: 'NeurologiqueTWIN', target: 'projects',
+      problem: 'How can heterogeneous EEG and IMU signals be combined to support neurological monitoring and early-event prediction?',
+      worked: ['EEG & IMU signal cleaning and synchronization', 'Segmentation / windowing & time-series representation', 'Feature extraction', 'Deep learning: CNN architectures + attention', 'Multimodal learning', 'Real-time monitoring & risk indicators', 'Digital-twin visualization'],
+      contribution: 'Designed and implemented the experimental pipeline for preprocessing, synchronizing and modelling multimodal EEG/IMU signals, and developed the deep-learning and visualization components for neurological monitoring.',
+      tech: ['Python', 'PyTorch', 'TensorFlow', 'scikit-learn', 'Pandas', 'NumPy', 'CNN', 'Attention', 'EEG', 'IMU', 'Streamlit'],
+      result: '≈92% internal classification accuracy · 6–10 pp improvement in pre-crisis recall · 2nd Prize Innov\'Boost 2025.',
+      takeaway: 'In multimodal AI, synchronization and signal quality can matter as much as model architecture.'
+    },
+    {
+      id: 'aquadviser', org: 'AQUADVISER', sub: 'Data Science Internship',
+      location: '', start: 'May 2025', end: 'Jul 2025',
+      role: 'Data Science Internship — Graph-RAG & Knowledge Graphs',
+      project: 'Graph-RAG Decision Support', target: 'projects',
+      problem: 'How can business information be retrieved using both semantic similarity and the explicit relationships between entities?',
+      worked: ['Data ingestion & cleaning', 'Entity & relationship modelling', 'Neo4j knowledge graph construction', 'Vector embeddings & semantic search', 'Graph traversal & hybrid retrieval', 'LLM integration (RAG / Graph-RAG)', 'FastAPI, provenance & traceability, architecture documentation'],
+      contribution: 'Developed a Graph-RAG architecture combining semantic vector retrieval with knowledge-graph relationships to produce more contextual and traceable decision-support responses.',
+      tech: ['Python', 'FastAPI', 'Neo4j', 'Embeddings', 'Vector Search', 'SQL', 'LLMs', 'RAG', 'Graph-RAG'],
+      result: 'Grounded, source-attributed answers that use both similarity and explicit relationships.',
+      takeaway: 'Vector similarity and explicit graph relationships solve different retrieval problems and can complement each other.'
+    },
+    {
+      id: 'ocp', org: 'OCP Group', sub: 'Software Development & Data Analytics Internship',
+      location: 'Morocco', start: 'Jul 2024', end: 'Aug 2024',
+      role: 'Software Development & Data Analytics Internship — the data foundation',
+      project: 'Survey & Analytics Platform', target: 'projects',
+      problem: 'Transform collected business information into structured data, operational indicators and decision-support reporting.',
+      worked: ['Web application development', 'Data collection', 'SQL database design', 'Data analysis & KPIs', 'Operational reporting & dashboards', 'Data visualization'],
+      contribution: 'Developed a web-based survey and analytics platform connected to a SQL database and created operational indicators and reporting views.',
+      tech: ['SQL', 'Web Development', 'Data Visualization', 'KPI Design', 'Reporting'],
+      result: 'A working survey → SQL → KPI reporting platform.',
+      takeaway: 'This experience gave me the data and software foundations that later supported my Machine Learning and AI projects.'
+    }
+  ],
+
+  // ---- Reusable animated pipelines (nodes; t = optional tooltip; branch = parallel pair) ----
+  pipelines: {
+    'securedocai-doc': { title: 'Document Intelligence', accent: 'cyan', nodes: [
+      { l: 'Documents' }, { l: 'OCR / Native PDF Parsing', t: 'Scanned pages are OCR-ed; native PDFs are parsed directly.' }, { l: 'Layout Analysis', t: 'Detects structure — headings, tables, sections.' }, { l: 'Document Profiling' }, { l: 'Language / Domain Routing', t: 'Routes each document to the right domain pipeline.' }, { l: 'Information Extraction' }, { l: 'Canonical JSON', t: 'Heterogeneous documents become one normalized schema.' }, { l: 'PII / PHI Detection', t: 'Sensitive personal / health data is detected and tagged.' }, { l: 'Protected Storage' }, { l: 'Vector Index' }, { l: 'Knowledge Graph', t: 'Explicit entities and relationships for relationship-aware retrieval.' }
+    ] },
+    'securedocai-sec': { title: 'Secure AI Governance', accent: 'amber', nodes: [
+      { l: 'User Query' }, { l: 'Authenticated Role', t: "The user's verified role drives what they may access." }, { l: 'Security Guard' }, { l: 'Injection / Jailbreak Detection', t: 'Adversarial prompts are detected and filtered.' }, { l: 'Session / Query Risk Analysis' }, { l: 'Policy Filtering' }, { l: 'Authorized Retrieval', t: "Only information permitted by the user's role and policy enters the context." }, { l: 'Context Minimization', t: 'The prompt is reduced to the minimum needed to answer.' }, { l: 'Controlled LLM' }, { l: 'Output Firewall', t: 'The generated answer is checked before it leaves the system.' }, { l: 'Final Validation' }, { l: 'Audited Answer' }
+    ] },
+    'securedocai-eval': { title: 'Evaluation', accent: 'cyan', nodes: [
+      { l: '500 Documents' }, { l: '5 Domains' }, { l: '6,000 Scenarios' }, { l: 'Normal Queries' }, { l: 'Sensitive Queries' }, { l: 'Adversarial Queries' }, { l: 'RBAC Tests' }, { l: 'PII / PHI Tests' }, { l: 'Leakage Evaluation' }, { l: 'Utility Evaluation' }, { l: 'Final Metrics' }
+    ] },
+    'neurologiquetwin': { title: 'EEG + IMU → Digital Twin', accent: 'cyan', nodes: [
+      { l: 'EEG + IMU Signals' }, { l: 'Signal Cleaning' }, { l: 'Temporal Synchronization' }, { l: 'Segmentation / Windowing' }, { l: 'Feature Extraction' }, { l: 'CNN + Attention' }, { l: 'Risk / Event Classification' }, { l: 'Real-Time Monitoring' }, { l: 'Digital Twin' }
+    ] },
+    'graphrag': { title: 'Hybrid Graph-RAG', accent: 'cyan', nodes: [
+      { l: 'Domain Data' }, { l: 'Ingestion & Cleaning' }, { l: 'Entity + Relationship Modelling' }, { branch: ['Neo4j Knowledge Graph', 'Embeddings / Vector Retrieval'] }, { l: 'Hybrid Retrieval' }, { l: 'Context Fusion' }, { l: 'LLM' }, { l: 'Traceable Answer' }
+    ] },
+    'multiagent': { title: 'Controlled Agent Workflow', accent: 'cyan', nodes: [
+      { l: 'Business Question' }, { l: 'Understanding Agent' }, { l: 'SQL Generation Agent' }, { l: 'Consistency / Safety Check' }, { l: 'Controlled Execution' }, { l: 'KPI Computation' }, { l: 'Visualization' }, { l: 'NL Synthesis' }, { l: 'Human Validation' }
+    ] },
+    'gear5': { title: 'Teacher → Student Distillation', accent: 'amber', nodes: [
+      { l: 'Dataset' }, { l: 'Shared Tokenization' }, { l: 'TinyLLaMA Teacher' }, { l: 'Teacher Signals' }, { l: 'Adaptive Multi-Signal Gating', t: 'Gates on confidence, token cross-entropy, sequence difficulty and energy budget.' }, { l: 'DistilGPT2 Student' }, { l: 'Knowledge Distillation' }, { l: 'INT8 Quantization' }, { l: 'Evaluation' }
+    ] },
+    'forex': { title: 'Big Data + RL Trading', accent: 'cyan', nodes: [
+      { l: 'Market Data' }, { l: 'Kafka Streams' }, { l: 'Spark Processing' }, { l: 'Feature Engineering' }, { l: 'NoSQL Storage' }, { l: 'Forecasting Models', t: 'LSTM, RNN, Random Forest.' }, { l: 'RL Trading Agents' }, { l: 'Risk Constraints' }, { l: 'Dashboard' }
+    ] },
+    'swim': { title: 'Vision + Sensor Fusion', accent: 'cyan', nodes: [
+      { l: 'Cameras + Wearable Sensors' }, { l: 'Pose / Key-Point Detection' }, { l: 'Lane-to-Athlete Association' }, { l: 'Sensor Fusion' }, { l: 'Movement Analysis' }, { l: 'Technical Indicators' }, { l: 'Automated Feedback' }, { l: 'Digital Twin' }
+    ] },
+    'ecommerce': { title: 'Real-Time E-commerce', accent: 'cyan', nodes: [
+      { l: 'Customer Events' }, { l: 'Kafka' }, { l: 'Spark Streaming' }, { l: 'Session / Basket Transforms' }, { l: 'PostgreSQL' }, { l: 'Business KPIs' }, { l: 'Superset Dashboard' }
+    ] },
+    'cvjob': { title: 'Semantic Matching', accent: 'cyan', nodes: [
+      { l: 'CV + Job Description' }, { l: 'Text Processing' }, { l: 'Skill Extraction' }, { branch: ['TF-IDF', 'SBERT Embeddings'] }, { l: 'Similarity Scoring' }, { l: 'Candidate Ranking' }, { l: 'Explainable Match Score' }, { l: 'Interface' }
+    ] },
+    'flightdelay': { title: 'ETL → BI', accent: 'amber', nodes: [
+      { l: '500k+ Flight Records' }, { l: 'Talend ETL' }, { l: 'Data Quality' }, { l: 'Transformations' }, { l: 'MySQL' }, { l: 'Analytical Model' }, { l: 'BI Dashboards' }, { l: 'Delay KPIs / Bottlenecks' }
+    ] },
+    'ahmedai': { title: 'Profile-grounded AI', accent: 'cyan', nodes: [
+      { l: 'User Question' }, { l: 'Intent Analysis' }, { l: 'Profile Retrieval' }, { l: 'Relevant Ahmed Context' }, { l: 'Prompt Construction' }, { l: 'Llama 3.2' }, { l: 'Grounded Answer' }
+    ] }
+  },
+
   // ---- Retrieval corpus: each entry is one grounding unit ----
   // group is used to assemble balanced overviews; kw drives lexical retrieval.
   sections: [
@@ -29,14 +124,14 @@ window.AHMED_PROFILE = {
       text: 'Ahmed is starting the Advanced Master at EFREI Paris (2026–2027) on a work-study contract: 2 weeks in the company and 1 week at school — strong continuity on real engineering work with a regular academic anchor.' },
 
     // Professional / research experiences
-    { id: 'exp-ocp', group: 'experience', kw: 'ocp group data analytics analyst industrial reporting sql dashboard 2024 experience',
-      text: 'OCP Group (2024) — Data Analytics & Software in a large industrial environment: SQL, analytics, dashboards and reporting. This is an industrial data / analytics experience (not a research internship).' },
-    { id: 'exp-aquadviser', group: 'experience research', kw: 'aquadviser graph rag knowledge graph neo4j retrieval hybrid embeddings 2025 experience knowledge representation',
-      text: 'AQUADVISER (2025) — Knowledge representation and Graph-RAG: built a hybrid retrieval assistant combining vector embeddings and a Neo4j knowledge graph with LLMs, served via FastAPI, to answer business questions with sourced, relationship-aware answers.' },
-    { id: 'exp-um6p', group: 'experience research', kw: 'um6p research multimodal eeg imu deep learning digital twin signals 2025 experience neurologiquetwin sdas',
-      text: 'UM6P — SDAS Research Group (2025) — Multimodal AI research: NeurologiqueTWIN, a digital-twin project fusing EEG brain signals and IMU motion signals with deep learning for neurological monitoring (≈92% internal accuracy; 2nd Prize Innov\'Boost 2025).' },
-    { id: 'exp-listic', group: 'experience research', kw: 'listic universite savoie mont blanc polytech annecy chambery secure document ai research 2026 experience trustworthy',
-      text: 'LISTIC Laboratory, Université Savoie Mont Blanc / Polytech Annecy-Chambéry (2026) — Trustworthy generative AI research: SecureDocAI, secure document intelligence and controlled LLM-based information access over sensitive documents. Scientific manuscript in preparation with Faiza Loukil and Hervé Verjus.' },
+    { id: 'exp-ocp', group: 'experience', kw: 'ocp group data analytics analyst industrial reporting sql dashboard 2024 experience when dates software web survey',
+      text: 'OCP Group (Jul 2024 – Aug 2024) — Software Development & Data Analytics internship in a large industrial environment. Ahmed built a web-based survey and analytics platform connected to a SQL database, with KPIs, operational reporting and dashboards. This is his data / software foundation — an industrial experience, not a research internship.' },
+    { id: 'exp-aquadviser', group: 'experience research', kw: 'aquadviser graph rag knowledge graph neo4j retrieval hybrid embeddings 2025 experience knowledge representation when dates data science',
+      text: 'AQUADVISER (May 2025 – Jul 2025) — Data Science internship on knowledge representation and Graph-RAG: Ahmed built a hybrid retrieval architecture combining vector embeddings and a Neo4j knowledge graph with LLMs, served via FastAPI, for traceable decision-support answers.' },
+    { id: 'exp-um6p', group: 'experience research', kw: 'um6p research multimodal eeg imu deep learning digital twin signals 2025 experience neurologiquetwin sdas when dates mohammed vi',
+      text: 'UM6P — Smart Data Analysis Systems Research Group (Jul 2025 – Oct 2025) — Research internship in multimodal AI & biomedical time series: NeurologiqueTWIN, fusing EEG and IMU signals with deep learning (CNN + attention) for neurological monitoring and early-event prediction (≈92% internal accuracy; 6–10 pp pre-crisis recall improvement; 2nd Prize Innov\'Boost 2025).' },
+    { id: 'exp-listic', group: 'experience research', kw: 'listic universite savoie mont blanc polytech annecy chambery secure document ai research 2026 experience trustworthy when dates final year internship',
+      text: 'LISTIC Laboratory, Université Savoie Mont Blanc / Polytech Annecy-Chambéry, Annecy (Feb 2026 – Jul 2026) — Final-year R&D internship on secure document AI, LLMs & agentic security: SecureDocAI. Ahmed designed and implemented major parts of the end-to-end system. Scientific manuscript in preparation with Faiza Loukil and Hervé Verjus.' },
 
     // Research
     { id: 'research-interests', group: 'research', kw: 'research interests focus topics areas explore studying',
@@ -65,14 +160,14 @@ window.AHMED_PROFILE = {
       text: 'NLP CV–Job Matching — matches CVs to job offers by meaning and recommends the most relevant offers per CV: NER extraction, hybrid TF-IDF + SBERT scoring, cosine-similarity ranking (Top-5). About 95% matching precision. Lesson: combining TF-IDF and embeddings balances exact-term overlap with meaning.' },
     { id: 'proj-bigdata', group: 'projects data', kw: 'big data streaming kafka spark hadoop hdfs hive etl elt nosql pipeline data engineering docker',
       text: 'Big Data / Streaming — streaming ingestion and processing with Kafka and Spark, ETL/ELT into NoSQL stores, containerized with Docker: the data foundation under Ahmed\'s AI systems. Lesson: models are only as reliable as the pipelines feeding them.' },
-    { id: 'proj-forex', group: 'projects data', kw: 'forex big data financial market exchange spark streaming pipeline',
-      text: 'Forex Big Data — a big-data project processing large-scale foreign-exchange (Forex) market data with Spark/streaming pipelines. (Data-engineering / Big Data project.)' },
-    { id: 'proj-ecommerce', group: 'projects data', kw: 'ecommerce streaming real time events kafka spark nosql pipeline',
-      text: 'E-commerce Streaming — a real-time streaming pipeline processing e-commerce events with Kafka and Spark Streaming into NoSQL storage. (Data-engineering project.)' },
-    { id: 'proj-swim', group: 'projects', kw: 'swim coach vision computer vision video pose opencv movement technique deep learning',
-      text: 'Swim Coach Vision — a computer-vision project analyzing swimming movement/technique from video (OpenCV, deep learning). (Computer-vision project.)' },
-    { id: 'proj-flightbi', group: 'projects', kw: 'flight delay prediction machine learning bi power bi scikit classification forecasting visualization',
-      text: 'Flight Delay Prediction (BI) — a machine-learning + business-intelligence project predicting flight delays and visualizing results (scikit-learn, Power BI, SQL).' },
+    { id: 'proj-forex', group: 'projects data', kw: 'forex trading big data financial market exchange kafka spark streaming reinforcement learning lstm rnn random forest forecasting mongodb cassandra',
+      text: 'Forex Trading Platform — Big Data, forecasting and reinforcement learning: market data → Kafka streams → Spark processing → feature engineering → NoSQL storage → forecasting models (LSTM, RNN, Random Forest) → RL trading agents (buy/hold/sell) under risk constraints → dashboard (P&L, risk metrics, market indicators). Tech: Python, Kafka, Spark, TensorFlow, scikit-learn, MongoDB/Cassandra, Streamlit.' },
+    { id: 'proj-ecommerce', group: 'projects data', kw: 'ecommerce streaming real time events kafka spark postgresql superset sessions baskets conversions pipeline docker',
+      text: 'Real-Time E-commerce Pipeline — customer events → Kafka → Spark Streaming → session/basket transformations → PostgreSQL → business KPIs → Superset dashboard (sessions, baskets, conversions, marketing/pricing/inventory indicators). Tech: Kafka, Spark Streaming, PostgreSQL, Superset, Docker.' },
+    { id: 'proj-swim', group: 'projects', kw: 'swimcoach vision computer vision video pose opencv movement sensor fusion digital twin omniverse stroke',
+      text: 'SwimCoach Vision — computer vision, sensor fusion and digital twin: overhead cameras + wearable sensors → pose/key-point detection → lane-to-athlete association → sensor fusion → movement analysis → technical indicators (stroke symmetry, head position, entry angle, anomalies) → automated feedback → digital-twin visualization. Tech: Python, OpenCV, pose estimation, sensor fusion, digital twins.' },
+    { id: 'proj-flightbi', group: 'projects', kw: 'flight delay analytics machine learning bi looker studio talend mysql etl data quality dashboard 500000 records',
+      text: 'Flight Delay Analytics — Data & BI: 500,000+ flight records → Talend ETL → data quality → transformations → MySQL → analytical model → BI dashboards → delay KPIs / bottleneck analysis. Tech: Talend, MySQL, Looker Studio, ETL, data quality, BI. Shows Ahmed\'s strong data / BI foundations.' },
 
     // Skills
     { id: 'skills-ai', group: 'skills', kw: 'machine learning deep learning skills python pytorch tensorflow scikit xgboost cnn attention classification forecasting anomaly model evaluation',
@@ -127,8 +222,14 @@ window.AHMED_PROFILE = {
       a: 'At **UM6P** (SDAS Research Group, 2025) Ahmed built **NeurologiqueTWIN** — a multimodal / digital-twin project fusing **EEG + IMU** signals with deep learning for neurological monitoring (≈92% internal accuracy; **2nd Prize Innov\'Boost 2025**).' },
     { id: 'aquadviser', keys: 'aquadviser graph rag knowledge graph neo4j',
       a: 'At **AQUADVISER** (2025) Ahmed built a **Graph-RAG** assistant combining vector embeddings, a **Neo4j** knowledge graph and LLMs (FastAPI) to answer business questions with sourced, relationship-aware answers.' },
-    { id: 'ocp', keys: 'ocp group industrial analytics 2024',
-      a: 'At **OCP Group** (2024) Ahmed did **Data Analytics & Software** in a large industrial environment — SQL, analytics, dashboards and reporting. This is an **industrial data / analytics** experience (not a research internship).' },
+    { id: 'ocp', keys: 'ocp group industrial analytics 2024 software web survey',
+      a: 'At **OCP Group** (**Jul 2024 – Aug 2024**) Ahmed did a **Software Development & Data Analytics** internship — he built a web-based survey & analytics platform on a SQL database with KPIs, reporting and dashboards. This is his **data / software foundation** (an industrial experience, not research).' },
+    { id: 'dates', keys: 'when dates start end period years worked timeline how long',
+      a: 'Ahmed\'s experience dates: **OCP Group** — Jul 2024 → Aug 2024; **AQUADVISER** — May 2025 → Jul 2025; **UM6P** (SDAS Research Group) — Jul 2025 → Oct 2025; **LISTIC** (Université Savoie Mont Blanc / Polytech Annecy-Chambéry) — Feb 2026 → Jul 2026. Next: **EFREI Paris** Advanced Master (2026–2027, apprenticeship 2 weeks company / 1 week school).' },
+    { id: 'kafka', keys: 'kafka spark streaming which projects use big data pipelines',
+      a: 'Ahmed uses **Kafka** in his streaming/Big-Data projects: the **Forex Trading Platform** (Kafka → Spark → forecasting + RL agents), the **Real-Time E-commerce Pipeline** (Kafka → Spark Streaming → PostgreSQL → Superset) and his general **Big Data / streaming** work. He also uses Spark, Hadoop/HDFS/Hive and ETL/ELT.' },
+    { id: 'multiagent', keys: 'multi agent assistant project langgraph crewai controlled workflow',
+      a: 'Ahmed\'s **Intelligent Multi-Agent Data Assistant** turns a business question into an **auditable** workflow: understanding agent → SQL generation agent → consistency/safety check → controlled execution → KPI computation → visualization → natural-language synthesis → human validation (LangGraph, CrewAI, LangChain, SQL, FastAPI, Streamlit). He prefers **explicit, controlled** agent workflows over uncontrolled autonomy.' },
     { id: 'deeplearning', keys: 'deep learning neural network cnn pytorch',
       a: 'Yes. Ahmed\'s **deep-learning** work includes **NeurologiqueTWIN** (UM6P — EEG/IMU, CNN + attention, PyTorch), **GEAR5** (knowledge distillation, quantization) and deep-learning components in **SecureDocAI**. He also works with computer vision (Swim Coach Vision).' },
     { id: 'genai', keys: 'generative ai llm llms genai',
