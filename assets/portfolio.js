@@ -648,7 +648,7 @@
       { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Who I Am' },
       { id: 'experience', label: 'Experience' }, { id: 'research', label: 'Research & Publications' }, { id: 'securedocai', label: 'SecureDocAI' },
       { id: 'projects', label: 'AI Projects' }, { id: 'hackathons', label: 'Hackathons & Awards' }, { id: 'mindset', label: 'Engineering Mindset' },
-      { id: 'thales', label: 'Why Thales' }, { id: 'assistant', label: 'Ahmed AI' }, { id: 'stack', label: 'Technical Foundations' }, { id: 'contact', label: "Let's Talk" }
+      { id: 'thales', label: 'Why Thales' }, { id: 'stack', label: 'Technical Foundations' }, { id: 'assistant', label: 'Ahmed AI' }
     ];
     var HINTS = {
       intro: ['Open with the one-line: data → deployment, with security in mind.', 'Point at the chips: LLMs, RAG/Graph-RAG, KGs, Agentic, Secure AI.', 'Note: graduating 2026, EFREI Advanced Master, 2w/1w apprenticeship.'],

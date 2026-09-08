@@ -562,7 +562,14 @@
   .ask-them .qc p { margin:8px 0 0; font-size:.9rem; }
   .thanks { margin-top:30px; font-family:var(--mono); color:var(--faint); letter-spacing:.1em; }
 
-  footer.legal { padding:26px 0; text-align:center; color:var(--faint); font-size:.78rem; }
+  footer.legal { padding:22px 0 32px; color:var(--faint); font-size:.82rem; border-top:1px solid var(--line); }
+  .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .footer-inner .foot-name b { color:var(--ink); }
+  .footer-links { display:flex; gap:8px; flex-wrap:wrap; }
+  .footer-links a { color:var(--muted); border:1px solid var(--line2); border-radius:999px; padding:7px 15px; font-weight:600; font-size:.82rem; }
+  .footer-links a:hover { color:var(--cyan); border-color:var(--cyan); }
+  .foot-copy { color:var(--faint); font-family:var(--mono); font-size:.76rem; }
+  @media(max-width:560px){ .footer-inner { flex-direction:column; text-align:center; } }
 
   /* ===== Lightbox ===== */
   .lightbox { position:fixed; inset:0; z-index:200; background:rgba(4,8,12,.92); display:none; align-items:center; justify-content:center; flex-direction:column; padding:30px; }
@@ -1103,7 +1110,12 @@
       <figure class="shot"><img loading="lazy" src="photos/innov-projet.jpg" alt="NeurologiqueTWIN project presentation at Innov'Boost 2025"><figcaption>Project presentation</figcaption></figure>
     </div>
     <div class="grid2">
-      <div class="card reveal d2"><div class="xp-role">Open Data Hackathon 2025 · Digital Health</div><h4 style="margin:4px 0 6px">Santeo</h4><p style="color:var(--muted);margin:0;font-size:.9rem">An application combining open data and AI agents to improve access to healthcare services.</p></div>
+      <div class="card reveal d2">
+        <div class="xp-role">Open Data Hackathon 2025 · Digital Health</div><h4 style="margin:4px 0 6px">Santeo</h4>
+        <p style="color:var(--muted);margin:0 0 12px;font-size:.9rem">An application combining open data and AI agents to improve access to healthcare services.</p>
+        <figure class="shot" style="margin-bottom:10px"><img loading="lazy" src="photos/hackathon-opendata.jpg" alt="Open Data Hackathon 2025 award ceremony — Ahmed on stage with the certificates"><figcaption>Open Data Hackathon 2025 — award ceremony</figcaption></figure>
+        <a class="btn ghost" style="font-size:.78rem;padding:7px 14px" href="https://www.linkedin.com/posts/ahmed-moubarak-lahlyal-015839257_opendata-innovationdigitale-santaez-activity-7304135036906135552-_nOf" target="_blank" rel="noopener">View on LinkedIn ↗</a>
+      </div>
       <div class="card reveal d2"><div class="xp-role">Pwned Hackathon · Cybersecurity &amp; AI</div><h4 style="margin:4px 0 6px">Security &amp; rapid prototyping</h4><p style="color:var(--muted);margin:0;font-size:.9rem">Security analysis and rapid prototyping / development under time constraints.</p></div>
     </div>
   </div>
@@ -1181,10 +1193,49 @@
   </div>
 </section>
 
+
+<!-- ===== Tech stack (regular section) ===== -->
+<section class="step" id="stack" data-step="Technical Foundations" style="min-height:auto">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="idx">10</span> · Technical Foundations</span>
+    <h2 class="sec-title reveal">Organized by <em>architecture layer</em></h2>
+    <p class="sec-sub reveal">Not a logo wall. Tools are not the goal — architecture and measurable value are.</p>
+    <div class="stack-grid">
+      <div class="stack-cat reveal d1"><h4>AI &amp; Machine Learning</h4><div class="tools"><span>Python</span><span>PyTorch</span><span>TensorFlow</span><span>scikit-learn</span><span>XGBoost</span><span>Deep Learning</span><span>CNNs</span><span>Attention</span><span>Classification</span><span>Forecasting</span><span>Anomaly Detection</span><span>Model Evaluation</span></div></div>
+      <div class="stack-cat reveal d1"><h4>Generative AI &amp; NLP</h4><div class="tools"><span>LLMs</span><span>RAG</span><span>Graph-RAG</span><span>LangGraph</span><span>CrewAI</span><span>LangChain</span><span>Hugging Face</span><span>SBERT</span><span>Embeddings</span><span>NER</span><span>Prompt Engineering</span><span>Agentic Workflows</span><span>Guardrails</span><span>Prompt-Injection Defense</span></div></div>
+      <div class="stack-cat reveal d1"><h4>Document AI &amp; Vision</h4><div class="tools"><span>OCR</span><span>PDF Parsing</span><span>Layout Analysis</span><span>Information Extraction</span><span>Tesseract</span><span>DocTR</span><span>Mistral OCR</span><span>PDFPlumber</span><span>LayoutLMv3</span><span>OpenCV</span></div></div>
+      <div class="stack-cat reveal d2"><h4>Data Engineering</h4><div class="tools"><span>SQL</span><span>ETL / ELT</span><span>Kafka</span><span>Spark</span><span>Spark Streaming</span><span>Hadoop</span><span>HDFS</span><span>Hive</span><span>HBase</span><span>Airflow</span><span>Talend</span><span>Data Pipelines</span></div></div>
+      <div class="stack-cat reveal d2"><h4>Databases &amp; Knowledge Systems</h4><div class="tools"><span>PostgreSQL</span><span>SQL Server</span><span>MySQL</span><span>Oracle</span><span>SQLite</span><span>MongoDB</span><span>Cassandra</span><span>Neo4j</span><span>ChromaDB</span><span>Knowledge Graphs</span><span>Vector Databases</span></div></div>
+      <div class="stack-cat reveal d2"><h4>Software Engineering &amp; MLOps</h4><div class="tools"><span>FastAPI</span><span>Next.js</span><span>React.js</span><span>Java / Spring Boot</span><span>REST APIs</span><span>Docker</span><span>Git / GitHub</span><span>Linux</span><span>n8n</span><span>Testing</span><span>CI/CD fundamentals</span></div></div>
+      <div class="stack-cat reveal d3"><h4>Business Intelligence</h4><div class="tools"><span>Power BI</span><span>DAX</span><span>Power Query</span><span>Tableau</span><span>Superset</span><span>Looker Studio</span><span>KPI Design</span><span>Data Visualization</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== How I Work (soft skills) ===== -->
+<section class="step" id="howiwork" data-step="How I Work" style="min-height:auto">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="idx">11</span> · How I Work</span>
+    <h2 class="sec-title reveal">Soft skills, as <em>behaviors</em></h2>
+    <p class="sec-sub reveal">Not a list of adjectives — how I actually work on technical problems and in a team.</p>
+    <div class="grid3">
+      <div class="card pillar reveal d1"><h3>Curiosity</h3><p>I like understanding systems beyond the surface.</p></div>
+      <div class="card pillar reveal d1"><h3>Analytical thinking</h3><p>I break complex problems into measurable components.</p></div>
+      <div class="card pillar reveal d1"><h3>Rigor</h3><p>I value reproducible experiments, testing and documentation.</p></div>
+      <div class="card pillar reveal d2"><h3>Autonomy</h3><p>I investigate and prototype independently, while knowing when expert feedback is needed.</p></div>
+      <div class="card pillar reveal d2"><h3>Communication &amp; teamwork</h3><p>I explain technical decisions clearly and collaborate around feedback and shared objectives.</p></div>
+      <div class="card pillar reveal d2"><h3>Adaptability</h3><p>I have worked across Data Analytics, Knowledge Graphs, Deep Learning, Generative AI and secure AI systems.</p></div>
+    </div>
+    <div class="highlight-line reveal d2"><b style="color:var(--cyan)">Engineering pragmatism</b> — I prefer the simplest architecture that reliably solves the problem, and add complexity only when it provides measurable value.</div>
+  </div>
+</section>
+
+<!-- ===== Education + Innov'Boost (regular section) ===== -->
+
 <!-- ============ 08 · AI ASSISTANT ============ -->
 <section class="step" id="assistant" data-step="AI Assistant">
   <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">10</span> · AI Assistant</span>
+    <span class="eyebrow reveal"><span class="idx">12</span> · AI Assistant</span>
     <h2 class="sec-title reveal">Ask <em>Ahmed's AI</em></h2>
     <p class="sec-sub reveal"><b style="color:var(--cyan)">Profile-grounded AI</b> — an assistant grounded in my <b>complete profile</b>: research &amp; publications, projects, skills, experience and engineering approach. Intent-aware retrieval over one verified profile, answered by Llama&nbsp;3.2 when running locally, or a curated profile mode on the web. It never redirects everything to one project.</p>
     <div class="assistant-grid">
@@ -1231,44 +1282,6 @@
   </div>
 </section>
 
-<!-- ===== Tech stack (regular section) ===== -->
-<section class="step" id="stack" data-step="Technical Foundations" style="min-height:auto">
-  <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">11</span> · Technical Foundations</span>
-    <h2 class="sec-title reveal">Organized by <em>architecture layer</em></h2>
-    <p class="sec-sub reveal">Not a logo wall. Tools are not the goal — architecture and measurable value are.</p>
-    <div class="stack-grid">
-      <div class="stack-cat reveal d1"><h4>AI &amp; Machine Learning</h4><div class="tools"><span>Python</span><span>PyTorch</span><span>TensorFlow</span><span>scikit-learn</span><span>XGBoost</span><span>Deep Learning</span><span>CNNs</span><span>Attention</span><span>Classification</span><span>Forecasting</span><span>Anomaly Detection</span><span>Model Evaluation</span></div></div>
-      <div class="stack-cat reveal d1"><h4>Generative AI &amp; NLP</h4><div class="tools"><span>LLMs</span><span>RAG</span><span>Graph-RAG</span><span>LangGraph</span><span>CrewAI</span><span>LangChain</span><span>Hugging Face</span><span>SBERT</span><span>Embeddings</span><span>NER</span><span>Prompt Engineering</span><span>Agentic Workflows</span><span>Guardrails</span><span>Prompt-Injection Defense</span></div></div>
-      <div class="stack-cat reveal d1"><h4>Document AI &amp; Vision</h4><div class="tools"><span>OCR</span><span>PDF Parsing</span><span>Layout Analysis</span><span>Information Extraction</span><span>Tesseract</span><span>DocTR</span><span>Mistral OCR</span><span>PDFPlumber</span><span>LayoutLMv3</span><span>OpenCV</span></div></div>
-      <div class="stack-cat reveal d2"><h4>Data Engineering</h4><div class="tools"><span>SQL</span><span>ETL / ELT</span><span>Kafka</span><span>Spark</span><span>Spark Streaming</span><span>Hadoop</span><span>HDFS</span><span>Hive</span><span>HBase</span><span>Airflow</span><span>Talend</span><span>Data Pipelines</span></div></div>
-      <div class="stack-cat reveal d2"><h4>Databases &amp; Knowledge Systems</h4><div class="tools"><span>PostgreSQL</span><span>SQL Server</span><span>MySQL</span><span>Oracle</span><span>SQLite</span><span>MongoDB</span><span>Cassandra</span><span>Neo4j</span><span>ChromaDB</span><span>Knowledge Graphs</span><span>Vector Databases</span></div></div>
-      <div class="stack-cat reveal d2"><h4>Software Engineering &amp; MLOps</h4><div class="tools"><span>FastAPI</span><span>Next.js</span><span>React.js</span><span>Java / Spring Boot</span><span>REST APIs</span><span>Docker</span><span>Git / GitHub</span><span>Linux</span><span>n8n</span><span>Testing</span><span>CI/CD fundamentals</span></div></div>
-      <div class="stack-cat reveal d3"><h4>Business Intelligence</h4><div class="tools"><span>Power BI</span><span>DAX</span><span>Power Query</span><span>Tableau</span><span>Superset</span><span>Looker Studio</span><span>KPI Design</span><span>Data Visualization</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== How I Work (soft skills) ===== -->
-<section class="step" id="howiwork" data-step="How I Work" style="min-height:auto">
-  <div class="wrap">
-    <span class="eyebrow reveal"><span class="idx">12</span> · How I Work</span>
-    <h2 class="sec-title reveal">Soft skills, as <em>behaviors</em></h2>
-    <p class="sec-sub reveal">Not a list of adjectives — how I actually work on technical problems and in a team.</p>
-    <div class="grid3">
-      <div class="card pillar reveal d1"><h3>Curiosity</h3><p>I like understanding systems beyond the surface.</p></div>
-      <div class="card pillar reveal d1"><h3>Analytical thinking</h3><p>I break complex problems into measurable components.</p></div>
-      <div class="card pillar reveal d1"><h3>Rigor</h3><p>I value reproducible experiments, testing and documentation.</p></div>
-      <div class="card pillar reveal d2"><h3>Autonomy</h3><p>I investigate and prototype independently, while knowing when expert feedback is needed.</p></div>
-      <div class="card pillar reveal d2"><h3>Communication &amp; teamwork</h3><p>I explain technical decisions clearly and collaborate around feedback and shared objectives.</p></div>
-      <div class="card pillar reveal d2"><h3>Adaptability</h3><p>I have worked across Data Analytics, Knowledge Graphs, Deep Learning, Generative AI and secure AI systems.</p></div>
-    </div>
-    <div class="highlight-line reveal d2"><b style="color:var(--cyan)">Engineering pragmatism</b> — I prefer the simplest architecture that reliably solves the problem, and add complexity only when it provides measurable value.</div>
-  </div>
-</section>
-
-<!-- ===== Education + Innov'Boost (regular section) ===== -->
-
 <!-- ============ 14 · EDUCATION & CERTIFICATIONS ============ -->
 <section class="step" id="education" data-step="Education" style="min-height:auto">
   <div class="wrap">
@@ -1282,9 +1295,9 @@
 
     <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:24px 0 12px">Certifications</h4>
     <div class="cert-grid reveal d2">
-      <div class="cert-cat"><div class="cert-h">Machine Learning</div><span class="cert">Stanford University — Machine Learning Specialization</span></div>
+      <div class="cert-cat"><div class="cert-h">Machine Learning &amp; MLOps</div><span class="cert">Stanford — Machine Learning Specialization</span><span class="cert">Google Cloud — MLOps with Vertex AI: Model Evaluation</span><span class="cert">Google Cloud — MLOps for Generative AI</span></div>
       <div class="cert-cat"><div class="cert-h">Data Science</div><span class="cert">IBM — Python for Data Science</span><span class="cert">IBM — Data Science Methodology</span></div>
-      <div class="cert-cat"><div class="cert-h">Cloud Computing</div><span class="cert">AWS Academy — Cloud Foundations</span><span class="cert">AWS Academy — Cloud Developing</span><span class="cert">Oracle — Cloud Infrastructure Foundations</span></div>
+      <div class="cert-cat"><div class="cert-h">Cloud (AWS Academy &amp; Oracle)</div><span class="cert">AWS — Cloud Foundations</span><span class="cert">AWS — Cloud Architecting</span><span class="cert">AWS — Cloud Developing</span><span class="cert">AWS — Cloud Security Foundations</span><span class="cert">AWS — Cloud Security Builder (Lab)</span><span class="cert">Oracle — Cloud Infrastructure Foundations</span></div>
     </div>
 
     <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:24px 0 10px">Languages</h4>
@@ -1296,29 +1309,17 @@
   </div>
 </section>
 
-<!-- ============ 09 · LET'S TALK ============ -->
-<section class="step closing" id="contact" data-step="Let's Talk">
-  <div class="wrap">
-    <span class="eyebrow reveal" style="margin-left:auto;margin-right:auto"><span class="idx">14</span> · Let's Talk</span>
-    <h2 class="reveal">Let's build AI that can be <em>trusted</em>.</h2>
-    <p class="who reveal d1"><b>Ahmed Moubarak Lahlyal</b> · AI &amp; Data Engineer</p>
-    <p class="who reveal d1">Advanced Master® — Data &amp; Generative AI Engineering · EFREI Paris</p>
-    <p class="who reveal d1 mono" style="color:var(--amber)">Apprenticeship: 2 weeks company / 1 week school</p>
-    <div class="contact-btns reveal d2">
-      <a class="btn primary" href="mailto:lahlyalmoubarak@gmail.com">Email</a>
-      <a class="btn ghost" href="https://linkedin.com/in/ahmed-moubarak-lahlyal-015839257" target="_blank" rel="noopener">LinkedIn</a>
-      <a class="btn ghost" href="https://github.com/amlmbr" target="_blank" rel="noopener">GitHub</a>
+<footer class="legal" id="contact">
+  <div class="wrap footer-inner">
+    <span class="foot-name"><b>Ahmed Moubarak Lahlyal</b> · AI &amp; Data Engineer</span>
+    <div class="footer-links">
+      <a href="mailto:lahlyalmoubarak@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/ahmed-moubarak-lahlyal-015839257" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/amlmbr" target="_blank" rel="noopener">GitHub</a>
     </div>
-    <div class="ask-them reveal d2">
-      <div class="qc"><span class="lbl">To ask the team</span><p>Could you tell me more about the AI project and its main technical challenges?</p></div>
-      <div class="qc"><span class="lbl">To ask the team</span><p>How do you validate AI systems when reliability and security are critical?</p></div>
-      <div class="qc"><span class="lbl">To ask the team</span><p>What would you expect an apprentice to accomplish during the first three to six months?</p></div>
-    </div>
-    <p class="thanks reveal d3">Thank you for the discussion.</p>
+    <span class="foot-copy">© <span id="yr"></span></span>
   </div>
-</section>
-
-<footer class="legal">© <span id="yr"></span> Ahmed Moubarak Lahlyal · Built as an interactive AI-Engineer presentation.</footer>
+</footer>
 
 <!-- ===== Lightbox ===== -->
 <div class="lightbox" id="lightbox" role="dialog" aria-label="Enlarged photo"><img id="lightbox-img" src="" alt=""><p id="lightbox-cap"></p></div>
@@ -1337,7 +1338,7 @@
   <ul id="ph-list"></ul>
 </div>
 
-<script src="assets/ahmed-profile.js?v=20260909" defer></script>
-<script src="assets/portfolio.js?v=20260909" defer></script>
+<script src="assets/ahmed-profile.js?v=20260909b" defer></script>
+<script src="assets/portfolio.js?v=20260909b" defer></script>
 </body>
 </html>
