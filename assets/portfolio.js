@@ -626,7 +626,7 @@
      ============================================================ */
   (function () {
     var STEPS = [
-      { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Who I Am' }, { id: 'journey', label: 'My Journey' },
+      { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Who I Am' },
       { id: 'experience', label: 'Experience' }, { id: 'research', label: 'Research & Publications' }, { id: 'securedocai', label: 'SecureDocAI' },
       { id: 'projects', label: 'AI Projects' }, { id: 'hackathons', label: 'Hackathons & Awards' }, { id: 'mindset', label: 'Engineering Mindset' },
       { id: 'thales', label: 'Why Thales' }, { id: 'assistant', label: 'Ahmed AI' }, { id: 'stack', label: 'Technical Foundations' }, { id: 'contact', label: "Let's Talk" }
@@ -634,8 +634,7 @@
     var HINTS = {
       intro: ['Open with the one-line: data → deployment, with security in mind.', 'Point at the chips: LLMs, RAG/Graph-RAG, KGs, Agentic, Secure AI.', 'Note: graduating 2026, EFREI Advanced Master, 2w/1w apprenticeship.'],
       profile: ['“Tell me about yourself” lands here.', 'Three pillars: AI Engineering, Data Foundations, Trustworthy Systems.', 'I understand complete systems, not just frameworks.'],
-      journey: ['Not many unrelated internships — a progression.', 'Each role added a layer: Data → ML → Knowledge → GenAI → Trustworthy.', 'OCP → AQUADVISER → UM6P → LISTIC.'],
-      experience: ['Four experiences with exact dates.', 'For each: role, project, my contribution, stack, result.', 'LISTIC (Feb–Jul 2026) is the current, flagship one.', 'Each card links to the full project.'],
+      experience: ['Four experiences with exact dates — a progression, not unrelated internships.', 'Each role added a layer: Data → ML → Knowledge → GenAI → Trustworthy AI.', 'OCP → AQUADVISER → UM6P → LISTIC; each card links to the full project.', 'LISTIC (Feb–Jul 2026) is the current, flagship one.'],
       research: ['I have a real research profile, not only projects.', 'PUBLISHED: CityEcoScout (co-author, IJCEDS 2025).', 'IN PREPARATION: SecureDocAI manuscript (LISTIC, with Loukil & Verjus).', 'Progression: knowledge rep → multimodal → trustworthy GenAI.'],
       securedocai: ['Lead with the PROBLEM, not the tech.', 'Walk Layer 1 (document) then Layer 2 (security) — click the tabs.', 'Headline: 97.8% RBAC, leakage 15.39%→0.21%, 95% utility kept.', 'This is my flagship — but one part of a broader profile.'],
       projects: ['Click each tab; the visual animates live.', 'For each: Problem → Built → My contribution → Approach → Results → Takeaway.', 'NeurologiqueTWIN: DL classification was the core; Digital Twin was my extension.', 'Show breadth: multimodal, KGs, agents, Green AI, NLP, Big Data.'],
