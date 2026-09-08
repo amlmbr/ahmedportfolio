@@ -91,8 +91,8 @@ window.AHMED_PROFILE = {
     'securedocai-eval': { title: 'Evaluation', accent: 'cyan', nodes: [
       { l: '500 Documents' }, { l: '5 Domains' }, { l: '6,000 Scenarios' }, { l: 'Normal Queries' }, { l: 'Sensitive Queries' }, { l: 'Adversarial Queries' }, { l: 'RBAC Tests' }, { l: 'PII / PHI Tests' }, { l: 'Leakage Evaluation' }, { l: 'Utility Evaluation' }, { l: 'Final Metrics' }
     ] },
-    'neurologiquetwin': { title: 'EEG + IMU → Digital Twin', accent: 'cyan', nodes: [
-      { l: 'EEG + IMU Signals' }, { l: 'Signal Cleaning' }, { l: 'Temporal Synchronization' }, { l: 'Segmentation / Windowing' }, { l: 'Feature Extraction' }, { l: 'CNN + Attention' }, { l: 'Risk / Event Classification' }, { l: 'Real-Time Monitoring' }, { l: 'Digital Twin' }
+    'neurologiquetwin': { title: 'Core: DL classification  →  My extension: Digital Twin', accent: 'cyan', nodes: [
+      { l: 'EEG + IMU Signals', t: 'Core internship work starts here.' }, { l: 'Signal Cleaning' }, { l: 'Temporal Synchronization' }, { l: 'Segmentation / Windowing' }, { l: 'CNN + Attention' }, { l: 'Classification', t: 'End of the core internship work — multimodal deep-learning classification.' }, { l: 'Monitoring', t: 'My extension begins here.' }, { l: 'Visualization' }, { l: 'Digital Twin', t: 'My extension: visualize, monitor and interact with the outputs over time.' }
     ] },
     'graphrag': { title: 'Hybrid Graph-RAG', accent: 'cyan', nodes: [
       { l: 'Domain Data' }, { l: 'Ingestion & Cleaning' }, { l: 'Entity + Relationship Modelling' }, { branch: ['Neo4j Knowledge Graph', 'Embeddings / Vector Retrieval'] }, { l: 'Hybrid Retrieval' }, { l: 'Context Fusion' }, { l: 'LLM' }, { l: 'Traceable Answer' }

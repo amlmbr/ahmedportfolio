@@ -188,13 +188,16 @@
     var projects = {
       'v-eeg': {
         type: 'Deep Learning · Multimodal Time Series (+ Digital Twin)', title: 'NeurologiqueTWIN', org: 'UM6P — 2025',
-        problem: 'Classify heterogeneous physiological time-series (EEG + IMU) with deep learning for neurological monitoring.',
-        built: 'Internship core — a deep-learning classification pipeline: EEG/IMU cleaning, synchronization, segmentation, representation and a CNN + attention classifier fusing both modalities. Extension — a Digital-Twin layer for monitoring & visualization.',
-        contribution: 'Core: preprocessed/synchronized/segmented the EEG+IMU signals and built and evaluated the deep-learning classification models. Extension: added a Digital-Twin layer to monitor, visualize and interpret the outputs over time.',
-        core: 'Python · PyTorch · TensorFlow · CNN · Attention · EEG / IMU · Time Series',
+        rows: [
+          ['Problem', 'Classify heterogeneous physiological time-series (EEG + IMU) with deep learning for neurological monitoring.'],
+          ['Core internship work', 'A multimodal deep-learning classification pipeline: EEG/IMU preprocessing, temporal synchronization, segmentation/windowing and a CNN + attention classifier.'],
+          ['My extension', 'A Digital-Twin layer to monitor, visualize and interact with the classification outputs over time.'],
+          ['Technical approach', '<span class="stack-line">Python · PyTorch · TensorFlow · CNN · Attention · EEG / IMU · Streamlit</span>']
+        ],
+        core: 'Python · PyTorch · TensorFlow · CNN · Attention · EEG / IMU · Streamlit',
         kpi: ['≈92%', 'internal classification accuracy'],
-        results: '≈92% internal classification accuracy; won 2nd Prize at Innov\'Boost 2025.',
-        lesson: 'In multimodal AI, data synchronization and signal quality can matter as much as model architecture.'
+        results: '≈92% internal classification accuracy; 6–10 pp pre-crisis recall improvement.',
+        lesson: 'In multimodal AI, signal quality and temporal synchronization can matter as much as model complexity.'
       },
       'v-rag': {
         type: 'Knowledge Graph · Generative AI', title: 'Graph-RAG — AQUADVISER', org: 'AQUADVISER — 2025',
@@ -252,16 +255,22 @@
     function render(key) {
       var p = projects[key]; if (!p) return;
       stageTitle.textContent = p.title;
+      var rowsHtml;
+      if (p.rows) {   // custom rows (a = trusted authored HTML); Results appended
+        rowsHtml = p.rows.map(function (r) { return '<div class="qa-row"><span class="q">' + esc(r[0]) + '</span><span class="a">' + r[1] + '</span></div>'; }).join('') +
+          '<div class="qa-row"><span class="q">Results</span><span class="a">' + esc(p.results) + '</span></div>';
+      } else {
+        rowsHtml =
+          '<div class="qa-row"><span class="q">Problem</span><span class="a">' + esc(p.problem) + '</span></div>' +
+          '<div class="qa-row"><span class="q">What I built</span><span class="a">' + esc(p.built) + '</span></div>' +
+          '<div class="qa-row"><span class="q">My contribution</span><span class="a">' + esc(p.contribution) + '</span></div>' +
+          '<div class="qa-row"><span class="q">Technical approach</span><span class="a"><span class="stack-line">' + esc(p.core) + '</span></span></div>' +
+          '<div class="qa-row"><span class="q">Results</span><span class="a">' + esc(p.results) + '</span></div>';
+      }
       info.innerHTML =
         '<span class="type">' + esc(p.type) + (p.org ? '  ·  ' + esc(p.org) : '') + '</span>' +
         '<h3>' + esc(p.title) + '</h3>' +
-        '<div class="qa-block">' +
-        '<div class="qa-row"><span class="q">Problem</span><span class="a">' + esc(p.problem) + '</span></div>' +
-        '<div class="qa-row"><span class="q">What I built</span><span class="a">' + esc(p.built) + '</span></div>' +
-        '<div class="qa-row"><span class="q">My contribution</span><span class="a">' + esc(p.contribution) + '</span></div>' +
-        '<div class="qa-row"><span class="q">Technical approach</span><span class="a"><span class="stack-line">' + esc(p.core) + '</span></span></div>' +
-        '<div class="qa-row"><span class="q">Results</span><span class="a">' + esc(p.results) + '</span></div>' +
-        '</div>' +
+        '<div class="qa-block">' + rowsHtml + '</div>' +
         '<span class="kpi-chip"><span class="v">' + esc(p.kpi[0]) + '</span><span class="k">' + esc(p.kpi[1]) + '</span></span>' +
         '<div class="lesson"><b>Takeaway —</b> ' + esc(p.lesson) + '</div>';
       // per-project animated pipeline
