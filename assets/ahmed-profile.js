@@ -27,7 +27,7 @@ window.AHMED_PROFILE = {
       worked: ['Document ingestion & OCR / native PDF parsing', 'Information extraction → canonical JSON', 'PII / PHI detection & protected storage', 'Vector index + Knowledge Graph, RAG / Graph-RAG', 'Agent orchestration, RBAC, prompt-injection & jailbreak filtering', 'Secure retrieval, output validation, risk classification', 'FastAPI services, Docker, evaluation & scientific writing'],
       contribution: 'I designed and implemented major parts of the end-to-end system as part of the LISTIC research team — from document processing and knowledge retrieval to security mechanisms, LLM orchestration and experimental evaluation.',
       tech: ['Python', 'FastAPI', 'LangGraph', 'CrewAI', 'LangChain', 'RAG', 'Graph-RAG', 'Neo4j', 'ChromaDB', 'Presidio', 'SBERT', 'XGBoost', 'OCR', 'Docker'],
-      result: '500 documents · 6,000 scenarios · 97.8% RBAC compliance · 95% authorized utility · leakage 15.39% → 0.21% · PII/PHI micro-F1 0.96 · ROC-AUC 0.98.',
+      result: '97.8% RBAC compliance and unauthorized leakage cut from 15.39% to 0.21% (full metrics are in the SecureDocAI project).',
       takeaway: 'For sensitive AI, access control, provenance and output validation cannot be afterthoughts.'
     },
     {
@@ -39,7 +39,7 @@ window.AHMED_PROFILE = {
       worked: ['Internship core: EEG + IMU signal cleaning & synchronization', 'Segmentation / windowing & time-series representation', 'Feature / representation learning', 'Deep-learning models (CNN + attention) for classification', 'Multimodal fusion of the two signal types', 'My extension: a Digital-Twin layer for monitoring & visualization'],
       contribution: 'The core of the internship was Deep Learning for multimodal time-series classification: I preprocessed, synchronized and segmented EEG/IMU signals and developed the deep-learning classification models. I then extended the project by adding a Digital-Twin layer to monitor, visualize and interpret the model outputs over time.',
       tech: ['Python', 'PyTorch', 'TensorFlow', 'scikit-learn', 'Pandas', 'NumPy', 'CNN', 'Attention', 'EEG', 'IMU', 'Streamlit'],
-      result: '≈92% internal classification accuracy · 6–10 pp improvement in pre-crisis recall · 2nd Prize Innov\'Boost 2025.',
+      result: '≈92% internal classification accuracy and a 6–10 pp improvement in pre-crisis recall (the Innov\'Boost 2nd Prize is under Hackathons & Awards).',
       takeaway: 'In multimodal AI, synchronization and signal quality can matter as much as model architecture.'
     },
     {
