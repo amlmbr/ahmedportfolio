@@ -520,7 +520,25 @@
   .askme-answer.show { display:block; }
   .askme-answer ul { margin:6px 0 0; padding-left:18px; color:var(--muted); }
   .askme-answer li { margin-bottom:4px; }
-  @media(max-width:900px){ .assistant-grid{grid-template-columns:1fr;} .chat-panel{height:480px;} }
+  @media(max-width:900px){ .assistant-grid{grid-template-columns:1fr;} .chat-panel{height:auto; min-height:520px;} }
+  @media(max-width:640px){
+    .chat-panel { height:76vh; min-height:480px; max-height:640px; }
+    .chat-head { flex-wrap:wrap; row-gap:8px; column-gap:10px; padding:12px 13px; }
+    .chat-avatar { width:34px; height:34px; border-radius:9px; }
+    .chat-id .nm { font-size:.92rem; } .chat-id .sb { font-size:.72rem; }
+    .status { font-size:.64rem; padding:4px 8px; }
+    .chat-tools { flex:1 1 100%; gap:6px; }
+    .chat-tools button { flex:1; text-align:center; padding:8px 4px; font-size:.66rem; }
+    .chat-log { padding:13px; }
+    .msg { max-width:92%; font-size:.9rem; }
+    .chips-row { padding:0 13px 8px; }
+    .chip-cats { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:2px; }
+    .chip-cats::-webkit-scrollbar { display:none; }
+    .chip-cat { flex:0 0 auto; }
+    .chip-qs { max-height:96px; overflow-y:auto; }
+    .chat-input { padding:10px 12px; }
+    .send-btn { width:46px; }
+  }
 
   /* ===== Tech stack ===== */
   .stack-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
@@ -1338,7 +1356,7 @@
   <ul id="ph-list"></ul>
 </div>
 
-<script src="assets/ahmed-profile.js?v=20260909b" defer></script>
-<script src="assets/portfolio.js?v=20260909b" defer></script>
+<script src="assets/ahmed-profile.js?v=20260909c" defer></script>
+<script src="assets/portfolio.js?v=20260909c" defer></script>
 </body>
 </html>
