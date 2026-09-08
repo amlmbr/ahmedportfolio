@@ -540,9 +540,48 @@
   .lightbox img { max-width:90vw; max-height:80vh; border-radius:12px; border:1px solid var(--line2); }
   .lightbox p { color:var(--muted); margin-top:14px; font-size:.88rem; }
 
-  /* ===== Presentation mode ===== */
+  /* ===== Presentation mode (guided full-screen tour of the real portfolio) ===== */
   body.presenting .step { scroll-snap-align:start; }
   body.presenting { scroll-snap-type:y proximity; }
+  body.presenting nav { display:none; }                 /* hide the normal navbar */
+  body.presenting .scroll-hint { display:none; }
+  body.presenting .step { padding-left:64px; padding-right:64px; }
+  body.presenting .sec-title { font-size:clamp(2rem,4.6vw,3.2rem); }
+  body.presenting .flag-title { font-size:clamp(2.4rem,5vw,3.6rem); }
+  body.presenting .sec-sub { font-size:1.1rem; }
+  /* subtle top progress bar */
+  .present-progress { position:fixed; top:0; left:0; height:3px; width:0; z-index:72; display:none;
+    background:linear-gradient(90deg,var(--cyan),var(--amber)); box-shadow:0 0 10px var(--glow); transition:width .4s ease; }
+  body.presenting .present-progress { display:block; }
+  /* full-screen start screen */
+  #present-start { position:fixed; inset:0; z-index:90; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:6px; background:var(--bg); }
+  #present-start.show { display:flex; }
+  #present-start .ks { font-family:var(--mono); letter-spacing:.3em; text-transform:uppercase; color:var(--cyan); font-size:clamp(.8rem,1.4vw,1rem); }
+  #present-start h1 { font-size:clamp(2rem,6vw,4rem); font-weight:800; letter-spacing:-.02em; margin:12px 0 2px; }
+  #present-start h1 .amb { color:var(--amber); }
+  #present-start .role { color:var(--muted); font-size:1.15rem; }
+  #present-start .sub { color:var(--faint); font-family:var(--mono); font-size:.82rem; letter-spacing:.06em; margin-top:6px; }
+  #present-start .status { display:flex; flex-direction:column; gap:6px; margin:26px 0; font-family:var(--mono); font-size:.82rem; }
+  #present-start .status .row { display:flex; gap:12px; justify-content:space-between; min-width:280px; color:var(--muted); }
+  #present-start .status .row b { color:var(--ink); font-weight:600; }
+  #present-start .status .ok { color:var(--green); } #present-start .status .live { color:var(--green); } #present-start .status .kb { color:var(--amber); }
+  #present-start .hint { color:var(--faint); font-family:var(--mono); font-size:.72rem; margin-top:18px; letter-spacing:.08em; }
+
+  /* ===== Simple / Technical depth toggle (reusable) ===== */
+  .depth-toggle { display:inline-flex; gap:4px; padding:4px; border:1px solid var(--line2); border-radius:999px; background:var(--panel3); margin-bottom:18px; }
+  .depth-toggle button { font-family:var(--mono); font-size:.74rem; padding:7px 16px; border-radius:999px; border:none; background:transparent; color:var(--muted); cursor:pointer; }
+  .depth-toggle button.active { background:linear-gradient(120deg,var(--cyan-deep),var(--cyan)); color:#04121A; font-weight:700; }
+  .simple-story { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+  .simple-story .ss { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px; text-align:left; position:relative; }
+  .simple-story .ss .n { font-family:var(--mono); font-size:.72rem; color:var(--cyan); }
+  .simple-story .ss p { margin:6px 0 0; font-size:.86rem; color:var(--ink); }
+  .simple-agents { display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; margin:6px 0 14px; }
+  .simple-agents .ag { flex:1; min-width:150px; background:var(--panel); border:1px solid var(--line2); border-radius:11px; padding:12px 14px; text-align:left; }
+  .simple-agents .ag h5 { margin:0 0 4px; font-size:.9rem; color:var(--cyan); }
+  .simple-agents .ag p { margin:0; font-size:.8rem; color:var(--muted); }
+  .simple-agents .ar { display:flex; align-items:center; color:var(--faint); }
+  .simple-note { border:1px solid var(--amber); border-left:3px solid var(--amber); border-radius:10px; padding:12px 16px; background:linear-gradient(100deg,rgba(230,178,76,.07),transparent); font-size:.95rem; }
+  @media(max-width:820px){ .simple-story{ grid-template-columns:1fr 1fr; } body.presenting .step{ padding-left:24px; padding-right:24px; } }
   .present-rail { position:fixed; left:18px; top:50%; transform:translateY(-50%); z-index:70; display:none; flex-direction:column; gap:9px; }
   body.presenting .present-rail { display:flex; }
   .rail-item { display:flex; align-items:center; gap:9px; cursor:pointer; opacity:.55; transition:opacity .2s; }
@@ -849,7 +888,35 @@
       <p>How can an organization use LLMs over sensitive documents <b style="color:var(--cyan)">without giving every user access to every piece of information?</b></p>
     </div>
 
-    <div class="arch reveal d1">
+    <div class="depth-toggle reveal d1" id="sdai-depth" role="tablist" aria-label="Explanation depth">
+      <button class="active" data-depth="simple">Simple explanation</button>
+      <button data-depth="technical">Technical architecture</button>
+    </div>
+
+    <div id="sdai-simple" class="reveal d1">
+      <div class="simple-story">
+        <div class="ss"><div class="n">1</div><p>A company has <b>sensitive documents</b> — financial, administrative, legal, clinical.</p></div>
+        <div class="ss"><div class="n">2</div><p>The system <b>reads and structures</b> the documents.</p></div>
+        <div class="ss"><div class="n">3</div><p>Specialized AI components each handle a different task.</p></div>
+        <div class="ss"><div class="n">4</div><p>On a question it checks <b>who</b> is asking, what they may access, and whether the request is suspicious.</p></div>
+        <div class="ss"><div class="n">5</div><p>Only <b>authorized</b> information is retrieved.</p></div>
+        <div class="ss"><div class="n">6</div><p>The LLM receives only the <b>minimum</b> context needed.</p></div>
+        <div class="ss"><div class="n">7</div><p>The generated answer is <b>checked again</b>.</p></div>
+        <div class="ss"><div class="n">8</div><p>The user receives a <b>controlled answer</b>.</p></div>
+      </div>
+      <div class="layer-label">The system as <b>specialized AI workers</b> (multi-agent)</div>
+      <div class="simple-agents">
+        <div class="ag"><h5>Document Agent</h5><p>Reads and structures the document.</p></div><span class="ar">→</span>
+        <div class="ag"><h5>Extraction Agent</h5><p>Identifies useful information.</p></div><span class="ar">→</span>
+        <div class="ag"><h5>Retrieval Agent</h5><p>Finds relevant knowledge.</p></div><span class="ar">→</span>
+        <div class="ag"><h5>Security / Policy</h5><p>Checks what is authorized.</p></div><span class="ar">→</span>
+        <div class="ag"><h5>LLM / Answer Agent</h5><p>Answers using the controlled context.</p></div><span class="ar">→</span>
+        <div class="ag"><h5>Validation</h5><p>Checks the final answer.</p></div>
+      </div>
+      <div class="simple-note"><b>The goal is simple:</b> give the right information to the right user, without exposing sensitive information. Agents are not independent robots — they are <b>specialized software components coordinated through a controlled workflow</b>.</div>
+    </div>
+
+    <div class="arch reveal d1" id="sdai-technical" hidden>
       <div class="arch-tabs">
         <button class="arch-tab active" data-arch="doc">Document Layer</button>
         <button class="arch-tab" data-arch="sec">Security Layer</button>
@@ -1261,10 +1328,7 @@
   <ul id="ph-list"></ul>
 </div>
 
-<!-- ===== Interview presentation deck (built by JS) ===== -->
-<div id="deck" hidden></div>
-
-<script src="assets/ahmed-profile.js?v=20260907c" defer></script>
-<script src="assets/portfolio.js?v=20260907c" defer></script>
+<script src="assets/ahmed-profile.js?v=20260908" defer></script>
+<script src="assets/portfolio.js?v=20260908" defer></script>
 </body>
 </html>

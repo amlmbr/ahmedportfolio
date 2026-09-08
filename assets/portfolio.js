@@ -11,7 +11,6 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   var PROFILE = window.AHMED_PROFILE || {};
-  var openDeck = null; // assigned by the interview-deck module below
 
   /* ============================================================
      Reusable animated pipeline component
@@ -173,16 +172,25 @@
         $('#contrib-tech').style.display = k === 'tech' ? '' : 'none';
       });
     });
+
+    // Simple / Technical depth toggle
+    var depth = $('#sdai-depth');
+    if (depth) depth.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-depth]'); if (!b) return;
+      $$('button', depth).forEach(function (o) { o.classList.remove('active'); }); b.classList.add('active');
+      var tech = b.dataset.depth === 'technical';
+      $('#sdai-simple').hidden = tech; $('#sdai-technical').hidden = !tech;
+    });
   })();
 
   /* ===== Projects showcase ===== */
   (function () {
     var projects = {
       'v-eeg': {
-        type: 'Multimodal AI · Digital Twin', title: 'NeurologiqueTWIN', org: 'UM6P — 2025',
-        problem: 'Combine heterogeneous physiological signals (EEG and IMU) into a reliable model for neurological monitoring.',
-        built: 'An end-to-end multimodal pipeline: signal synchronization, segmentation, feature extraction and a deep-learning classifier fusing both modalities.',
-        contribution: 'Built the EEG/IMU processing pipeline, aligned the two modalities, engineered the features and implemented and evaluated the classification model.',
+        type: 'Deep Learning · Multimodal Time Series (+ Digital Twin)', title: 'NeurologiqueTWIN', org: 'UM6P — 2025',
+        problem: 'Classify heterogeneous physiological time-series (EEG + IMU) with deep learning for neurological monitoring.',
+        built: 'Internship core — a deep-learning classification pipeline: EEG/IMU cleaning, synchronization, segmentation, representation and a CNN + attention classifier fusing both modalities. Extension — a Digital-Twin layer for monitoring & visualization.',
+        contribution: 'Core: preprocessed/synchronized/segmented the EEG+IMU signals and built and evaluated the deep-learning classification models. Extension: added a Digital-Twin layer to monitor, visualize and interpret the outputs over time.',
         core: 'Python · PyTorch · TensorFlow · CNN · Attention · EEG / IMU · Time Series',
         kpi: ['≈92%', 'internal classification accuracy'],
         results: '≈92% internal classification accuracy; won 2nd Prize at Innov\'Boost 2025.',
@@ -614,273 +622,14 @@
   })();
 
   /* ============================================================
-     THALES interview presentation deck (dedicated full-screen slides)
-     Independent of the AI assistant / Ollama — never fails if offline.
-     Reuses AHMED_PROFILE data (pipelines, metrics). Opened by openDeck().
-     ============================================================ */
-  (function () {
-    var deck = $('#deck'); if (!deck) return;
-    var P = PROFILE, sd = P.secureDoc || {}, pl = P.pipelines || {};
-
-    function chips(arr, cls) { return '<div class="d-chips">' + arr.map(function (c) { return '<span class="' + (cls || '') + '">' + esc(c) + '</span>'; }).join('') + '</div>'; }
-
-    // ---- slide content ----
-    var timeline =
-      '<div class="d-timeline">' +
-      '<div class="d-tl"><div class="d-when">Jul 2024 → Aug 2024</div><div class="d-org">OCP</div><div class="d-tags">Data Analytics<br>SQL · Reporting</div></div>' +
-      '<span class="d-tl-arrow">→</span>' +
-      '<div class="d-tl"><div class="d-when">May 2025 → Jul 2025</div><div class="d-org">AQUADVISER</div><div class="d-tags">Graph-RAG<br>Knowledge Graphs · LLMs</div></div>' +
-      '<span class="d-tl-arrow">→</span>' +
-      '<div class="d-tl"><div class="d-when">Jul 2025 → Oct 2025</div><div class="d-org">UM6P</div><div class="d-tags">Multimodal AI<br>EEG / IMU · Deep Learning</div></div>' +
-      '<span class="d-tl-arrow">→</span>' +
-      '<div class="d-tl now"><div class="d-when">Feb 2026 → Jul 2026</div><div class="d-org">LISTIC</div><div class="d-tags">Secure Document AI<br>RAG · Agents · Security</div></div>' +
-      '<span class="d-tl-arrow">→</span>' +
-      '<div class="d-tl now"><div class="d-when">2026 → 2027</div><div class="d-org">EFREI Paris</div><div class="d-tags">Data &amp; Generative<br>AI Engineering</div></div>' +
-      '</div>' +
-      '<div class="d-evolution"><span>Data</span><i>→</i><span>Machine Learning</span><i>→</i><span>Knowledge Systems</span><i>→</i><span>Generative AI</span><i>→</i><span>Trustworthy AI</span></div>';
-
-    var metricsHtml = (sd.metrics || []).map(function (m) { return '<div class="d-stat"><div class="v ' + (m.c || '') + '">' + esc(m.v) + '</div><div class="k">' + esc(m.k) + '</div></div>'; }).join('');
-    var smallHtml = (sd.small || []).map(function (m) { return '<div><b>' + esc(m.v) + '</b> · ' + esc(m.k) + '</div>'; }).join('');
-
-    var slidesHtml = [
-      // 0 — Intro
-      '<p class="s-kicker">THALES AI Interview · September 2026</p>' +
-      '<h1 class="s-title">Ahmed Moubarak <span class="amb">Lahlyal</span></h1>' +
-      '<p class="s-sub">AI Engineer</p>' +
-      chips(['Trustworthy AI', 'Generative AI', 'Data Engineering'], 'hl') +
-      '<p class="s-lead">Building AI systems from data to deployment — with security, traceability and measurable performance in mind.</p>' +
-      '<p class="s-note"><b>Engineering Graduate · 2026</b> — Advanced Master® Data &amp; Generative AI Engineering · EFREI Paris</p>',
-
-      // 1 — Who I Am
-      '<p class="s-kicker">Who I Am</p>' +
-      '<div class="d-grid3">' +
-        '<div class="d-card"><div class="d-idx">01</div><h3>AI Engineering</h3><p>Machine Learning, Deep Learning, LLMs and intelligent systems.</p></div>' +
-        '<div class="d-card"><div class="d-idx">02</div><h3>Data Foundations</h3><p>SQL, Data Engineering, Big Data, Knowledge Graphs and APIs.</p></div>' +
-        '<div class="d-card"><div class="d-idx">03</div><h3>Trustworthy Systems</h3><p>Security, controlled retrieval, evaluation and traceability.</p></div>' +
-      '</div>' +
-      '<p class="d-center-quote">I see AI engineering as a <b>complete system problem</b>: data, models, software, security, evaluation and deployment.</p>',
-
-      // 2 — Journey
-      '<p class="s-kicker">My Journey in AI &amp; Data</p>' + timeline,
-
-      // 3 — Landscape
-      '<p class="s-kicker">AI Systems I Have Worked On</p>' +
-      '<div class="d-emph" style="margin-bottom:16px;text-align:left"><h3 style="margin:0 0 4px;font-size:clamp(1.1rem,2vw,1.5rem)">SecureDocAI <span style="color:var(--amber);font-size:.8em">◆ today\'s focus</span></h3><p style="color:var(--muted);margin:0">Trustworthy Generative AI · secure LLM access over sensitive documents.</p></div>' +
-      '<div class="d-grid3">' +
-        '<div class="d-card"><h3>NeurologiqueTWIN</h3><p>Multimodal Deep Learning · EEG / IMU · CNN + Attention.</p></div>' +
-        '<div class="d-card"><h3>Graph-RAG</h3><p>Knowledge Graphs + LLMs · Neo4j · hybrid retrieval.</p></div>' +
-        '<div class="d-card"><h3>Multi-Agent Data Assistant</h3><p>Agentic AI + SQL · LangGraph · CrewAI.</p></div>' +
-      '</div>' +
-      '<p class="s-note" style="margin-top:12px"><span style="font-family:var(--mono);color:var(--faint)">＋ GEAR5 — Green AI &amp; LLM efficiency</span> · Today I will focus on <b style="color:var(--cyan)">SecureDocAI</b>.</p>',
-
-      // 4 — Problem
-      '<p class="s-kicker">SecureDocAI · The Problem</p>' +
-      '<p class="s-lead">How can organizations use LLMs over sensitive documents without exposing information users are not authorized to access?</p>' +
-      '<div class="d-flow"><span>Sensitive Documents</span><i>→</i><span>Traditional RAG</span><i>→</i><span>LLM</span><i>→</i><span class="warn">Potential Leakage</span></div>' +
-      chips(['Sensitive Data', 'Unauthorized Access', 'Prompt Injection', 'Role Escalation', 'Hallucination', 'Missing Traceability'], 'risk') +
-      '<p class="s-note">Traditional RAG focuses on <b>relevance</b>. For sensitive environments, relevance is not enough.</p>',
-
-      // 5 — Solution (two layers)
-      '<p class="s-kicker">SecureDocAI · Two-Layer Architecture</p>' +
-      '<div class="d-chips" style="margin-bottom:8px"><span class="hl deck-arch-tab" data-al="doc" style="cursor:pointer">Layer 1 · Document Intelligence</span><span class="deck-arch-tab" data-al="sec" style="cursor:pointer">Layer 2 · Secure AI Governance</span></div>' +
-      '<div id="deck-arch-doc"></div>' +
-      '<div id="deck-arch-sec" hidden></div>' +
-      '<p class="s-note" id="deck-arch-note">Documents become structured, protected knowledge — indexed for both vector search and a knowledge graph.</p>',
-
-      // 6 — Security pipeline (deep)
-      '<p class="s-kicker">From User Query to Controlled Answer</p>' +
-      '<h2 class="s-title" style="font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:14px">The <em>security</em> pipeline</h2>' +
-      '<div id="deck-sec-pipe"></div>' +
-      '<p class="s-note">Every request is governed. <b>Click a node with&nbsp;ⓘ</b> to see what it does — role authentication, injection detection, authorized retrieval, output firewall.</p>',
-
-      // 7 — What I built
-      '<p class="s-kicker">My Contribution</p>' +
-      '<div class="d-grid3">' +
-        '<div class="d-card"><h3>Architecture</h3><p>Designed major components of the two-layer architecture.</p></div>' +
-        '<div class="d-card"><h3>Document Intelligence</h3><p>Built document processing, extraction and sensitive-data pipelines.</p></div>' +
-        '<div class="d-card"><h3>Knowledge Systems</h3><p>Integrated RAG, Graph-RAG, Neo4j and ChromaDB.</p></div>' +
-        '<div class="d-card"><h3>AI Security</h3><p>Implemented RBAC, prompt-injection filtering and controlled retrieval.</p></div>' +
-        '<div class="d-card"><h3>AI Orchestration</h3><p>Integrated LLM workflows and agents with LangGraph and CrewAI.</p></div>' +
-        '<div class="d-card"><h3>Evaluation</h3><p>Ran controlled experiments across normal, sensitive and adversarial scenarios.</p></div>' +
-      '</div>' +
-      '<p class="s-note"><b>I designed and implemented major parts of the system as part of the LISTIC research team.</b></p>' +
-      chips(['Python', 'FastAPI', 'LangGraph', 'CrewAI', 'Neo4j', 'ChromaDB', 'Presidio', 'SBERT', 'XGBoost', 'Docker']),
-
-      // 8 — Results
-      '<p class="s-kicker">Experimental Evaluation</p>' +
-      '<div class="d-metrics">' + metricsHtml + '</div>' +
-      '<div class="d-transform"><div><div class="k" style="font-family:var(--mono);font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Unauthorized leakage</div><span class="from">' + esc(sd.leakageFrom || '') + '</span> <span class="arw">→</span> <span class="to">' + esc(sd.leakageTo || '') + '</span></div><div class="red"><div class="big">' + esc(sd.leakageReduction || '') + '</div><div class="lbl">relative reduction</div></div></div>' +
-      '<div class="d-small-metrics">' + smallHtml + '</div>' +
-      '<p class="s-note"><b>Security without utility is not enough.</b> The objective was to reduce unauthorized disclosure while preserving useful answers for authorized users.</p>',
-
-      // 9 — Lessons
-      '<p class="s-kicker">What This Project Taught Me</p>' +
-      '<div class="d-list">' +
-        '<div class="d-li"><span class="n">1</span><p>AI performance alone is not enough.</p></div>' +
-        '<div class="d-li"><span class="n">2</span><p>Security must be designed into the architecture.</p></div>' +
-        '<div class="d-li"><span class="n">3</span><p>Retrieval is a security boundary.</p></div>' +
-        '<div class="d-li"><span class="n">4</span><p>Critical AI requires traceability and evaluation.</p></div>' +
-        '<div class="d-li"><span class="n">5</span><p>Add complexity only when it provides measurable value.</p></div>' +
-      '</div>' +
-      '<div class="d-emph"><p class="d-center-quote" style="border:0;padding:0;margin:0">For trustworthy AI, the question is not only <b>“Can the model answer?”</b> — it is also <b>“Should it answer, using which information, and can we verify why?”</b></p></div>',
-
-      // 10 — Why Thales
-      '<p class="s-kicker">Why This Matters to Me</p>' +
-      '<div class="d-venn">' +
-        '<div class="col l"><h4>What I have been building</h4><div class="taglist">' + ['Trustworthy AI', 'Secure RAG', 'Knowledge Graphs', 'Agentic AI', 'Multimodal AI', 'Data Engineering', 'Evaluation', 'Traceability'].map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('') + '</div></div>' +
-        '<div class="col c"><div class="node">THALES</div></div>' +
-        '<div class="col r"><h4>What I want to explore</h4><div class="taglist">' + ['AI for Critical Systems', 'Reliability', 'Robustness', 'Explainability', 'Cybersecurity', 'Industrial Validation', 'Human-AI Collaboration'].map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('') + '</div></div>' +
-      '</div>' +
-      '<p class="d-center-quote" style="margin-top:18px">What attracts me to Thales is the opportunity to work on AI where <b>performance alone is not enough</b>.</p>' +
-      chips(['Reliability', 'Security', 'Traceability', 'Human Control'], 'hl') +
-      '<p class="s-note">Thank you. Questions? &nbsp;·&nbsp; <span style="color:var(--faint)">I\'d also like to ask: what are the project\'s main technical challenges? · how do you validate AI when reliability &amp; security are critical? · what would an apprentice accomplish in the first 3–6 months?</span></p>' +
-      '<button class="btn ghost" id="deck-demo-open" style="margin-top:14px">Open Live Demo — Ahmed AI →</button>',
-
-      // 11 — Optional live demo (reached only via button)
-      '<p class="s-kicker">Ahmed AI · Live Demo <span style="color:var(--faint)">(optional)</span></p>' +
-      '<h2 class="s-title" style="font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:14px">A profile-grounded assistant</h2>' +
-      '<div id="deck-ai-pipe"></div>' +
-      '<p class="s-note">Suggested questions: <b>“Who is Ahmed?”</b> · <b>“Explain SecureDocAI.”</b> · <b>“Why could Ahmed fit a trustworthy-AI project?”</b><br>Runs on Llama 3.2 locally, or a grounded knowledge base on the web — it never fails if the model is offline.</p>' +
-      '<div style="display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap"><button class="btn primary" id="deck-ai-launch">Open Ahmed AI</button><button class="btn ghost" id="deck-demo-back">← Back to presentation</button></div>'
-    ];
-
-    var notes = [
-      'Introduce myself in ~45 seconds. Confidence, not a full CV.',
-      'Three pillars. Land on the "complete system problem" line.',
-      'Explain progression: Data → Graph-RAG → Multimodal AI → Trustworthy Generative AI.',
-      'Name the four systems, then pivot: today I focus on SecureDocAI.',
-      'Spend time on the PROBLEM before any tool. Relevance ≠ safety.',
-      'Walk Layer 1, then click Layer 2. Keep it high-level here.',
-      'Zoom into security. Click 2–3 nodes to explain them live.',
-      'My contribution — concrete, honest ("major parts, as part of the team").',
-      'Focus on the security / utility trade-off. Numbers speak.',
-      'The two questions on the quote are the heart of trustworthy AI.',
-      'Bridge to Thales. Then invite questions. Demo only if time allows.',
-      'Optional: run 1–2 questions. Do not force it if time is short.'
-    ];
-
-    var MAIN = 11; // slides 0..10 are the sequence; 11 is the optional demo
-
-    // ---- build shell ----
-    var stage = document.createElement('div'); stage.className = 'deck-stage'; stage.id = 'deck-stage';
-    var slideEls = slidesHtml.map(function (html, i) {
-      var s = document.createElement('div'); s.className = 'slide'; s.setAttribute('role', 'group'); s.setAttribute('aria-label', 'Slide ' + (i + 1)); s.innerHTML = html; stage.appendChild(s); return s;
-    });
-
-    deck.innerHTML = '';
-    var prog = document.createElement('div'); prog.className = 'deck-progress'; deck.appendChild(prog);
-
-    var start = document.createElement('div'); start.className = 'deck-start'; start.id = 'deck-start';
-    start.innerHTML = '<p class="ks">THALES AI Interview</p><h1>Ahmed Moubarak Lahlyal</h1><p class="role">AI Engineer · Trustworthy AI · Generative AI</p>' +
-      '<button class="btn primary btn-lg" id="deck-start-btn">▶ Start Presentation</button>' +
-      '<p class="hint">→ / Space next · ← previous · Esc exit · N notes</p>';
-    deck.appendChild(start);
-    deck.appendChild(stage);
-
-    var notesEl = document.createElement('div'); notesEl.className = 'deck-notes'; notesEl.id = 'deck-notes';
-    notesEl.innerHTML = '<div class="t">Presenter notes</div><p></p>'; deck.appendChild(notesEl);
-
-    var ctrls = document.createElement('div'); ctrls.className = 'deck-controls';
-    ctrls.innerHTML = '<button id="deck-prev">← Prev</button><span class="num" id="deck-num">01 / ' + ('0' + MAIN).slice(-2) + '</span><button id="deck-next">Next →</button>' +
-      '<button id="deck-notes-btn">Notes</button><button id="deck-fs">⤢ Full screen</button><button class="exit" id="deck-exit">Esc · Exit</button>';
-    deck.appendChild(ctrls);
-
-    var current = 0, notesOn = false, built = {};
-
-    function buildSlidePipelines(i) {
-      if (built[i]) return; built[i] = true;
-      if (i === 5) {
-        if (pl['securedocai-doc']) buildPipeline($('#deck-arch-doc'), pl['securedocai-doc']);
-        if (pl['securedocai-sec']) buildPipeline($('#deck-arch-sec'), pl['securedocai-sec']);
-      }
-      if (i === 6 && pl['securedocai-sec']) buildPipeline($('#deck-sec-pipe'), pl['securedocai-sec']);
-      if (i === 11 && pl['ahmedai']) buildPipeline($('#deck-ai-pipe'), pl['ahmedai']);
-    }
-
-    function renderNotes() { notesEl.querySelector('p').textContent = notes[current] || ''; notesEl.classList.toggle('show', notesOn); }
-    function updateUI() {
-      slideEls.forEach(function (el, i) { el.classList.toggle('active', i === current); });
-      var main = Math.min(current, MAIN - 1);
-      if (current < MAIN) { prog.style.width = ((current + 1) / MAIN * 100) + '%'; $('#deck-num').textContent = ('0' + (current + 1)).slice(-2) + ' / ' + ('0' + MAIN).slice(-2); }
-      else { prog.style.width = '100%'; $('#deck-num').textContent = 'Demo'; }
-      buildSlidePipelines(current);
-      renderNotes();
-      stage.scrollTop = 0;
-    }
-    function go(i, arrow) {
-      if (arrow && i >= MAIN) return;          // arrows never enter the optional demo
-      if (i < 0) i = 0; if (i > slideEls.length - 1) i = slideEls.length - 1;
-      if (arrow && i > MAIN - 1) i = MAIN - 1;
-      current = i; updateUI();
-    }
-
-    function open(atStart) {
-      deck.hidden = false; deck.classList.add('open'); document.body.classList.add('deck-open');
-      start.style.display = 'flex'; // always show start screen first
-      current = 0; updateUI();
-    }
-    function begin() { start.style.display = 'none'; current = 0; updateUI(); }
-    function close() {
-      deck.classList.remove('open'); document.body.classList.remove('deck-open'); deck.hidden = true;
-      notesOn = false; renderNotes();
-      if (document.fullscreenElement) { try { document.exitFullscreen(); } catch (e) {} }
-      if (location.hash === '#presentation') { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
-    }
-    openDeck = open; // expose to the nav/hero buttons
-
-    // start screen
-    $('#deck-start-btn').addEventListener('click', begin);
-    // controls
-    $('#deck-prev').addEventListener('click', function () { go(current - 1, true); });
-    $('#deck-next').addEventListener('click', function () { go(current + 1, true); });
-    $('#deck-exit').addEventListener('click', close);
-    $('#deck-notes-btn').addEventListener('click', function () { notesOn = !notesOn; renderNotes(); });
-    $('#deck-fs').addEventListener('click', function () {
-      try { if (!document.fullscreenElement) deck.requestFullscreen(); else document.exitFullscreen(); } catch (e) {}
-    });
-
-    // slide 05 layer tabs
-    stage.addEventListener('click', function (e) {
-      var tab = e.target.closest('.deck-arch-tab'); if (tab) {
-        $$('.deck-arch-tab').forEach(function (o) { o.classList.remove('hl'); }); tab.classList.add('hl');
-        var doc = tab.dataset.al === 'doc';
-        $('#deck-arch-doc').hidden = !doc; $('#deck-arch-sec').hidden = doc;
-        $('#deck-arch-note').textContent = doc
-          ? 'Documents become structured, protected knowledge — indexed for both vector search and a knowledge graph.'
-          : 'Every request is governed: authenticated role, injection detection, authorized retrieval, context minimization, output firewall and final validation.';
-      }
-      if (e.target.id === 'deck-demo-open') { current = 11; updateUI(); }
-      if (e.target.id === 'deck-demo-back') { go(10); }
-      if (e.target.id === 'deck-ai-launch') { close(); var a = document.getElementById('assistant'); if (a) a.scrollIntoView({ behavior: 'smooth' }); }
-    });
-
-    // keyboard (only while deck is open)
-    document.addEventListener('keydown', function (e) {
-      if (deck.hidden || !deck.classList.contains('open')) return;
-      if (start.style.display !== 'none') { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); begin(); } else if (e.key === 'Escape') { close(); } return; }
-      switch (e.key) {
-        case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); go(current + 1, true); break;
-        case 'ArrowLeft': case 'PageUp': e.preventDefault(); go(current - 1, true); break;
-        case 'Home': e.preventDefault(); go(0); break;
-        case 'End': e.preventDefault(); go(MAIN - 1); break;
-        case 'Escape': e.preventDefault(); close(); break;
-        case 'n': case 'N': notesOn = !notesOn; renderNotes(); break;
-      }
-    });
-
-    // open directly via /presentation route or #presentation hash
-    if (location.pathname.replace(/\/$/, '') === '/presentation' || location.hash === '#presentation') { open(); }
-  })();
-
-  /* ============================================================
      Presentation mode
      ============================================================ */
   (function () {
     var STEPS = [
       { id: 'intro', label: 'Intro' }, { id: 'profile', label: 'Who I Am' }, { id: 'journey', label: 'My Journey' },
       { id: 'experience', label: 'Experience' }, { id: 'research', label: 'Research & Publications' }, { id: 'securedocai', label: 'SecureDocAI' },
-      { id: 'projects', label: 'Selected AI Systems' }, { id: 'stack', label: 'Technical Foundations' }, { id: 'mindset', label: 'Engineering Mindset' },
-      { id: 'thales', label: 'Why Thales' }, { id: 'assistant', label: 'Ahmed AI' }, { id: 'contact', label: "Let's Talk" }
+      { id: 'projects', label: 'AI Projects' }, { id: 'hackathons', label: 'Hackathons & Awards' }, { id: 'stack', label: 'Technical Foundations' },
+      { id: 'mindset', label: 'Engineering Mindset' }, { id: 'thales', label: 'Why Thales' }, { id: 'assistant', label: 'Ahmed AI' }, { id: 'contact', label: "Let's Talk" }
     ];
     var HINTS = {
       intro: ['Open with the one-line: data → deployment, with security in mind.', 'Point at the chips: LLMs, RAG/Graph-RAG, KGs, Agentic, Secure AI.', 'Note: graduating 2026, EFREI Advanced Master, 2w/1w apprenticeship.'],
@@ -889,7 +638,8 @@
       experience: ['Four experiences with exact dates.', 'For each: role, project, my contribution, stack, result.', 'LISTIC (Feb–Jul 2026) is the current, flagship one.', 'Each card links to the full project.'],
       research: ['I have a real research profile, not only projects.', 'PUBLISHED: CityEcoScout (co-author, IJCEDS 2025).', 'IN PREPARATION: SecureDocAI manuscript (LISTIC, with Loukil & Verjus).', 'Progression: knowledge rep → multimodal → trustworthy GenAI.'],
       securedocai: ['Lead with the PROBLEM, not the tech.', 'Walk Layer 1 (document) then Layer 2 (security) — click the tabs.', 'Headline: 97.8% RBAC, leakage 15.39%→0.21%, 95% utility kept.', 'This is my flagship — but one part of a broader profile.'],
-      projects: ['Click each tab; the visual animates live.', 'For each: Problem → Built → My contribution → Approach → Results → Takeaway.', 'Show breadth: multimodal, KGs, agents, Green AI, NLP, Big Data.'],
+      projects: ['Click each tab; the visual animates live.', 'For each: Problem → Built → My contribution → Approach → Results → Takeaway.', 'NeurologiqueTWIN: DL classification was the core; Digital Twin was my extension.', 'Show breadth: multimodal, KGs, agents, Green AI, NLP, Big Data.'],
+      hackathons: ['2nd Prize — Innov\'Boost 2025 (NeurologiqueTWIN), with photos.', 'Open Data Hackathon (Santeo, digital health) + Pwned (cyber & AI).', 'Shows rapid prototyping, teamwork and delivery under pressure.'],
       stack: ['Organized by architecture layer, not a logo wall.', 'AI/ML · GenAI · Document AI · Data Eng · Databases · MLOps · BI.', 'Point: tools are not the goal — architecture and value are.'],
       mindset: ['This is the part that matters for critical systems.', 'Ten principles; land on “security by design” and “measure before claiming”.', 'Quote: use AI only where it brings measurable value.'],
       thales: ['Honest overlap, not flattery.', 'Left = what I built, Right = what I want to explore.', 'Ask them: “what problem would you want me on first?”', 'Then Why-me: five evidence-based points.'],
@@ -898,9 +648,29 @@
     };
 
     var body = document.body, rail = $('#present-rail'), ind = $('#pv-ind'), hintBox = $('#presenter-hint'), hintList = $('#ph-list');
-    var current = 0, presenting = false, hintOn = true;
+    var current = 0, presenting = false, hintOn = false;   // presenter notes hidden by default
+    var navLock = 0;                                        // explicit nav wins over the scroll-spy for a moment
 
-    // build rail
+    // progress bar
+    var progress = document.createElement('div'); progress.className = 'present-progress'; body.appendChild(progress);
+
+    // full-screen start screen
+    var startEl = document.createElement('div'); startEl.id = 'present-start';
+    startEl.innerHTML =
+      '<p class="ks">THALES AI Interview · September 2026</p>' +
+      '<h1>Ahmed Moubarak <span class="amb">Lahlyal</span></h1>' +
+      '<p class="role">AI Engineer · Trustworthy AI · Generative AI · Data Engineering</p>' +
+      '<p class="sub">Interactive Portfolio Presentation</p>' +
+      '<div class="status">' +
+        '<div class="row"><b>Portfolio data</b><span class="ok">✓ Ready</span></div>' +
+        '<div class="row"><b>Presentation</b><span class="ok">✓ Ready</span></div>' +
+        '<div class="row"><b>Ahmed AI</b><span id="ps-ai" class="kb">○ checking…</span></div>' +
+      '</div>' +
+      '<button class="btn primary btn-lg" id="ps-start">▶ Start Presentation</button>' +
+      '<p class="hint">→ / Space next · ← previous · Esc exit · pick a chapter on the left</p>';
+    body.appendChild(startEl);
+
+    // build rail (chapter navigator)
     STEPS.forEach(function (s, i) {
       var it = document.createElement('div'); it.className = 'rail-item'; it.dataset.i = i;
       it.innerHTML = '<span class="num">' + ('0' + (i + 1)).slice(-2) + '</span><span class="bar"></span><span class="lbl">' + s.label + '</span>';
@@ -912,26 +682,39 @@
       var id = STEPS[current].id; var arr = HINTS[id] || [];
       hintList.innerHTML = arr.map(function (h) { return '<li>' + h + '</li>'; }).join('');
       hintBox.querySelector('.t').textContent = ('0' + (current + 1)).slice(-2) + ' · ' + STEPS[current].label;
-      hintBox.classList.toggle('show', presenting && hintOn);
+      hintBox.classList.toggle('show', presenting && hintOn && !startEl.classList.contains('show'));
     }
     function updateUI() {
       $$('.rail-item').forEach(function (el, i) { el.classList.toggle('active', i === current); });
       ind.textContent = ('0' + (current + 1)).slice(-2) + ' / ' + ('0' + STEPS.length).slice(-2);
+      progress.style.width = ((current + 1) / STEPS.length * 100) + '%';
       renderHint();
     }
     function goTo(i) {
       current = Math.max(0, Math.min(STEPS.length - 1, i));
+      navLock = Date.now();
       var el = document.getElementById(STEPS[current].id);
       if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
       updateUI();
     }
-    function enter() {
-      presenting = true; body.classList.add('presenting');
-      // sync to nearest current section
-      syncCurrent(); goTo(current); updateUI();
+    function probeStatus() {
+      var el = $('#ps-ai'); if (!el) return;
+      var ctrl = new AbortController(); var to = setTimeout(function () { ctrl.abort(); }, 2500);
+      fetch('/api/chat', { method: 'GET', signal: ctrl.signal }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { clearTimeout(to); if (d && d.available) { el.className = 'live'; el.textContent = '● Llama 3.2 — Local'; } else { el.className = 'kb'; el.textContent = '○ Web knowledge mode'; } })
+        .catch(function () { clearTimeout(to); el.className = 'kb'; el.textContent = '○ Web knowledge mode'; });
     }
-    function exit() { presenting = false; body.classList.remove('presenting'); hintBox.classList.remove('show'); }
-    function toggle() { presenting ? exit() : enter(); }
+    function open() {                 // show the start screen; portfolio "enters presentation mode"
+      presenting = true; body.classList.add('presenting'); window.scrollTo(0, 0);
+      startEl.classList.add('show'); probeStatus(); renderHint();
+    }
+    function begin() {                // start the guided tour of the real portfolio
+      startEl.classList.remove('show'); current = 0; goTo(0);
+    }
+    function exit() {
+      presenting = false; body.classList.remove('presenting'); startEl.classList.remove('show'); hintBox.classList.remove('show');
+      if (location.hash === '#presentation') { try { history.replaceState(null, '', location.pathname); } catch (e) {} }
+    }
 
     function syncCurrent() {
       var best = 0, bestDist = Infinity;
@@ -939,16 +722,18 @@
       current = best;
     }
 
-    // track current on scroll (both modes, keeps rail honest)
+    // track current on scroll — the section crossing the viewport centre is "current"
+    // (rootMargin works for both short and very tall sections, unlike a fixed threshold)
     var spy = new IntersectionObserver(function (es) {
+      if (Date.now() - navLock < 1000) return;   // explicit navigation is authoritative for ~1s
       es.forEach(function (e) { if (e.isIntersecting) { var idx = STEPS.map(function (s) { return s.id; }).indexOf(e.target.id); if (idx >= 0) { current = idx; if (presenting) updateUI(); } } });
-    }, { threshold: .5 });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     STEPS.forEach(function (s) { var el = document.getElementById(s.id); if (el) spy.observe(el); });
 
-    // buttons
-    // The nav / hero "Interview Presentation" buttons open the dedicated deck.
-    $('#present-toggle').addEventListener('click', function () { if (openDeck) openDeck(); else enter(); });
-    $('#hero-present').addEventListener('click', function () { if (openDeck) openDeck(); else enter(); });
+    // buttons — the nav / hero "Interview Presentation" buttons enter guided mode
+    $('#present-toggle').addEventListener('click', open);
+    $('#hero-present').addEventListener('click', open);
+    $('#ps-start').addEventListener('click', begin);
     $('#pv-next').addEventListener('click', function () { goTo(current + 1); });
     $('#pv-prev').addEventListener('click', function () { goTo(current - 1); });
     $('#pv-exit').addEventListener('click', exit);
@@ -958,12 +743,19 @@
     // keyboard
     document.addEventListener('keydown', function (e) {
       var lb = $('#lightbox');
-      if (e.key === 'Escape') { if (lb.classList.contains('open')) { lb.classList.remove('open'); return; } if (presenting) { exit(); return; } }
-      var tag = (e.target.tagName || '').toLowerCase();
-      if (tag === 'textarea' || tag === 'input') return;
+      if (e.key === 'Escape') { if (lb.classList.contains('open')) { lb.classList.remove('open'); return; } if (presenting) { e.preventDefault(); exit(); return; } }
       if (!presenting) return;
+      // start screen: any advance key begins the tour
+      if (startEl.classList.contains('show')) { if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); begin(); } return; }
+      var tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'textarea' || tag === 'input') return;  // don't hijack the chatbot input
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+      else if (e.key === 'End') { e.preventDefault(); goTo(STEPS.length - 1); }
     });
+
+    // open directly via /presentation route or #presentation hash
+    if (location.pathname.replace(/\/$/, '') === '/presentation' || location.hash === '#presentation') { open(); }
   })();
 })();

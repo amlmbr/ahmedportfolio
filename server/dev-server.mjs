@@ -152,8 +152,9 @@ const server = createServer(async (req, res) => {
 
 server.listen(PORT, async () => {
   const ok = await reachOllama();
-  console.log(`\n  Portfolio dev server  →  http://localhost:${PORT}`);
-  console.log(`  Ollama (${OLLAMA_BASE_URL}, ${OLLAMA_MODEL}): ${ok ? 'reachable ✓  — assistant runs on Llama 3.2' : 'not reachable — assistant runs in knowledge-base mode'}`);
+  console.log(`\n  Portfolio            →  http://localhost:${PORT}`);
+  console.log(`  Interview mode       →  http://localhost:${PORT}/presentation`);
+  console.log(`  Ahmed AI · Ollama    →  ${ok ? '● Llama 3.2 — Local (reachable ✓)' : '○ Web knowledge mode (Ollama not reachable)'}`);
   if (!ok) console.log(`  Tip: run "ollama serve" and "ollama pull ${OLLAMA_MODEL}" to enable the live model.\n`);
   else console.log('');
 });

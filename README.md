@@ -24,13 +24,26 @@ A premium, interactive single-page portfolio that doubles as a **screen-share in
 
 ---
 
-## Presentation mode
+## Interview presentation mode
 
-Click **▶ Interview Presentation** (nav or hero). The site becomes a guided, one-viewport-per-step deck while staying a live website.
+The **Interview Presentation** is a **guided full-screen tour of the same portfolio** (same sections, same canonical data) — not a separate slide deck. Click **▶ Interview Presentation** (nav or hero), or open **`/presentation`** directly.
 
-- **→ / Space** next step · **←** previous step · **Esc** exit
-- Left progress rail: `01 Intro · 02 Profile · 03 Journey · 04 SecureDocAI · 05 AI Projects · 06 Engineering Mindset · 07 Why Thales · 08 AI Assistant · 09 Let's Talk`
-- Toggle **Hints** for concise presenter notes (off-screen for the audience; you keep them short and oral).
+- A **start screen** first (name, role, and a live status: Portfolio ✓ / Presentation ✓ / Ahmed AI ● Llama 3.2 Local or ○ Web knowledge mode).
+- **→ / Space** next · **←** previous · **Home/End** first/last · **Esc** exit.
+- Left **chapter navigator** (rail) + top **progress bar** + bottom controls (Prev / `n / total` / Next / Hints / Exit); the normal navbar is hidden while presenting.
+- Scene flow: `Intro · Who I Am · Journey · Experience · Research & Publications · SecureDocAI · AI Projects · Hackathons & Awards · Technical Foundations · Engineering Mindset · Why Thales · Ahmed AI · Let's Talk`.
+- **SecureDocAI** has a reusable **Simple explanation / Technical architecture** toggle so you can pitch to non-technical and technical interviewers.
+- **Ahmed AI** is a live scene — type a question during the interview (Llama 3.2 locally, grounded knowledge base on the web).
+- Toggle **Hints** for concise presenter notes (they never dominate the shared screen).
+
+### Launch it for the interview (local, with Llama 3.2)
+
+```bash
+ollama serve
+ollama pull llama3.2
+npm run interview     # (= npm run dev) prints the URLs + live Ollama status
+# open  http://localhost:5173/presentation
+```
 
 ---
 

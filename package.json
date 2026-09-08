@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node server/dev-server.mjs",
-    "start": "node server/dev-server.mjs"
+    "start": "node server/dev-server.mjs",
+    "interview": "node server/dev-server.mjs"
   },
   "engines": {
     "node": ">=18"
