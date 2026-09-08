@@ -47,7 +47,8 @@ const MIME = {
   '.png': 'image/png',
   '.ico': 'image/x-icon',
   '.txt': 'text/plain; charset=utf-8',
-  '.woff2': 'font/woff2'
+  '.woff2': 'font/woff2',
+  '.webmanifest': 'application/manifest+json'
 };
 
 async function reachOllama(ms = 1500) {

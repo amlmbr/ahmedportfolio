@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070B10">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ahmed Lahlyal">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon.svg">
 <title>Ahmed Moubarak Lahlyal — AI Engineer</title>
 <meta name="description" content="Ahmed Moubarak Lahlyal — AI Engineer. Trustworthy AI, Generative AI, Knowledge Graphs, Agentic systems and Data Engineering. Interactive interview presentation.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070B10'/%3E%3Cpath d='M8 22 L16 9 L24 22' fill='none' stroke='%2339C6F0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='9' r='2.4' fill='%23E6B24C'/%3E%3C/svg%3E">
@@ -68,7 +76,23 @@
     border:1px solid var(--cyan-deep); color:var(--ink); font-size:.76rem; font-weight:700; letter-spacing:.04em;
     background:linear-gradient(120deg, rgba(14,111,151,.35), rgba(57,198,240,.14)); cursor:pointer; }
   .nav-cta:hover { border-color:var(--cyan); box-shadow:0 0 20px var(--glow); }
-  @media(max-width:860px){ .nav-links{ display:none; } }
+  .nav-inner { position:relative; }
+  .nav-burger { display:none; align-items:center; justify-content:center; width:40px; height:34px; border:1px solid var(--line2);
+    background:var(--panel); color:var(--ink); border-radius:9px; font-size:1.15rem; cursor:pointer; }
+  .nav-burger:hover { border-color:var(--cyan); }
+  @media(max-width:860px){
+    .nav-burger { display:inline-flex; }
+    .nav-cta .cta-text { display:none; }
+    .nav-cta { padding:8px 13px; font-size:.9rem; }
+    .nav-links {
+      display:none; position:absolute; top:calc(100% + 1px); left:0; right:0; flex-direction:column; align-items:stretch; gap:0;
+      background:rgba(7,11,16,.98); backdrop-filter:blur(14px); border:1px solid var(--line); border-radius:0 0 14px 14px;
+      box-shadow:0 14px 34px rgba(0,0,0,.45); padding:6px 0; z-index:61;
+    }
+    nav.open .nav-links { display:flex; }
+    .nav-links a.navlink { padding:13px 22px; font-size:.82rem; letter-spacing:.08em; border-bottom:1px solid var(--line); }
+    .nav-links a.navlink:last-child { border-bottom:none; }
+  }
 
   /* ===== Buttons ===== */
   .btn {
@@ -518,6 +542,12 @@
   .lang-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
   .lang { border:1px solid var(--line2); border-radius:9px; padding:8px 14px; background:var(--panel); font-size:.85rem; }
   .lang b { color:var(--cyan); }
+  .cert-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .cert-cat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:8px; }
+  .cert-h { font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--cyan); }
+  .cert { font-size:.85rem; color:var(--ink); padding:8px 11px; border:1px solid var(--line2); border-radius:8px; background:var(--panel3); display:flex; gap:8px; align-items:center; }
+  .cert::before { content:"✓"; color:var(--green); font-size:.8rem; }
+  @media(max-width:820px){ .cert-grid { grid-template-columns:1fr; } }
 
   /* ===== Closing ===== */
   .closing { text-align:center; background:linear-gradient(180deg, transparent, rgba(14,111,151,.06)); }
@@ -634,16 +664,18 @@
       <svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0E1620"/><path d="M8 22 L16 9 L24 22" fill="none" stroke="#39C6F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="9" r="2.4" fill="#E6B24C"/></svg>
       A.M. <em>Lahlyal</em>
     </span>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a class="navlink" href="#profile">Profile</a>
       <a class="navlink" href="#experience">Experience</a>
       <a class="navlink" href="#research">Research</a>
       <a class="navlink" href="#projects">Projects</a>
       <a class="navlink" href="#stack">Skills</a>
+      <a class="navlink" href="#education">Certifications</a>
       <a class="navlink" href="#thales">Why Thales</a>
       <a class="navlink" href="#assistant">Ahmed AI</a>
     </div>
-    <button class="nav-cta" id="present-toggle">▶ Interview Presentation</button>
+    <button class="nav-cta" id="present-toggle">▶ <span class="cta-text">Interview Presentation</span></button>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">☰</button>
   </div>
 </nav>
 
@@ -1210,8 +1242,8 @@
       <div class="stack-cat reveal d1"><h4>Generative AI &amp; NLP</h4><div class="tools"><span>LLMs</span><span>RAG</span><span>Graph-RAG</span><span>LangGraph</span><span>CrewAI</span><span>LangChain</span><span>Hugging Face</span><span>SBERT</span><span>Embeddings</span><span>NER</span><span>Prompt Engineering</span><span>Agentic Workflows</span><span>Guardrails</span><span>Prompt-Injection Defense</span></div></div>
       <div class="stack-cat reveal d1"><h4>Document AI &amp; Vision</h4><div class="tools"><span>OCR</span><span>PDF Parsing</span><span>Layout Analysis</span><span>Information Extraction</span><span>Tesseract</span><span>DocTR</span><span>Mistral OCR</span><span>PDFPlumber</span><span>LayoutLMv3</span><span>OpenCV</span></div></div>
       <div class="stack-cat reveal d2"><h4>Data Engineering</h4><div class="tools"><span>SQL</span><span>ETL / ELT</span><span>Kafka</span><span>Spark</span><span>Spark Streaming</span><span>Hadoop</span><span>HDFS</span><span>Hive</span><span>HBase</span><span>Airflow</span><span>Talend</span><span>Data Pipelines</span></div></div>
-      <div class="stack-cat reveal d2"><h4>Databases &amp; Knowledge Systems</h4><div class="tools"><span>PostgreSQL</span><span>SQL Server</span><span>MySQL</span><span>MongoDB</span><span>Cassandra</span><span>Neo4j</span><span>ChromaDB</span><span>Knowledge Graphs</span><span>Vector Databases</span></div></div>
-      <div class="stack-cat reveal d2"><h4>Software Engineering &amp; MLOps</h4><div class="tools"><span>FastAPI</span><span>REST APIs</span><span>Docker</span><span>Git / GitHub</span><span>Linux</span><span>Testing</span><span>Logging</span><span>Modular Architecture</span><span>CI/CD fundamentals</span></div></div>
+      <div class="stack-cat reveal d2"><h4>Databases &amp; Knowledge Systems</h4><div class="tools"><span>PostgreSQL</span><span>SQL Server</span><span>MySQL</span><span>Oracle</span><span>SQLite</span><span>MongoDB</span><span>Cassandra</span><span>Neo4j</span><span>ChromaDB</span><span>Knowledge Graphs</span><span>Vector Databases</span></div></div>
+      <div class="stack-cat reveal d2"><h4>Software Engineering &amp; MLOps</h4><div class="tools"><span>FastAPI</span><span>Next.js</span><span>React.js</span><span>Java / Spring Boot</span><span>REST APIs</span><span>Docker</span><span>Git / GitHub</span><span>Linux</span><span>n8n</span><span>Testing</span><span>CI/CD fundamentals</span></div></div>
       <div class="stack-cat reveal d3"><h4>Business Intelligence</h4><div class="tools"><span>Power BI</span><span>DAX</span><span>Power Query</span><span>Tableau</span><span>Superset</span><span>Looker Studio</span><span>KPI Design</span><span>Data Visualization</span></div></div>
     </div>
   </div>
@@ -1243,11 +1275,19 @@
     <span class="eyebrow reveal"><span class="idx">13</span> · Education &amp; Certifications</span>
     <h2 class="sec-title reveal">Education &amp; <em>credentials</em></h2>
     <div class="edu-grid">
-      <div class="edu-card reveal d1"><div class="d">June 2026</div><h4>Engineering Degree — Computer Science &amp; Emerging Technologies</h4><p>ENSA El Jadida.</p></div>
-      <div class="edu-card reveal d2"><div class="d">2026 → 2027</div><h4>Advanced Master® — Data &amp; Generative AI Engineering</h4><p>EFREI Paris. Apprenticeship: 2 weeks company / 1 week school.</p></div>
+      <div class="edu-card reveal d1"><div class="d">Sep 2026 → Oct 2027</div><h4>Advanced Master® — Data &amp; Generative AI Engineering</h4><p>EFREI Paris — admission confirmed. Apprenticeship: 2 weeks company / 1 week school.</p></div>
+      <div class="edu-card reveal d2"><div class="d">2023 → 2026</div><h4>Engineering Degree — Computer Science &amp; Emerging Technologies</h4><p>ENSA El Jadida, Chouaïb Doukkali University (Master's-level).</p></div>
+      <div class="edu-card reveal d3"><div class="d">2021 → 2023</div><h4>Integrated Preparatory Cycle — Mathematics &amp; Physics</h4><p>ENSA El Jadida — intensive scientific foundation.</p></div>
     </div>
-    <p class="sec-sub reveal d2" style="margin:16px 0 0;font-size:.9rem">Plus verifiable certifications in cloud, data and Python.</p>
-    <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:20px 0 10px">Languages</h4>
+
+    <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:24px 0 12px">Certifications</h4>
+    <div class="cert-grid reveal d2">
+      <div class="cert-cat"><div class="cert-h">Machine Learning</div><span class="cert">Stanford University — Machine Learning Specialization</span></div>
+      <div class="cert-cat"><div class="cert-h">Data Science</div><span class="cert">IBM — Python for Data Science</span><span class="cert">IBM — Data Science Methodology</span></div>
+      <div class="cert-cat"><div class="cert-h">Cloud Computing</div><span class="cert">AWS Academy — Cloud Foundations</span><span class="cert">AWS Academy — Cloud Developing</span><span class="cert">Oracle — Cloud Infrastructure Foundations</span></div>
+    </div>
+
+    <h4 class="reveal d2" style="font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:24px 0 10px">Languages</h4>
     <div class="lang-row reveal d2" style="margin-top:0">
       <span class="lang"><b>Arabic</b> — native / bilingual</span>
       <span class="lang"><b>French</b> — C1</span>
@@ -1297,7 +1337,7 @@
   <ul id="ph-list"></ul>
 </div>
 
-<script src="assets/ahmed-profile.js?v=20260908e" defer></script>
-<script src="assets/portfolio.js?v=20260908e" defer></script>
+<script src="assets/ahmed-profile.js?v=20260909" defer></script>
+<script src="assets/portfolio.js?v=20260909" defer></script>
 </body>
 </html>

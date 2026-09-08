@@ -191,9 +191,9 @@ window.AHMED_PROFILE = {
     { id: 'skills-dataeng', group: 'skills data', kw: 'data engineering sql etl elt kafka spark streaming hadoop hdfs hive hbase airflow talend pipelines big data',
       text: 'Data Engineering: SQL, ETL/ELT, Kafka, Spark, Spark Streaming, Hadoop, HDFS, Hive, HBase, Airflow, Talend, data pipelines.' },
     { id: 'skills-db', group: 'skills data', kw: 'databases knowledge systems postgresql sql server mysql mongodb cassandra neo4j chromadb vector database knowledge graph',
-      text: 'Databases & Knowledge Systems: PostgreSQL, SQL Server, MySQL, MongoDB, Cassandra, Neo4j, ChromaDB, knowledge graphs, vector databases.' },
-    { id: 'skills-mlops', group: 'skills', kw: 'software engineering mlops fastapi rest api docker git github linux testing logging modular architecture ci cd',
-      text: 'Software Engineering & MLOps: FastAPI, REST APIs, Docker, Git/GitHub, Linux, testing, logging, modular architecture, CI/CD fundamentals.' },
+      text: 'Databases & Knowledge Systems: PostgreSQL, SQL Server, MySQL, Oracle, SQLite, MongoDB, Cassandra, Neo4j, ChromaDB, knowledge graphs, vector databases.' },
+    { id: 'skills-mlops', group: 'skills', kw: 'software engineering mlops fastapi nextjs react java spring boot n8n rest api docker git github linux testing ci cd',
+      text: 'Software Engineering & MLOps: FastAPI, Next.js, React.js, Java/Spring Boot, REST APIs, Docker, Git/GitHub, Linux, n8n, testing, modular architecture, CI/CD fundamentals.' },
     { id: 'skills-bi', group: 'skills', kw: 'business intelligence power bi dax power query tableau superset looker studio kpi data visualization',
       text: 'Business Intelligence: Power BI, DAX, Power Query, Tableau, Superset, Looker Studio, KPI design, data visualization.' },
 
@@ -206,8 +206,8 @@ window.AHMED_PROFILE = {
       text: 'Awards: 2nd Prize at the Innov\'Boost 2025 hackathon (The Startups Competition, Forum ENSAJ Entreprises, ENSA El Jadida) for NeurologiqueTWIN.' },
     { id: 'hackathons', group: 'recognition', kw: 'hackathon technical activities open data digital health santeo pwned cybersecurity competition',
       text: 'Hackathons & technical activities: Innov\'Boost 2025 (2nd Prize, NeurologiqueTWIN); Open Data Hackathon 2025 — Digital Health (Santeo); Pwned Hackathon — Cybersecurity & AI.' },
-    { id: 'certifications', group: 'recognition', kw: 'certification certifications certified cloud data python courses',
-      text: 'Ahmed holds several verifiable certifications in cloud, data and Python (details on the portfolio and his profiles).' },
+    { id: 'certifications', group: 'recognition', kw: 'certification certifications certified cloud data python courses stanford ibm aws oracle',
+      text: 'Certifications: Stanford University — Machine Learning Specialization; IBM — Python for Data Science; IBM — Data Science Methodology; AWS Academy — Cloud Foundations; AWS Academy — Cloud Developing; Oracle — Cloud Infrastructure Foundations.' },
     { id: 'languages', group: 'practical', kw: 'language languages english french arabic speak',
       text: 'Languages: Arabic — native/bilingual; French — C1; English — C1.' },
     { id: 'whythales', group: 'thales', kw: 'thales why fit critical systems reliability robustness explainability cybersecurity industrial bring team',
@@ -268,6 +268,8 @@ window.AHMED_PROFILE = {
       a: 'Ahmed\'s apprenticeship rhythm for the EFREI Advanced Master (2026–2027) is **2 weeks in the company / 1 week at school** — strong continuity on real engineering work with a regular academic anchor.' },
     { id: 'languages', keys: 'languages language speak english french arabic',
       a: 'Languages: **Arabic** — native/bilingual; **French** — C1; **English** — C1.' },
+    { id: 'certs', keys: 'certifications certification certified courses stanford ibm aws oracle cloud',
+      a: 'Ahmed\'s **certifications**: **Stanford** — Machine Learning Specialization; **IBM** — Python for Data Science & Data Science Methodology; **AWS Academy** — Cloud Foundations & Cloud Developing; **Oracle** — Cloud Infrastructure Foundations.' },
     { id: 'contact', keys: 'contact email reach linkedin github how can i',
       a: 'You can reach Ahmed at **lahlyalmoubarak@gmail.com**, on **LinkedIn** (ahmed-moubarak-lahlyal) and **GitHub** (amlmbr).' },
     { id: 'securedocai', keys: 'securedocai secure document flagship explain',
@@ -286,6 +288,6 @@ window.AHMED_PROFILE = {
     Data: ["What is Ahmed's Data Engineering experience?", 'Has Ahmed worked with Big Data?', 'What databases has Ahmed used?'],
     Engineering: ['How does Ahmed approach AI engineering?', "What are Ahmed's soft skills?", 'How does Ahmed evaluate AI systems?'],
     Thales: ['Why is Ahmed interested in Thales?', 'What could Ahmed bring to an AI team at Thales?'],
-    Practical: ["What is Ahmed's apprenticeship schedule?", 'What languages does Ahmed speak?', 'How can I contact Ahmed?']
+    Practical: ["What is Ahmed's apprenticeship schedule?", 'What certifications does Ahmed have?', 'What languages does Ahmed speak?', 'How can I contact Ahmed?']
   }
 };

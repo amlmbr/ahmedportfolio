@@ -12,6 +12,16 @@
 
   var PROFILE = window.AHMED_PROFILE || {};
 
+  /* ===== Mobile burger menu ===== */
+  (function () {
+    var burger = $('#nav-burger'), nav = burger && burger.closest('nav'); if (!burger || !nav) return;
+    function close() { nav.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+    burger.addEventListener('click', function (e) { e.stopPropagation(); var open = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+    $$('#nav-links a').forEach(function (a) { a.addEventListener('click', close); });
+    document.addEventListener('click', function (e) { if (nav.classList.contains('open') && !nav.contains(e.target)) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+
   /* ============================================================
      Reusable animated pipeline component
      buildPipeline(container, pipelineDef) — renders a node/arrow flow,
